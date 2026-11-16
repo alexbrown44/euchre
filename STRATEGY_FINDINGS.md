@@ -36,6 +36,8 @@ Each time a player had to decide in round one, the same hand was played out ever
 
 From the **right of the dealer** it's even stronger. Passing beat ordering up even with 4 trumps (+1.25 versus +0.85).
 
+This matches league experience: ordering up in round one is rare at the table.
+
 **2. The dealer should pick up with 3 trumps and go alone with 4.** The dealer is the one seat where picking up pays, because the upcard goes into *their* hand.
 
 | Dealer, trumps after pick-up | Pass | Pick it up | Alone |
@@ -128,7 +130,7 @@ When your trumps include the Benny, the advantage of following colour roughly ha
 The first run of this experiment (also 16 Nov) used bots whose dealer picked up **74%** of hands, so round two came up in only about **15%** of hands. That's far less than at the league. Tests showed how loosely the dealer picks up makes almost no difference to winning games (anywhere from strength 4 to 6.5 wins about 50%), so the bots were recalibrated to pick up from 5.5. That brings round two to about a third of hands. Run 2 confirmed the colour findings but corrected one point: **2 trumps in next from the dealer's left** looked like a call in run 1, but is really a toss-up.
 
 ### Caveats
-- Who reaches round two depends on how the earlier players bid in round one. These bots rarely order up from the dealer's left or right (see Finding 1), whereas league players may order up more often.
+- Who reaches round two depends on how the earlier players bid in round one. These bots rarely order up from the dealer's left or right (see Finding 1), and league players confirm that's rare at the table too.
 - Same caveats as Finding 1: bot card play is simple, and the score was always 0-0.
 - Full tables are produced by `npm run exp:round-two` in the `results/` folder.
 
