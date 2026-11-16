@@ -1,0 +1,16 @@
+{
+  "name": "euchre-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Euchre rules engine for the Lizard Peninsula Euchre League rules (see ../EUCHRE_RULES.md)",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.ts\"",
+    "sample": "node scripts/sample-deals.ts",
+    "bidding": "node scripts/sample-bidding.ts",
+    "game": "node scripts/sample-game.ts"
+  }
+}

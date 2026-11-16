@@ -1,0 +1,11 @@
+{
+  "name": "euchre",
+  "private": true,
+  "description": "Lizard Peninsula Euchre League: rules, engine and tools. Commands here pass through to the engine folder.",
+  "scripts": {
+    "test": "npm --prefix engine test",
+    "sample": "npm --prefix engine run sample",
+    "bidding": "npm --prefix engine run bidding",
+    "game": "npm --prefix engine run game"
+  }
+}
