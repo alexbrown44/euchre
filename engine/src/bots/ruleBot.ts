@@ -89,13 +89,25 @@ export const ROUND2_TUNED_PARAMS: RuleBotParams = {
   colourBonus: 1.5,
 };
 
-/** The best bot settings so far. */
-export const DEFAULT_PARAMS: RuleBotParams = ROUND2_TUNED_PARAMS;
+/**
+ * Calibrated to league play: the dealer picks up from 5.5 instead of 4, so round two is
+ * reached in roughly a third of hands, as at the Lizard Peninsula league (the player's
+ * estimate: 30-35%). Head to head this costs nothing (the dealer threshold is a flat
+ * region between about 4 and 6.5), and it keeps the bots' bidding closer to human play.
+ */
+export const LEAGUE_PARAMS: RuleBotParams = {
+  ...ROUND2_TUNED_PARAMS,
+  dealerPickupThreshold: 5.5,
+};
+
+/** The bot settings used by default. */
+export const DEFAULT_PARAMS: RuleBotParams = LEAGUE_PARAMS;
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
   initial: INITIAL_PARAMS,
   round1: ROUND1_TUNED_PARAMS,
   round2: ROUND2_TUNED_PARAMS,
+  league: LEAGUE_PARAMS,
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };

@@ -64,6 +64,7 @@ Bots retuned with these findings won **60.8%** of games against the original bot
 ### Caveats
 - **Bots, not people.** The bots' card play is simple: they draw trump with the boss, lead off-aces, let it go when their partner's winning, and win cheaply. Better play would shift some numbers.
 - **Score not considered yet.** Everything assumes 0-0. Near the end of a game, for example when you're "in the hole", the right call can be different.
+- **The bots' dealer was looser than this advice.** These runs used bots whose dealer picked up from a strength of about 4 (roughly 2 trumps). Later tests showed the exact threshold barely matters in games (see the note in Finding 2), so the bots now pick up from 5.5, closer to league play.
 - **Groups with fewer than 300 hands aren't shown.** Rows marked "(close)" in the full results are within statistical noise.
 - Full tables are produced by `npm run exp:order-up` in the `results/` folder (not saved in git).
 
@@ -71,7 +72,7 @@ Bots retuned with these findings won **60.8%** of games against the original bot
 
 ## Finding 2: Round two, naming trump, and "against colour"
 
-*Experiment run 16 Nov 2026. 1,000,000 deals, of which about 287,000 decisions reached round two. Bots used the round-one settings from Finding 1.*
+*Experiment run 16 Nov 2026 (run 2). 1,000,000 deals, with about 395,000 round-two decisions. The bots were calibrated so round two comes up in about **a third of hands** (33.6%), matching the league's estimate of 30–35%.*
 
 ### How it was tested
 Whenever a player had a turn in round two, the same hand was played out **7 ways**: pass, or each of the three suits they could name, with or without going alone. As before, numbers are **average net points per hand** for that player's team.
@@ -84,48 +85,50 @@ Whenever a player had a turn in round two, the same hand was played out **7 ways
 
 | Your seat | Name a suit with… | Go alone with… |
 |---|---|---|
-| **Left of dealer** | 2 trumps in **next**, or 3 in an opposite-colour suit | 4 trumps |
-| **Dealer's partner** | 3 trumps in an opposite-colour suit (2 is a toss-up); **next needs 4** | 4 trumps (close call) |
-| **Right of dealer** | 2 trumps in **next**, or 3 in an opposite-colour suit | Rarely: naming it is as good as alone even with 4 |
-| **Dealer** | 3 trumps in an opposite-colour suit; next with 3 is only just worth it | 4 trumps |
+| **Left of dealer** | 3 trumps, preferably in **next**. 2 trumps in next is a toss-up. | 4 trumps |
+| **Dealer's partner** | 3 trumps in an **opposite-colour** suit. Avoid next unless you have 4. | 4 trumps |
+| **Right of dealer** | 3 trumps in **next**; 3 in an opposite-colour suit is a toss-up | 4 trumps (close to just naming it) |
+| **Dealer** | Too few hands reached the dealer to say (see the note below) | |
 
-If everyone passes, the hand is thrown in, so for the dealer "pass" is always worth exactly 0.
+By the time round two reaches the right of the dealer or the dealer, both players before them have passed twice, which tells you something about their hands. Those seats get the turn less often, so their numbers are less certain.
 
 ### 1. "Make next" is right for the non-dealing team
 
-Hold the hand the same (same number of trumps and top trumps) and compare naming next with naming an opposite-colour suit. For the **non-dealing team**, next is worth about **+0.3 to +0.8 net points more per hand**, at every hand strength:
+Hold the hand the same (same number of trumps and top trumps) and compare naming next with naming an opposite-colour suit. For the **left of the dealer**, next is worth about **+0.3 to +0.6 net points more per hand**:
 
 | Left of dealer, naming the suit vs passing | Next | Opposite colour (against colour) |
 |---|---:|---:|
-| 2 trumps, 1 top trump | **+0.25** | −0.25 |
-| 3 trumps, 1 top trump | **+0.71** | +0.22 |
-| 4 trumps, 2 top trumps | **+1.68** | +1.33 |
+| 2 trumps, 1 top trump | **+0.13** | −0.31 |
+| 3 trumps, 1 top trump | **+0.57** | +0.09 |
+| 4 trumps, 2 top trumps | **+1.56** | +0.99 |
 
-From the **right of the dealer** the gap is even bigger: about +0.6 to +0.9 with 2–3 trumps. Two trumps in next is a call. Two trumps in an opposite-colour suit isn't.
+With 3 trumps, naming next beats passing comfortably. With 3 trumps in an opposite-colour suit it's only slightly better than passing.
 
 ### 2. For the dealing team it's the reverse: avoid next
 
-For the **dealer's partner**, naming the **same** colour (against colour for the dealing team) costs about **0.15 to 1.1 net points per hand** compared with the same hand in an opposite-colour suit:
+For the **dealer's partner**, naming the **same** colour (against colour for the dealing team) costs about **0.2 to 0.9 net points per hand** compared with the same hand in an opposite-colour suit:
 
 | Dealer's partner, naming the suit vs passing | Opposite colour | Next (against colour) |
 |---|---:|---:|
-| 2 trumps, 1 top trump | **+0.22** | −0.37 |
-| 3 trumps, 1 top trump | **+0.72** | +0.10 |
-| 3 trumps, 0 top trumps | **+0.40** | −0.71 |
-
-For the dealer the gap is small, about 0.1 to 0.2.
+| 2 trumps, 1 top trump | **+0.11** | −0.29 |
+| 3 trumps, 0 top trumps | **+0.39** | −0.39 |
+| 3 trumps, 1 top trump | **+0.60** | +0.02 |
+| 4 trumps, 1 top trump | **+1.40** | +0.75 |
 
 **Why:** the dealer turned the card down, which hints that the dealing team is short in that colour. The data backs up the table wisdom in your glossary: *"if the upcard was turned down, the dealer's team is weak in that colour."* So "against colour" is a real risk for both teams.
 
 ### 3. The Benny weakens the colour effect
-When your trumps include the Benny, the advantage of following colour is smaller (about +0.25 to +0.36 instead of +0.5 for the left of the dealer). The Benny is trump whatever suit you name, so colour matters less when it's carrying your hand.
+When your trumps include the Benny, the advantage of following colour roughly halves (about +0.2 to +0.3 instead of +0.4 to +0.6 for the left of the dealer). The Benny is trump whatever suit you name, so colour matters less when it's carrying your hand.
 
 ### How much this matters in a game
-- Bots retuned with the round-two thresholds beat the round-one bots **50.9%** of the time (20,000 games to 10, ±0.7%). It's a small gain, because round two only comes up in about 1 hand in 10.
+- Bots using these round-two thresholds beat bots without them **50.9%** of the time (20,000 games to 10, ±0.7%).
 - The colour rule **on its own** won 50.3% (40,000 games, ±0.5%), which is within noise over whole games. It's clearly right hand by hand, but it only changes the call when two suits are close in strength.
 
+### Note: run 1 was skewed, and why
+The first run of this experiment (also 16 Nov) used bots whose dealer picked up **74%** of hands, so round two came up in only about **15%** of hands. That's far less than at the league. Tests showed how loosely the dealer picks up makes almost no difference to winning games (anywhere from strength 4 to 6.5 wins about 50%), so the bots were recalibrated to pick up from 5.5. That brings round two to about a third of hands. Run 2 confirmed the colour findings but corrected one point: **2 trumps in next from the dealer's left** looked like a call in run 1, but is really a toss-up.
+
 ### Caveats
-- These results are against bots that use the Finding 1 round-one settings. Different opponents in round one would change which hands reach round two.
+- Who reaches round two depends on how the earlier players bid in round one. These bots rarely order up from the dealer's left or right (see Finding 1), whereas league players may order up more often.
 - Same caveats as Finding 1: bot card play is simple, and the score was always 0-0.
 - Full tables are produced by `npm run exp:round-two` in the `results/` folder.
 

@@ -7,7 +7,7 @@
 // pass, and each of the three suits named with or without going alone (7 playouts).
 // Net points = the deciding team's points minus the opponents', at 0-0 in a game to 10.
 //
-// Usage: node experiments/round-two.ts [deals=150000] [seed=3]
+// Usage: node experiments/round-two.ts [deals=150000] [seed=4]
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SUITS, SUIT_NAME, colourOf, sameColourSuit, type Suit } from '../src/cards.ts';
@@ -15,12 +15,12 @@ import { dealHand, partnerOf, teamOf, type Seat } from '../src/deal.ts';
 import { createRng } from '../src/rng.ts';
 import { applyBidAction, startBidding, type BidAction, type BiddingState } from '../src/bidding.ts';
 import { bidView, finishHand } from '../src/game.ts';
-import { ROUND1_TUNED_PARAMS, ruleBot } from '../src/bots/ruleBot.ts';
+import { LEAGUE_PARAMS, ruleBot } from '../src/bots/ruleBot.ts';
 import { features, strength } from '../src/bots/evaluate.ts';
 
 const DEALS = Number(process.argv[2] ?? 150_000);
-const SEED = Number(process.argv[3] ?? 3);
-const agents = [0, 1, 2, 3].map(() => ruleBot(ROUND1_TUNED_PARAMS)); // settings used for the published findings (STRATEGY_FINDINGS.md)
+const SEED = Number(process.argv[3] ?? 4);
+const agents = [0, 1, 2, 3].map(() => ruleBot(LEAGUE_PARAMS)); // settings used for Finding 2 in STRATEGY_FINDINGS.md (run 2)
 
 type Role = 'Left of dealer' | "Dealer's partner" | 'Right of dealer' | 'Dealer';
 const ROLES: Role[] = ['Left of dealer', "Dealer's partner", 'Right of dealer', 'Dealer'];
