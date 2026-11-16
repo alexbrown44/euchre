@@ -200,6 +200,46 @@ There is evidence for the second. Against a loner, a defender with a very strong
 
 ---
 
+## Finding 4: When the dealer should go alone (testing the league rule)
+
+*Experiment run 16 Nov 2026. 1,000,000 deals, with 429,000 dealer decisions holding 3+ trumps after picking up. Bots calibrated to the league (loners about 1 in 10).*
+
+**The league rule of thumb:** the dealer should go alone with **at least 3 big trumps and only one suit outside, preferably an Ace.** Here, "big trumps" means the Benny, Right, Left and Ace of trumps. Hands were grouped by their shape **after picking up and discarding**, and each was played out three ways: pass, pick up, and pick up alone.
+
+### The rule holds up
+
+| Dealer's hand after the discard | Pick up | Alone | Alone march | Verdict |
+|---|---:|---:|---:|---|
+| 3 trumps, all big, outside **Ace** | +1.44 | **+2.27** | 45% | Alone, clearly |
+| 3 trumps, all big, outside card not an Ace | +1.13 | +1.10 | 11% | Toss-up |
+| 4 trumps, 3 big, outside Ace | +1.68 | **+3.19** | 73% | Alone, clearly |
+| 4 trumps, 3 big, no outside Ace | +1.40 | **+1.72** | 24% | Alone |
+
+"Preferably an Ace" is exactly right. With 3 trumps, the outside Ace is what turns a toss-up into a clear loner.
+
+### Where the data goes further
+
+| Dealer's hand after the discard | Pick up | Alone | Verdict |
+|---|---:|---:|---|
+| 3 trumps, 2 big, one outside suit, Ace | +1.10 | **+1.38** | Alone |
+| 3 trumps, 2 big, two outside suits, Ace | +0.93 | **+1.14** | Alone |
+| 3 trumps, 2 big, no outside Ace | +0.82 | +0.55 | Pick up |
+| 4 trumps, 1 big, outside Ace | +1.12 | **+1.60** | Alone |
+| 4 trumps, 2 big, outside Ace | +1.42 | **+2.45** | Alone |
+| 4 trumps, 2 big, no outside Ace | +1.11 | +1.18 | Alone (narrowly) |
+| 5 trumps, any | | | **Always alone** |
+
+- **The outside Ace is the single biggest factor.** In every group it adds about 0.8 to 1.2 points to going alone.
+- **One outside suit is better than two,** as the rule says. Two outside suits with an Ace still favour going alone.
+- With **3 trumps and no outside Ace**, picking up is better however good the trumps are.
+
+### How to read this
+The league rule is a **safe, solid version** of what the data shows. The data suggests going alone a bit more often when you hold an outside Ace. That matches the open question in Finding 3. The same caveat applies: the bots may defend badly against loners, which would flatter going alone. Against good human defenders, the league rule may be just right.
+
+Full table: `npm run exp:dealer-alone`, written to the `results/` folder.
+
+---
+
 ## Still to test
 - **Do dealers under-use loners, or do bots defend loners badly?** (See Finding 3's open question.) This needs a stronger bot.
 - Score-aware calling ("die in the hole") and different winning totals (10, 15, 20).
