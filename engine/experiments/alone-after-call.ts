@@ -10,19 +10,19 @@
 // after-call turn where going alone is allowed, the hand is played out both ways from that exact
 // point: pass, or go alone. Net points = deciding team's points minus the opponents', at 0-0.
 //
-// Usage: node experiments/alone-after-call.ts [deals=300000] [seed=6]
+// Usage: node experiments/alone-after-call.ts [deals=300000] [seed=7]
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dealHand, partnerOf, teamOf, type Seat } from '../src/deal.ts';
 import { createRng } from '../src/rng.ts';
 import { applyBidAction, legalBidActions, startBidding, type BiddingState } from '../src/bidding.ts';
 import { bidView, finishHand } from '../src/game.ts';
-import { LEAGUE_V2_PARAMS, ruleBot } from '../src/bots/ruleBot.ts';
+import { LEAGUE_V3_PARAMS, ruleBot } from '../src/bots/ruleBot.ts';
 import { bestAfterPickup, features, strength } from '../src/bots/evaluate.ts';
 
 const DEALS = Number(process.argv[2] ?? 300_000);
-const SEED = Number(process.argv[3] ?? 6);
-const agents = [0, 1, 2, 3].map(() => ruleBot(LEAGUE_V2_PARAMS)); // settings used for Finding 3 in STRATEGY_FINDINGS.md
+const SEED = Number(process.argv[3] ?? 7);
+const agents = [0, 1, 2, 3].map(() => ruleBot(LEAGUE_V3_PARAMS)); // settings used for Finding 3 in STRATEGY_FINDINGS.md
 
 type Situation =
   | 'Defend alone vs two makers'
@@ -140,7 +140,7 @@ const counts = SITUATIONS.map((s) => `- ${s}: ${(situationCount.get(s) ?? 0).toL
 const report = [
   `# Experiment: going alone after the call (defending alone, taking over, answering)`,
   ``,
-  `${DEALS.toLocaleString()} deals, ${decisions.toLocaleString()} decisions, seed ${SEED}, ${secs.toFixed(0)}s. Bots: league-calibrated (v2) settings.`,
+  `${DEALS.toLocaleString()} deals, ${decisions.toLocaleString()} decisions, seed ${SEED}, ${secs.toFixed(0)}s. Bots: league-calibrated (v3) settings.`,
   `Average **net points per hand** for the deciding player's team if they pass or go alone. "Euchre" columns show how often the makers were euchred. "(close)" = within statistical noise.`,
   `Trumps include the Benny and Left Bower. A dealer who picks up the upcard is judged on their hand after picking up and discarding.`,
   ``,

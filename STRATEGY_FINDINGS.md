@@ -138,7 +138,7 @@ The first run of this experiment (also 16 Nov) used bots whose dealer picked up 
 
 ## Finding 3: Going alone after the call (defending alone, taking over, answering)
 
-*Experiment run 16 Nov 2026, twice. Run 2 used 2,000,000 deals and about 1.7 million decisions, with bots calibrated to the league: makers go alone in about 1 hand in 7, someone defends alone in about 1 in 20, and round two comes up in about a third of hands. Both runs agreed closely.*
+*Experiment run 16 Nov 2026, three times. Run 3 used 2,000,000 deals and about 1.6 million decisions, with bots calibrated to the league: makers go alone in about **1 hand in 10**, someone defends alone in about 1 in 20, and round two comes up in about a third of hands. All three runs agreed closely, including runs with loners at 1 in 3 and 1 in 7.*
 
 ### How it was tested
 Whenever a player had an after-the-call turn where going alone was allowed, the hand was played out both ways from that exact point: **pass** or **"Drop"**. Numbers are average **net points per hand** for that player's team. The "euchre" columns show how often the makers were euchred. A dealer who picks up the upcard is judged on their hand after picking up and discarding.
@@ -160,26 +160,26 @@ Defending alone makes a euchre less likely, because your partner's cards are gon
 
 | Defender's hand (in trump) | Pass | Defend alone | Euchre if pass | Euchre if alone |
 |---|---:|---:|---:|---:|
-| 2 trumps, 1 top | −0.15 | −0.67 | 29% | 8% |
-| 3 trumps, no top | +0.14 | −0.18 | 38% | 17% |
-| 3 trumps, 1 top | +0.50 | +0.52 | 50% | 30% |
-| 3 trumps, 2 top incl. Benny | +1.22 | **+2.12** | 74% | 62% |
-| 4 trumps, 1 top | +1.07 | **+2.07** | 69% | 61% |
+| 2 trumps, 1 top | −0.21 | −0.71 | 27% | 7% |
+| 3 trumps, no top | +0.03 | −0.28 | 35% | 15% |
+| 3 trumps, 1 top | +0.41 | +0.43 | 47% | 29% |
+| 3 trumps, 2 top incl. Benny | +1.21 | **+2.10** | 74% | 62% |
+| 4 trumps, 1 top | +0.94 | **+1.89** | 65% | 58% |
 
-At league frequency, someone defends alone about 1 hand in 20. That fits these thresholds.
+Bots using these thresholds defend alone in about 1 hand in 20, the same as at the league.
 
 ### 2. Defending alone against a loner needs more
-Against a single opponent, your partner's help matters less, but the loner is usually strong. Only **3 trumps including the Benny** (+0.95 versus +0.42) or **4 trumps including a top trump** (+1.11 versus +0.11) came out ahead.
+Against a single opponent, your partner's help matters less, but the loner is usually strong. Only **3 trumps including the Benny** (+0.40 versus +0.12) or **4 trumps including a top trump** (+0.80 versus −0.04) came out ahead. The rarer loners are, the stronger they tend to be, so the bar is high.
 
 ### 3. Don't drop a partner who has already gone alone
 
 | Taking over partner's loner | Pass (let partner play) | Take over |
 |---|---:|---:|
-| 2 trumps, 1 top | +1.58 | −0.76 |
-| 3 trumps, 1 top | +1.62 | +0.75 |
-| 3 trumps, 2 top incl. Benny | +2.11 | +1.12 |
+| 2 trumps, 1 top | +1.77 | −0.67 |
+| 3 trumps, 1 top | +1.81 | +0.91 |
+| 3 trumps, 1 top incl. Benny | +1.86 | +0.71 |
 
-Your partner only went alone with a strong hand. Dropping them throws that hand away and replaces it with yours. The one exception is the **dealer in Up and Down with 4 trumps after picking up** (+2.41 versus +1.87). The dealer gets the upcard and a discard, so their hand can genuinely be better.
+Your partner only went alone with a strong hand. Dropping them throws that hand away and replaces it with yours. The one exception is the **dealer in Up and Down with 4 trumps after picking up** (+2.42 versus +2.02). The dealer gets the upcard and a discard, so their hand can genuinely be better.
 
 **Answering a lone defender** is worse still: with 2 trumps it costs about 3 points per hand. The lone defender is strong, and halving your own team only helps them.
 
@@ -187,11 +187,11 @@ Your partner only went alone with a strong hand. Dropping them throws that hand 
 Bots using these after-call settings beat bots without them **50.7%** of the time (40,000 games to 10, ±0.5%). It's a small edge, because these situations don't come up often.
 
 ### Open question: should dealers go alone more?
-Finding 1 suggested a dealer should go alone from about **3 trumps with a top trump** after picking up. Bots that do that go alone in about **1 hand in 3**, far more than the league's 1 in 7. Cutting dealer loners to league levels cost the bots about **2% of games**. There are two possible explanations:
+Finding 1 suggested a dealer should go alone from about **3 trumps with a top trump** after picking up. Bots that do that go alone in about **1 hand in 3**, far more than the league's estimate of 1 in 10 to 1 in 12. Cutting loners to league levels (1 in 10) cost the bots about **2.5% of games**. There are two possible explanations:
 - **League players could profitably go alone more often**, or
 - **the bots defend badly against loners**, which makes loners look better than they are.
 
-There is evidence for the second. Against a loner, a defender with a very strong hand sometimes euchred the loner **more often alone than with their partner** (85% versus 49% with 3 trumps including Benny and another top trump). That suggests the bot partners get in each other's way. A stronger bot (Monte Carlo, which plays out possible hands before each card) would settle this.
+There is evidence for the second. Against a loner, a defender with a very strong hand sometimes euchred the loner **more often alone than with their partner** (85% versus 49% with 3 trumps including Benny and another top trump). That suggests the bot partners get in each other's way. (Seen in runs 1 and 2; too few such hands in run 3 to show.) A stronger bot (Monte Carlo, which plays out possible hands before each card) would settle this.
 
 ### Caveats
 - Same caveats as Findings 1 and 2: bots, not people, and the score was always 0-0.

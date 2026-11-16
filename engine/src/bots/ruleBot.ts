@@ -134,6 +134,22 @@ export const LEAGUE_V2_PARAMS: RuleBotParams = {
   dealerAloneThreshold: 11,
 };
 
+/**
+ * League-calibrated opponents, version 3: makers go alone in about 1 hand in 10 (9.6%),
+ * after the player revised the league estimate to "1 in 10 or 1 in 12". Dealer alone from
+ * 12, every other "alone" threshold half a point higher. Lone defence 4.5%, round two
+ * 33.6% (both still matching the league). Costs ~2.5% of games against
+ * AFTER_CALL_TUNED_PARAMS. Use these as realistic opponents in experiments.
+ */
+export const LEAGUE_V3_PARAMS: RuleBotParams = {
+  ...LEAGUE_V2_PARAMS,
+  dealerAloneThreshold: 12,
+  orderAloneThreshold: LEAGUE_V2_PARAMS.orderAloneThreshold + 0.5,
+  round2: Object.fromEntries(
+    Object.entries(LEAGUE_V2_PARAMS.round2).map(([k, v]) => [k, { ...v, alone: v.alone + 0.5 }]),
+  ) as RuleBotParams['round2'],
+};
+
 /** The strongest bot settings against other bots so far. */
 export const DEFAULT_PARAMS: RuleBotParams = AFTER_CALL_TUNED_PARAMS;
 
@@ -144,6 +160,7 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   league: LEAGUE_PARAMS,
   'after-call': AFTER_CALL_TUNED_PARAMS,
   'league-v2': LEAGUE_V2_PARAMS,
+  'league-v3': LEAGUE_V3_PARAMS,
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
