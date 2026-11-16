@@ -75,6 +75,38 @@ function discardScore(c: Card, hand: readonly Card[], trump: Suit): number {
   return v;
 }
 
+export interface HandShape {
+  trumps: number;
+  /** Benny, Right Bower, Left Bower, Ace of trumps. */
+  big: number;
+  /** Number of non-trump suits held. */
+  outsideSuits: number;
+  outsideAce: boolean;
+}
+
+export function handShape(hand: readonly Card[], trump: Suit): HandShape {
+  const trumps = hand.filter((c) => isTrump(c, trump));
+  return {
+    trumps: trumps.length,
+    big: trumps.filter((c) => trumpRank(c, trump) >= 5).length,
+    outsideSuits: new Set(hand.filter((c) => !isTrump(c, trump)).map((c) => effectiveSuit(c, trump))).size,
+    outsideAce: hand.some((c) => !isTrump(c, trump) && c.kind === 'suited' && c.rank === 'A'),
+  };
+}
+
+/**
+ * Dealer go-alone rules by hand shape (after picking up and discarding). See Finding 4.
+ * - 'league': the league rule of thumb, at least 3 big trumps and at most one suit outside.
+ * - 'shape': what the experiment found pays against league-calibrated opponents.
+ */
+export function dealerShouldGoAlone(s: HandShape, rule: 'league' | 'shape'): boolean {
+  if (rule === 'league') return s.big >= 3 && s.outsideSuits <= 1;
+  if (s.trumps >= 5) return true;
+  if (s.trumps === 4) return s.big >= 2 || (s.big >= 1 && s.outsideAce);
+  if (s.trumps === 3) return s.big >= 2 && s.outsideAce;
+  return false;
+}
+
 /** Hand after the dealer picks up `upcard` and makes their best discard. */
 export function bestAfterPickup(hand: readonly Card[], upcard: Card, trump: Suit): Card[] {
   const six = [...hand, upcard];

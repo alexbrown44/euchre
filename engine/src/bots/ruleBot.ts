@@ -9,7 +9,7 @@ import { SUITS, isTrump, sameColourSuit, trumpRank, type Card, type Suit } from 
 import { leftOf, partnerOf, teamOf, type Seat } from '../deal.ts';
 import type { BidAction } from '../bidding.ts';
 import type { Agent, BidView, PlayView } from '../game.ts';
-import { bestAfterPickup, chooseDiscard, keepValue, strength } from './evaluate.ts';
+import { bestAfterPickup, chooseDiscard, dealerShouldGoAlone, handShape, keepValue, strength } from './evaluate.ts';
 import {
   highestUnseenTrump, isBoss, knowledgeOf, partnerIsWinning, playersAfterMe, unseenTrumpCount, wouldWinNow,
 } from './knowledge.ts';
@@ -45,6 +45,11 @@ export interface RuleBotParams {
   takeOverDefenceThreshold: number;
   /** Maker's partner going alone in answer to a lone defender. Infinity = never. */
   answerThreshold: number;
+  /**
+   * How the dealer decides to go alone in round one: by strength score (dealerAloneThreshold),
+   * or by hand shape (see dealerShouldGoAlone in evaluate.ts). Defaults to 'strength'.
+   */
+  dealerAloneRule?: 'strength' | 'shape' | 'league';
 }
 
 export type SeatRole = 'left' | 'dealersPartner' | 'right' | 'dealer';
@@ -150,8 +155,21 @@ export const LEAGUE_V3_PARAMS: RuleBotParams = {
   ) as RuleBotParams['round2'],
 };
 
+/**
+ * League-calibrated opponents using the league's own dealer loner rule (Finding 4):
+ * "at least 3 big trumps and one suit outside". Beats LEAGUE_V3_PARAMS 51.0% (±0.5);
+ * makers go alone in about 1 hand in 8.
+ */
+export const LEAGUE_RULE_PARAMS: RuleBotParams = { ...LEAGUE_V3_PARAMS, dealerAloneRule: 'league' };
+
+/**
+ * Strongest settings: after-call tuned, with the dealer's loner decided by hand shape
+ * (Finding 4). As strong as dealer-alone-by-strength (50.1% ±0.5) with fewer loners.
+ */
+export const SHAPE_TUNED_PARAMS: RuleBotParams = { ...AFTER_CALL_TUNED_PARAMS, dealerAloneRule: 'shape' };
+
 /** The strongest bot settings against other bots so far. */
-export const DEFAULT_PARAMS: RuleBotParams = AFTER_CALL_TUNED_PARAMS;
+export const DEFAULT_PARAMS: RuleBotParams = SHAPE_TUNED_PARAMS;
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
   initial: INITIAL_PARAMS,
@@ -161,6 +179,9 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   'after-call': AFTER_CALL_TUNED_PARAMS,
   'league-v2': LEAGUE_V2_PARAMS,
   'league-v3': LEAGUE_V3_PARAMS,
+  'league-rule': LEAGUE_RULE_PARAMS,
+  'league-v3-shape': { ...LEAGUE_V3_PARAMS, dealerAloneRule: 'shape' },
+  shape: SHAPE_TUNED_PARAMS,
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -188,7 +209,13 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
       const trump = up.suit;
       if (isDealer) {
         const s = strength(bestAfterPickup(v.hand, up, trump), trump);
-        if (s >= p.dealerPickupThreshold) return { type: 'orderUp', alone: s >= p.dealerAloneThreshold };
+        if (s >= p.dealerPickupThreshold) {
+          const rule = p.dealerAloneRule ?? 'strength';
+          const alone = rule === 'strength'
+            ? s >= p.dealerAloneThreshold
+            : dealerShouldGoAlone(handShape(bestAfterPickup(v.hand, up, trump), trump), rule);
+          return { type: 'orderUp', alone };
+        }
         return pass;
       }
       const s = strength(v.hand, trump);

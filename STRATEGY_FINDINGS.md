@@ -236,6 +236,19 @@ There is evidence for the second. Against a loner, a defender with a very strong
 ### How to read this
 The league rule is a **safe, solid version** of what the data shows. The data suggests going alone a bit more often when you hold an outside Ace. That matches the open question in Finding 3. The same caveat applies: the bots may defend badly against loners, which would flatter going alone. Against good human defenders, the league rule may be just right.
 
+### Teaching the bots to think in hand shape
+Bots were given each rule for the dealer's loner and played 40,000 games head to head (±0.5%). Everything else used the league-calibrated settings.
+
+| Dealer's loner rule | Loners overall | Dealer loners | Result |
+|---|---:|---:|---|
+| Strength score (previous bots) | 1 in 10 | 0.9% of hands | baseline |
+| **League rule** (3 big trumps, one outside suit) | 1 in 8 | 3.6% | Beats the strength score **51.0%** |
+| **Data rule** (the "go alone" rows above) | 1 in 4 | 16.3% | Beats the strength score 52.8%, and the league rule **52.3%** |
+
+- **The league rule is a real improvement** on a plain strength score, at a loner rate close to the league's own.
+- **The data rule wins more against bots,** but by going alone in a quarter of hands. That's far more than at the league, and it's exactly the open question from Finding 3. Against good human defenders, the league rule may well be the better one.
+- For the strongest bots, deciding the dealer's loner by shape played as well as the old approach (50.1%) with fewer loners. It's now their default.
+
 Full table: `npm run exp:dealer-alone`, written to the `results/` folder.
 
 ---
