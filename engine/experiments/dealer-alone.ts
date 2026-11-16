@@ -32,16 +32,27 @@ const ACTIONS: Record<Opt, BidAction> = {
   alone: { type: 'orderUp', alone: true },
 };
 
-interface Stat { n: number; sum: Record<Opt, number>; dSum: number; dSq: number; march: number }
+/** How a hand ended for the makers: all 5 tricks, 3 or 4, or euchred. */
+type Ending = 'march' | 'made' | 'euchred';
+const endingOf = (tricks: number): Ending => (tricks === 5 ? 'march' : tricks >= 3 ? 'made' : 'euchred');
+const noEndings = (): Record<Ending, number> => ({ march: 0, made: 0, euchred: 0 });
+
+interface Stat {
+  n: number; sum: Record<Opt, number>; dSum: number; dSq: number;
+  up: Record<Ending, number>; alone: Record<Ending, number>;
+}
 const stats = new Map<string, Stat>();
-function add(key: string, v: Record<Opt, number>, marchAlone: boolean): void {
-  if (!stats.has(key)) stats.set(key, { n: 0, sum: { pass: 0, up: 0, alone: 0 }, dSum: 0, dSq: 0, march: 0 });
+function add(key: string, v: Record<Opt, number>, upTricks: number, aloneTricks: number): void {
+  if (!stats.has(key)) {
+    stats.set(key, { n: 0, sum: { pass: 0, up: 0, alone: 0 }, dSum: 0, dSq: 0, up: noEndings(), alone: noEndings() });
+  }
   const s = stats.get(key)!;
   s.n++;
   for (const o of ['pass', 'up', 'alone'] as Opt[]) s.sum[o] += v[o];
   s.dSum += v.alone - v.up;
   s.dSq += (v.alone - v.up) ** 2;
-  if (marchAlone) s.march++;
+  s.up[endingOf(upTricks)]++;
+  s.alone[endingOf(aloneTricks)]++;
 }
 
 function shape(hand: Card[], trump: Suit): { trumps: number; big: number; outside: number; outsideAce: boolean } {
@@ -75,13 +86,14 @@ for (let i = 0; i < DEALS; i++) {
   if (state.phase !== 'round1') continue; // someone ordered up before the dealer
   const dealer = deal.dealer;
   const v = { pass: play(applyBidAction(state, ACTIONS.pass), dealer).net, up: 0, alone: 0 };
-  v.up = play(applyBidAction(state, ACTIONS.up), dealer).net;
+  const upResult = play(applyBidAction(state, ACTIONS.up), dealer);
+  v.up = upResult.net;
   const aloneResult = play(applyBidAction(state, ACTIONS.alone), dealer);
   v.alone = aloneResult.net;
   const hand = bestAfterPickup(deal.hands[dealer]!, deal.upcard, deal.upcard.suit);
   const s = shape(hand, deal.upcard.suit);
   if (s.trumps < 3) continue;
-  add(`${s.trumps}|${s.big}|${s.outside}|${s.outside === 0 ? '-' : s.outsideAce ? 'Ace' : 'no Ace'}`, v, aloneResult.makerTricks === 5);
+  add(`${s.trumps}|${s.big}|${s.outside}|${s.outside === 0 ? '-' : s.outsideAce ? 'Ace' : 'no Ace'}`, v, upResult.makerTricks, aloneResult.makerTricks);
   decisions++;
 }
 
@@ -97,7 +109,20 @@ for (const [k, s] of rows) {
   const se = Math.sqrt(Math.max(0, s.dSq / s.n - mean * mean) / s.n);
   const best = mean > 0 ? 'Alone' : 'Pick up';
   const verdict = Math.abs(mean) > 2 * se ? `**${best}**` : `${best} (close)`;
-  out += `| ${t} | ${b} | ${o} | ${a} | ${s.n.toLocaleString()} | ${fmt(s.sum.pass / s.n)} | ${fmt(s.sum.up / s.n)} | ${fmt(s.sum.alone / s.n)} | ${(100 * s.march / s.n).toFixed(0)}% | ${verdict} |\n`;
+  out += `| ${t} | ${b} | ${o} | ${a} | ${s.n.toLocaleString()} | ${fmt(s.sum.pass / s.n)} | ${fmt(s.sum.up / s.n)} | ${fmt(s.sum.alone / s.n)} | ${(100 * s.alone.march / s.n).toFixed(0)}% | ${verdict} |\n`;
+}
+
+// How each hand ends, with partner vs alone. The two tests for going alone are
+// (1) a decent chance of all 5 tricks (4 points instead of 2) and (2) little extra risk of a euchre.
+const pc = (x: number, n: number) => `${((100 * x) / n).toFixed(0)}%`;
+out += `\n## How the hands end: with partner vs alone\n\n`;
+out += `Going alone only gains when you take all 5 tricks (4 points instead of 2). Taking 3 or 4 scores 1 point either way. `;
+out += `It costs when it turns a made hand into a euchre (-2, or -4 against a lone defender).\n\n`;
+out += `| Trumps | Big trumps | Outside suits | Outside Ace? | All 5 (partner) | 3-4 (partner) | Euchred (partner) | All 5 (alone) | 3-4 (alone) | Euchred (alone) |\n`;
+out += `|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|\n`;
+for (const [k, s] of rows) {
+  const [t, b, o, a] = k.split('|');
+  out += `| ${t} | ${b} | ${o} | ${a} | ${pc(s.up.march, s.n)} | ${pc(s.up.made, s.n)} | ${pc(s.up.euchred, s.n)} | ${pc(s.alone.march, s.n)} | ${pc(s.alone.made, s.n)} | ${pc(s.alone.euchred, s.n)} |\n`;
 }
 mkdirSync('results', { recursive: true });
 writeFileSync('results/dealer-alone.md', out);

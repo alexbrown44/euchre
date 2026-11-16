@@ -236,6 +236,27 @@ There is evidence for the second. Against a loner, a defender with a very strong
 ### How to read this
 The league rule is a **safe, solid version** of what the data shows. The data suggests going alone a bit more often when you hold an outside Ace. That matches the open question in Finding 3. The same caveat applies: the bots may defend badly against loners, which would flatter going alone. Against good human defenders, the league rule may be just right.
 
+### The two tests: a real chance of all 5, and no extra euchre risk
+Going alone only gains when you take **all 5 tricks** (4 points instead of 2). Taking 3 or 4 scores 1 point either way. It costs when it turns a made hand into a **euchre**. So go alone when **both** of these are true:
+1. you have a decent chance of all 5, and
+2. going alone doesn't noticeably raise the risk of being euchred.
+
+The average points above already weigh both, but here is how the hands actually end:
+
+| Dealer's hand after the discard | All 5: partner → alone | Euchred: partner → alone | Average points: partner → alone |
+|---|---|---|---|
+| 3 big trumps, 1 outside suit, **Ace** | 48% → **45%** | 1% → **3%** | +1.44 → **+2.27** |
+| 3 big trumps, 1 outside suit, no Ace | 22% → 11% | 3% → 7% | +1.13 → +1.10 |
+| 3 trumps (2 big), 1 outside suit, Ace | 27% → 21% | 5% → 9% | +1.10 → +1.38 |
+| 4 trumps (1 big), 1 outside suit, Ace | 28% → 25% | 5% → 5% | +1.12 → +1.60 |
+| 3 trumps (2 big), no outside Ace | 13% → 5% | 10% → 20% | +0.82 → +0.55 |
+
+- **On a strong hand, your partner adds very little.** With 3 big trumps and an outside Ace, the chance of all 5 is 48% with partner and 45% alone. Going alone keeps nearly all the march chances and doubles what they're worth.
+- **The outside Ace keeps both tests passing.** Without it, the chance of all 5 halves when you go alone, and the euchre risk doubles.
+- **Weaker loners mostly score 1 point.** On a hand like 3 trumps with 2 big trumps and an Ace, about 70% of loners end with 3–4 tricks, scoring the same 1 point as with a partner. Going alone edges ahead only because about 1 in 5 becomes a 4-point march, against a small rise in euchres. That's a thin edge, and it's exactly where weak bot defence against loners would flatter the result.
+
+**So the league rule is the safe line:** it goes alone only when both tests pass comfortably. The data rule also takes the borderline hands.
+
 ### Teaching the bots to think in hand shape
 Bots were given each rule for the dealer's loner and played 40,000 games head to head (±0.5%). Everything else used the league-calibrated settings.
 
