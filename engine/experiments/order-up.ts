@@ -16,13 +16,13 @@ import { teamOf, dealHand, partnerOf, type Seat } from '../src/deal.ts';
 import { createRng } from '../src/rng.ts';
 import { applyBidAction, startBidding, type BidAction, type BiddingState } from '../src/bidding.ts';
 import { finishHand } from '../src/game.ts';
-import { ruleBot } from '../src/bots/ruleBot.ts';
+import { ROUND1_TUNED_PARAMS, ruleBot } from '../src/bots/ruleBot.ts';
 import { bestAfterPickup, features, strength } from '../src/bots/evaluate.ts';
 import { bidView } from '../src/game.ts';
 
 const DEALS = Number(process.argv[2] ?? 200_000);
 const SEED = Number(process.argv[3] ?? 1);
-const agents = [ruleBot(), ruleBot(), ruleBot(), ruleBot()];
+const agents = [0, 1, 2, 3].map(() => ruleBot(ROUND1_TUNED_PARAMS)); // settings used for run 2 in STRATEGY_FINDINGS.md
 
 type Role = 'Left of dealer' | "Dealer's partner" | 'Right of dealer' | 'Dealer';
 type Branch = 'pass' | 'order' | 'alone';

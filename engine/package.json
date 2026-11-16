@@ -13,6 +13,7 @@
     "bidding": "node scripts/sample-bidding.ts",
     "game": "node scripts/sample-game.ts",
     "exp:order-up": "node experiments/order-up.ts",
+    "exp:round-two": "node experiments/round-two.ts",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

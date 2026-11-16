@@ -1,22 +1,26 @@
-// Head-to-head: tuned bots (North/South) vs initial bots (East/West), then swap seats.
-// Usage: node experiments/head-to-head.ts [games=20000] [target=10]
+// Head-to-head: two sets of bot settings play each other, swapping sides every game.
+// Usage: node experiments/head-to-head.ts [games=20000] [target=10] [A=round2] [B=round1]
+// Setting names: see PARAM_SETS in src/bots/ruleBot.ts (initial, round1, round2, ...).
 
 import { createRng } from '../src/rng.ts';
 import { playGame } from '../src/game.ts';
-import { DEFAULT_PARAMS, INITIAL_PARAMS, ruleBot } from '../src/bots/ruleBot.ts';
+import { PARAM_SETS, ruleBot } from '../src/bots/ruleBot.ts';
 
 const GAMES = Number(process.argv[2] ?? 20_000);
 const TARGET = Number(process.argv[3] ?? 10);
-const tuned = ruleBot(DEFAULT_PARAMS, 'Tuned');
-const initial = ruleBot(INITIAL_PARAMS, 'Initial');
+const A = process.argv[4] ?? 'round2';
+const B = process.argv[5] ?? 'round1';
+if (!PARAM_SETS[A] || !PARAM_SETS[B]) throw new Error(`Unknown settings. Choose from: ${Object.keys(PARAM_SETS).join(', ')}`);
+const botA = ruleBot(PARAM_SETS[A], A);
+const botB = ruleBot(PARAM_SETS[B], B);
 
-let tunedWins = 0;
+let aWins = 0;
 for (let g = 0; g < GAMES; g++) {
-  const tunedNS = g % 2 === 0; // swap sides every game so seating can't bias the result
-  const agents = tunedNS ? [tuned, initial, tuned, initial] : [initial, tuned, initial, tuned];
+  const aNS = g % 2 === 0; // swap sides every game so seating can't bias the result
+  const agents = aNS ? [botA, botB, botA, botB] : [botB, botA, botB, botA];
   const game = playGame({ agents, target: TARGET, rng: createRng(g) });
-  if ((game.winner === 0) === tunedNS) tunedWins++;
+  if ((game.winner === 0) === aNS) aWins++;
 }
-const p = tunedWins / GAMES;
+const p = aWins / GAMES;
 const se = Math.sqrt((p * (1 - p)) / GAMES);
-console.log(`Tuned bots won ${tunedWins.toLocaleString()} of ${GAMES.toLocaleString()} games to ${TARGET}: ${(100 * p).toFixed(1)}% (±${(200 * se).toFixed(1)}%)`);
+console.log(`"${A}" bots beat "${B}" bots in ${aWins.toLocaleString()} of ${GAMES.toLocaleString()} games to ${TARGET}: ${(100 * p).toFixed(1)}% (±${(200 * se).toFixed(1)}%)`);

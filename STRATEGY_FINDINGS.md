@@ -69,8 +69,69 @@ Bots retuned with these findings won **60.8%** of games against the original bot
 
 ---
 
+## Finding 2: Round two, naming trump, and "against colour"
+
+*Experiment run 16 Nov 2026. 1,000,000 deals, of which about 287,000 decisions reached round two. Bots used the round-one settings from Finding 1.*
+
+### How it was tested
+Whenever a player had a turn in round two, the same hand was played out **7 ways**: pass, or each of the three suits they could name, with or without going alone. As before, numbers are **average net points per hand** for that player's team.
+
+"Same colour" means the suit of the same colour as the turned-down card ("next"). In league terms, **against colour** means:
+- for the **non-dealing team**: naming the **opposite** colour
+- for the **dealing team**: naming the **same** colour
+
+### The short version
+
+| Your seat | Name a suit with… | Go alone with… |
+|---|---|---|
+| **Left of dealer** | 2 trumps in **next**, or 3 in an opposite-colour suit | 4 trumps |
+| **Dealer's partner** | 3 trumps in an opposite-colour suit (2 is a toss-up); **next needs 4** | 4 trumps (close call) |
+| **Right of dealer** | 2 trumps in **next**, or 3 in an opposite-colour suit | Rarely: naming it is as good as alone even with 4 |
+| **Dealer** | 3 trumps in an opposite-colour suit; next with 3 is only just worth it | 4 trumps |
+
+If everyone passes, the hand is thrown in, so for the dealer "pass" is always worth exactly 0.
+
+### 1. "Make next" is right for the non-dealing team
+
+Hold the hand the same (same number of trumps and top trumps) and compare naming next with naming an opposite-colour suit. For the **non-dealing team**, next is worth about **+0.3 to +0.8 net points more per hand**, at every hand strength:
+
+| Left of dealer, naming the suit vs passing | Next | Opposite colour (against colour) |
+|---|---:|---:|
+| 2 trumps, 1 top trump | **+0.25** | −0.25 |
+| 3 trumps, 1 top trump | **+0.71** | +0.22 |
+| 4 trumps, 2 top trumps | **+1.68** | +1.33 |
+
+From the **right of the dealer** the gap is even bigger: about +0.6 to +0.9 with 2–3 trumps. Two trumps in next is a call. Two trumps in an opposite-colour suit isn't.
+
+### 2. For the dealing team it's the reverse: avoid next
+
+For the **dealer's partner**, naming the **same** colour (against colour for the dealing team) costs about **0.15 to 1.1 net points per hand** compared with the same hand in an opposite-colour suit:
+
+| Dealer's partner, naming the suit vs passing | Opposite colour | Next (against colour) |
+|---|---:|---:|
+| 2 trumps, 1 top trump | **+0.22** | −0.37 |
+| 3 trumps, 1 top trump | **+0.72** | +0.10 |
+| 3 trumps, 0 top trumps | **+0.40** | −0.71 |
+
+For the dealer the gap is small, about 0.1 to 0.2.
+
+**Why:** the dealer turned the card down, which hints that the dealing team is short in that colour. The data backs up the table wisdom in your glossary: *"if the upcard was turned down, the dealer's team is weak in that colour."* So "against colour" is a real risk for both teams.
+
+### 3. The Benny weakens the colour effect
+When your trumps include the Benny, the advantage of following colour is smaller (about +0.25 to +0.36 instead of +0.5 for the left of the dealer). The Benny is trump whatever suit you name, so colour matters less when it's carrying your hand.
+
+### How much this matters in a game
+- Bots retuned with the round-two thresholds beat the round-one bots **50.9%** of the time (20,000 games to 10, ±0.7%). It's a small gain, because round two only comes up in about 1 hand in 10.
+- The colour rule **on its own** won 50.3% (40,000 games, ±0.5%), which is within noise over whole games. It's clearly right hand by hand, but it only changes the call when two suits are close in strength.
+
+### Caveats
+- These results are against bots that use the Finding 1 round-one settings. Different opponents in round one would change which hands reach round two.
+- Same caveats as Finding 1: bot card play is simple, and the score was always 0-0.
+- Full tables are produced by `npm run exp:round-two` in the `results/` folder.
+
+---
+
 ## Still to test
-- Round two: when to name a suit, **next** versus **against colour**, and going alone.
 - Defending alone, taking over a loner, and answering a lone defender.
 - Score-aware calling ("die in the hole") and different winning totals (10, 15, 20).
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.

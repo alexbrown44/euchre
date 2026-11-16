@@ -8,6 +8,7 @@
     "bidding": "npm --prefix engine run bidding",
     "game": "npm --prefix engine run game",
     "exp:order-up": "npm --prefix engine run exp:order-up",
+    "exp:round-two": "npm --prefix engine run exp:round-two",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }
