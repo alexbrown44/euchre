@@ -1,0 +1,196 @@
+// A rule-based bot: simple, fast, explainable strategy.
+// Bidding uses a hand-strength score with thresholds; play uses common table habits
+// (draw trump when you hold the boss, lead off-aces, let it go when partner is winning,
+// win cheaply, throw your lowest card).
+//
+// The thresholds are deliberately adjustable: experiments test which values win most.
+
+import { SUITS, isTrump, sameColourSuit, trumpRank, type Card, type Suit } from '../cards.ts';
+import { partnerOf, teamOf } from '../deal.ts';
+import type { BidAction } from '../bidding.ts';
+import type { Agent, BidView, PlayView } from '../game.ts';
+import { bestAfterPickup, chooseDiscard, keepValue, strength } from './evaluate.ts';
+import {
+  highestUnseenTrump, isBoss, knowledgeOf, partnerIsWinning, playersAfterMe, unseenTrumpCount, wouldWinNow,
+} from './knowledge.ts';
+
+export interface RuleBotParams {
+  /** Round one, player on the dealer's left or right (ordering up hands the dealer the upcard). */
+  orderThreshold: number;
+  /** Round one, dealer's left or right: order up alone. */
+  orderAloneThreshold: number;
+  /** Round one, the dealer picking up (judged on the best hand after picking up and discarding). */
+  dealerPickupThreshold: number;
+  /** Round one, the dealer picking up alone. */
+  dealerAloneThreshold: number;
+  /** Round one, the dealer's partner: Up and Down is always alone. */
+  upAndDownThreshold: number;
+  /** Round two, naming a suit. */
+  nameThreshold: number;
+  /** Bonus for naming "next" in round two when on the non-dealing team. */
+  nextBonus: number;
+  /** Go alone with your own call in round two. */
+  aloneThreshold: number;
+  /** Take over a partner's loner (the dealer judges with the upcard picked up). */
+  takeOverThreshold: number;
+  /** Defend alone. */
+  defendAloneThreshold: number;
+  /** Maker's partner going alone in answer to a lone defender. */
+  answerThreshold: number;
+}
+
+/** First guesses, before any experiments. Kept for comparison. */
+export const INITIAL_PARAMS: RuleBotParams = {
+  orderThreshold: 6.5,
+  orderAloneThreshold: 10.5,
+  dealerPickupThreshold: 6.5,
+  dealerAloneThreshold: 10.5,
+  upAndDownThreshold: 9.5,
+  nameThreshold: 6.5,
+  nextBonus: 0,
+  aloneThreshold: 10.5,
+  takeOverThreshold: 11,
+  defendAloneThreshold: 9,
+  answerThreshold: 11.5,
+};
+
+/** Round-one thresholds tuned by experiments/order-up.ts (2026-11-16, run 1). */
+export const DEFAULT_PARAMS: RuleBotParams = {
+  orderThreshold: 9,
+  orderAloneThreshold: 9.5,
+  dealerPickupThreshold: 4,
+  dealerAloneThreshold: 8,
+  upAndDownThreshold: 9,
+  nameThreshold: 6.5,
+  nextBonus: 0,
+  aloneThreshold: 10.5,
+  takeOverThreshold: 11,
+  defendAloneThreshold: 9,
+  answerThreshold: 11.5,
+};
+
+export function ruleBot(params: Partial<RuleBotParams> = {}, name = 'RuleBot'): Agent {
+  const p = { ...DEFAULT_PARAMS, ...params };
+  return { name, bid: (v) => bid(v, p), play: (v) => play(v) };
+}
+
+// ---------------------------------------------------------------------------
+// Bidding
+
+function has(v: BidView, action: BidAction): boolean {
+  return v.legal.some((a) => JSON.stringify(a) === JSON.stringify(action));
+}
+
+function bid(v: BidView, p: RuleBotParams): BidAction {
+  const pass: BidAction = { type: 'pass' };
+  const isDealer = v.seat === v.dealer;
+  const up = v.upcard;
+
+  switch (v.phase) {
+    case 'round1': {
+      if (up.kind !== 'suited') return pass;
+      const trump = up.suit;
+      if (isDealer) {
+        const s = strength(bestAfterPickup(v.hand, up, trump), trump);
+        if (s >= p.dealerPickupThreshold) return { type: 'orderUp', alone: s >= p.dealerAloneThreshold };
+        return pass;
+      }
+      const s = strength(v.hand, trump);
+      if (v.seat === partnerOf(v.dealer)) {
+        return s >= p.upAndDownThreshold ? { type: 'orderUp', alone: true } : pass;
+      }
+      if (s >= p.orderThreshold) return { type: 'orderUp', alone: s >= p.orderAloneThreshold };
+      return pass;
+    }
+
+    case 'round2': {
+      const banned = up.kind === 'suited' ? up.suit : null;
+      const nonDealerTeam = teamOf(v.seat) !== teamOf(v.dealer);
+      let best: { suit: Suit; score: number } | null = null;
+      for (const suit of SUITS) {
+        if (suit === banned) continue;
+        let score = strength(v.hand, suit);
+        if (nonDealerTeam && banned !== null && suit === sameColourSuit(banned)) score += p.nextBonus;
+        if (!best || score > best.score) best = { suit, score };
+      }
+      if (best && best.score >= p.nameThreshold) {
+        return { type: 'name', suit: best.suit, alone: strength(v.hand, best.suit) >= p.aloneThreshold };
+      }
+      return pass;
+    }
+
+    case 'bennyCall':
+      // Blind: the dealer can't see their hand, so every suit is equally likely to be good.
+      return { type: 'name', suit: 'S', alone: false };
+
+    case 'afterCall': {
+      if (!has(v, { type: 'goAlone' })) return pass;
+      const trump = v.trump!;
+      const orderedUp = v.history.some((e) => e.action.type === 'orderUp');
+      const myHand = isDealer && orderedUp && up.kind === 'suited' ? bestAfterPickup(v.hand, up, trump) : v.hand;
+      const s = strength(myHand, trump);
+      const onMakers = v.maker !== null && teamOf(v.seat) === teamOf(v.maker);
+      if (onMakers) {
+        if (v.makerLoner === partnerOf(v.seat)) return s >= p.takeOverThreshold ? { type: 'goAlone' } : pass;
+        return s >= p.answerThreshold ? { type: 'goAlone' } : pass;
+      }
+      // Defending: don't take over a partner who is already defending alone unless very strong.
+      const threshold = v.loneDefender === partnerOf(v.seat) ? p.defendAloneThreshold + 1.5 : p.defendAloneThreshold;
+      return s >= threshold ? { type: 'goAlone' } : pass;
+    }
+
+    case 'discard':
+      return { type: 'discard', card: chooseDiscard(v.hand, v.trump!) };
+
+    default:
+      return v.legal[0]!;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Play
+
+const lowest = (cards: Card[], trump: Suit) => [...cards].sort((a, b) => keepValue(a, trump) - keepValue(b, trump))[0]!;
+const highest = (cards: Card[], trump: Suit) => [...cards].sort((a, b) => keepValue(b, trump) - keepValue(a, trump))[0]!;
+
+function play(v: PlayView): Card {
+  const legal = v.legal;
+  if (legal.length === 1) return legal[0]!;
+  const trump = v.trump;
+  const k = knowledgeOf(v);
+  const onMakers = teamOf(v.seat) === v.makerTeam;
+  const trumps = legal.filter((c) => isTrump(c, trump));
+  const nonTrumps = legal.filter((c) => !isTrump(c, trump));
+
+  // Leading.
+  if (v.current.plays.length === 0) {
+    if (onMakers && trumps.length > 0 && unseenTrumpCount(k, trump) > 0) {
+      const top = highest(trumps, trump);
+      // Draw trump with the boss, or when holding plenty of trump.
+      if (trumpRank(top, trump) > highestUnseenTrump(k, trump) || trumps.length >= 3) return top;
+    }
+    const bossOff = nonTrumps.filter((c) => isBoss(c, k, trump));
+    if (bossOff.length > 0) return highest(bossOff, trump);
+    if (nonTrumps.length > 0) return lowest(nonTrumps, trump);
+    return onMakers ? highest(trumps, trump) : lowest(trumps, trump);
+  }
+
+  // Following.
+  const winners = legal.filter((c) => wouldWinNow(v, c));
+  if (partnerIsWinning(v)) {
+    // Let it go, unless an opponent still to play could beat partner and we can make the trick safe.
+    const partnerCard = v.current.plays.find((pl) => pl.seat === partnerOf(v.seat))!.card;
+    if (playersAfterMe(v) === 0 || isBoss(partnerCard, k, trump)) return lowest(nonTrumps.length > 0 ? nonTrumps : legal, trump);
+    const safe = winners.filter((c) => isBoss(c, k, trump));
+    return safe.length > 0 ? lowest(safe, trump) : lowest(nonTrumps.length > 0 ? nonTrumps : legal, trump);
+  }
+  if (winners.length > 0) {
+    // Last to play: win as cheaply as possible. Otherwise win with a card that can't be beaten if we have one.
+    if (playersAfterMe(v) === 0) return lowest(winners, trump);
+    const safe = winners.filter((c) => isBoss(c, k, trump));
+    if (safe.length > 0) return lowest(safe, trump);
+    return lowest(winners, trump);
+  }
+  // Can't win: throw the least useful card, keeping trump if possible.
+  return lowest(nonTrumps.length > 0 ? nonTrumps : legal, trump);
+}

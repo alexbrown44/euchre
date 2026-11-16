@@ -6,6 +6,8 @@
     "test": "npm --prefix engine test",
     "sample": "npm --prefix engine run sample",
     "bidding": "npm --prefix engine run bidding",
-    "game": "npm --prefix engine run game"
+    "game": "npm --prefix engine run game",
+    "exp:order-up": "npm --prefix engine run exp:order-up",
+    "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

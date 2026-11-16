@@ -138,7 +138,16 @@ export interface GameRecord {
 }
 
 export function playHand(deal: Deal, agents: readonly Agent[], score: Score, target: number): HandRecord {
-  let bidding = startBidding(deal);
+  return finishHand(startBidding(deal), agents, score, target);
+}
+
+/**
+ * Play out a hand from any point in the bidding. Experiments use this to force one
+ * decision (e.g. "order up" vs "pass") and let the agents play out the rest.
+ */
+export function finishHand(start: BiddingState, agents: readonly Agent[], score: Score, target: number): HandRecord {
+  const deal = start.deal;
+  let bidding = start;
   while (bidding.turn !== null) {
     const seat = bidding.turn;
     const action = agents[seat]!.bid(bidView(bidding, seat, score, target));

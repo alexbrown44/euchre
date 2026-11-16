@@ -11,6 +11,8 @@
     "test": "node --test \"test/**/*.test.ts\"",
     "sample": "node scripts/sample-deals.ts",
     "bidding": "node scripts/sample-bidding.ts",
-    "game": "node scripts/sample-game.ts"
+    "game": "node scripts/sample-game.ts",
+    "exp:order-up": "node experiments/order-up.ts",
+    "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }
