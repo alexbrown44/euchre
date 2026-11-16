@@ -33,11 +33,17 @@ export interface RuleBotParams {
    * opposite colour for the dealing team. Calling the other way is "against colour".
    */
   colourBonus: number;
-  /** Take over a partner's loner (the dealer judges with the upcard picked up). */
+  /** Take over a partner's loner (not the dealer in Up and Down). Infinity = never. */
   takeOverThreshold: number;
-  /** Defend alone. */
+  /** The dealer taking over Up and Down (judged with the upcard picked up). */
+  dealerTakeOverThreshold: number;
+  /** Defend alone against two makers (the dealer judges with the upcard picked up, if ordered up). */
   defendAloneThreshold: number;
-  /** Maker's partner going alone in answer to a lone defender. */
+  /** Defend alone against a loner. */
+  defendAloneVsLonerThreshold: number;
+  /** Take over a partner's lone defence. Infinity = never. */
+  takeOverDefenceThreshold: number;
+  /** Maker's partner going alone in answer to a lone defender. Infinity = never. */
   answerThreshold: number;
 }
 
@@ -63,7 +69,10 @@ export const INITIAL_PARAMS: RuleBotParams = {
   round2: sameForAllSeats(6.5, 10.5),
   colourBonus: 0,
   takeOverThreshold: 11,
+  dealerTakeOverThreshold: 11,
   defendAloneThreshold: 9,
+  defendAloneVsLonerThreshold: 9,
+  takeOverDefenceThreshold: 10.5,
   answerThreshold: 11.5,
 };
 
@@ -100,14 +109,41 @@ export const LEAGUE_PARAMS: RuleBotParams = {
   dealerPickupThreshold: 5.5,
 };
 
-/** The bot settings used by default. */
-export const DEFAULT_PARAMS: RuleBotParams = LEAGUE_PARAMS;
+/** Plus after-call decisions tuned by experiments/alone-after-call.ts (2026-11-16). */
+export const AFTER_CALL_TUNED_PARAMS: RuleBotParams = {
+  ...LEAGUE_PARAMS,
+  defendAloneThreshold: 7,
+  defendAloneVsLonerThreshold: 7.5,
+  dealerTakeOverThreshold: 8,
+  takeOverThreshold: Infinity,
+  takeOverDefenceThreshold: Infinity,
+  answerThreshold: Infinity,
+};
+
+/**
+ * League-calibrated opponents, version 2: after-call tuned, but the dealer only goes alone
+ * from strength 11, so makers go alone in about 1 hand in 7 (14.5%), as at the league
+ * (the player's estimate). Defending alone happens in about 1 hand in 20 (4.4%) and round
+ * two in about a third of hands (33.7%), also matching the league.
+ * This costs about 2% of games against AFTER_CALL_TUNED_PARAMS (dealer alone from 8):
+ * either league players could go alone more, or the bots defend loners poorly. Unresolved.
+ * Use these as realistic opponents in experiments.
+ */
+export const LEAGUE_V2_PARAMS: RuleBotParams = {
+  ...AFTER_CALL_TUNED_PARAMS,
+  dealerAloneThreshold: 11,
+};
+
+/** The strongest bot settings against other bots so far. */
+export const DEFAULT_PARAMS: RuleBotParams = AFTER_CALL_TUNED_PARAMS;
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
   initial: INITIAL_PARAMS,
   round1: ROUND1_TUNED_PARAMS,
   round2: ROUND2_TUNED_PARAMS,
   league: LEAGUE_PARAMS,
+  'after-call': AFTER_CALL_TUNED_PARAMS,
+  'league-v2': LEAGUE_V2_PARAMS,
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -175,12 +211,16 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
       const myHand = isDealer && orderedUp && up.kind === 'suited' ? bestAfterPickup(v.hand, up, trump) : v.hand;
       const s = strength(myHand, trump);
       const onMakers = v.maker !== null && teamOf(v.seat) === teamOf(v.maker);
+      let threshold: number;
       if (onMakers) {
-        if (v.makerLoner === partnerOf(v.seat)) return s >= p.takeOverThreshold ? { type: 'goAlone' } : pass;
-        return s >= p.answerThreshold ? { type: 'goAlone' } : pass;
+        const upAndDown = isDealer && orderedUp && v.maker === partnerOf(v.seat);
+        if (v.makerLoner === partnerOf(v.seat)) threshold = upAndDown ? p.dealerTakeOverThreshold : p.takeOverThreshold;
+        else threshold = p.answerThreshold;
+      } else if (v.loneDefender === partnerOf(v.seat)) {
+        threshold = p.takeOverDefenceThreshold;
+      } else {
+        threshold = v.makerLoner !== null ? p.defendAloneVsLonerThreshold : p.defendAloneThreshold;
       }
-      // Defending: don't take over a partner who is already defending alone unless very strong.
-      const threshold = v.loneDefender === partnerOf(v.seat) ? p.defendAloneThreshold + 1.5 : p.defendAloneThreshold;
       return s >= threshold ? { type: 'goAlone' } : pass;
     }
 

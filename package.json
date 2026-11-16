@@ -9,6 +9,7 @@
     "game": "npm --prefix engine run game",
     "exp:order-up": "npm --prefix engine run exp:order-up",
     "exp:round-two": "npm --prefix engine run exp:round-two",
+    "exp:alone": "npm --prefix engine run exp:alone",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

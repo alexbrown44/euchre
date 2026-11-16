@@ -14,6 +14,7 @@
     "game": "node scripts/sample-game.ts",
     "exp:order-up": "node experiments/order-up.ts",
     "exp:round-two": "node experiments/round-two.ts",
+    "exp:alone": "node experiments/alone-after-call.ts",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

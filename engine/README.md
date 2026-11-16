@@ -11,6 +11,7 @@ npm run bidding               # walk through 9 scripted bidding examples
 npm run game                  # a full game by random players, first 2 hands trick by trick
 npm run exp:order-up          # round-one experiment (~90s for 200,000 deals), writes results/order-up.md
 npm run exp:round-two         # round-two experiment (~95s for 1,000,000 deals), writes results/round-two.md
+npm run exp:alone             # after-call experiment (~150s for 2,000,000 deals), writes results/alone-after-call.md
 npm run exp:head-to-head      # two bot settings play each other, e.g. -- 20000 10 round2 round1
 node scripts/sample-deals.ts 5 123   # 5 deals using seed 123
 ```
@@ -45,4 +46,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 3: playing tricks (legal cards, sitting-out players), scoring, full games
 - [x] Session 4: rule-based bots, round-one (order up) experiment, bots retuned from it
 - [x] Session 5: round-two experiment (naming trump, next vs against colour), bots retuned
-- [ ] Next: more experiments (defending alone, score-aware calls, card play), stronger Monte Carlo bot
+- [x] Session 6: after-call experiment (defending alone, taking over, answering); bots calibrated to league loner and lone-defence rates
+- [ ] Next: stronger Monte Carlo bot (settles the dealer-loner question), score-aware calls, card play
