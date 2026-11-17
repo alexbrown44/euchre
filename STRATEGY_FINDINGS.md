@@ -379,6 +379,22 @@ Tested on 1.5 million deals with the opponents on 9 and our team on 0–8, our p
 
 **As a whole policy,** "the dealer always calls in both rounds" did slightly worse than normal play: about −0.7 points of win chance on average, over 5,000 games from each score (us 0–8, them 9). It wasn't better at any score. The weak round-one pick-ups cost more than the round-two calls gain.
 
+**How often does "always pick up" survive?** Over about 358,000 hands where it came round to the dealer in round one with the opponents on 9:
+
+| Dealer's trumps after picking up | Always pick up: we make it | Always pick up: euchred (they win) | If pass: they win on this hand | If pass: we score |
+|---|---:|---:|---:|---:|
+| 1 | 37% | 63% | 67% | 33% |
+| 2 | 59% | 41% | 65% | 35% |
+| 3 | 81% | 19% | 62% | 38% |
+| 4+ | 96% | 4% | 59% | 41% |
+| **All hands** | **69%** | **31%** | **63%** | **37%** |
+
+So the dealer who always picks up **stays in the game about twice as often** (69% against 37%). Yet the chance of winning the game barely changes, because:
+- **After picking up and making it,** you usually score just 1 point. They still need only 1, and **they deal next**.
+- **When you pass and survive,** it's usually because you **euchred them for +2**, which leaves you much closer to winning.
+
+For example, at 5–9 with 2 trumps: picking up survives 59% of the time but leaves you on 6 against their deal (about a 12% chance of winning from there). Passing survives 35% of the time but leaves you on 7 (about 20%). These come out nearly even.
+
 **Refined rule:** when the opponents are in the hole, the dealer picks up in round one **only with 3+ trumps**, but **always calls if it comes back round in round two** (2+ trumps in the best suit, which is almost every hand).
 
 *Caveat:* with these bots, round two almost never reaches the dealer (0.01% of hands), because someone names first. The round-two numbers come from a setup where the other three pass with plausibly weak hands (no suit of strength 5+), not from natural play.
