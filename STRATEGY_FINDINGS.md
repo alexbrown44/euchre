@@ -286,16 +286,27 @@ With **the same bidding**, Monte Carlo card play beat the rule bots' card play i
 ### Do extra loners still pay when everyone defends well?
 Findings 3 and 4 left an open question: the bots did better going alone more often than the league does, but was that only because rule bots defend loners badly? To test it, **all card play** was done by the Monte Carlo bot, and only the dealer's loner rule differed (everything else used the league-calibrated settings). The main comparison ran **12,000 games** to 10, in four chunks of 3,000.
 
-| Bidding | Goes alone (of its contracts) | Dealer loners: all 5 / 3–4 / euchred | Points per dealer loner | Result vs league rule |
-|---|---:|---|---:|---|
-| **League rule** (3 big trumps, one outside suit) | 12% | 48% / 50% / **2%** | **+2.36** | baseline |
-| Data rule (Finding 4) | 25% | 32% / 61% / 7% | +1.75 | **51.7% (±0.9%)** |
+| Bidding | Goes alone (of its contracts) | Result vs league rule |
+|---|---:|---|
+| **League rule** (3 big trumps, one outside suit) | 12% | baseline |
+| Data rule (Finding 4) | 25% | **51.7% (±0.9%)** |
 
 All four chunks favoured the data rule (51.6%, 52.9%, 51.3%, 50.8%). A separate 3,000-game run with an even more loner-happy setting (dealer alone from strength 8) gave 51.7% (±1.8%).
 
-- **Good defence did not wipe out the extra loners.** Going alone more often still came out ahead with strong card play on both sides (51.7% here, 52.3% with rule-bot play). The data rule's loners were euchred about 7% of the time either way. So "the bots just defend badly" is **not** the explanation.
-- **The edge is real but modest:** about 1.7 percentage points of games, outside the margin of error.
-- **The league rule's loners are excellent:** about half take all 5, only 2% are euchred, and they average **+2.36** points each. The data rule's loners average +1.75, less each time, but there are twice as many, and that adds up.
+### The gain from going alone, compared with keeping your partner
+The question that matters is not how many points a loner scores, but **how many more it scores than the same hand would with your partner**. So the same dealer hands were played out both ways, with Monte Carlo card play throughout (60,000 deals):
+
+| Dealer's hand | Hands | With partner: all 5 / 3–4 / euchred | Alone: all 5 / 3–4 / euchred | Points with partner | Points alone | **Gain from going alone** |
+|---|---:|---|---|---:|---:|---:|
+| **League rule says alone** | 2,139 | 54% / 45% / 1% | 46% / 51% / 3% | +1.51 | +2.27 | **+0.76** (±0.06) |
+| **Only the data rule says alone** | 7,908 | 34% / 61% / 5% | 27% / 65% / 8% | +1.20 | +1.56 | **+0.36** (±0.03) |
+| Neither rule (keep partner) | 2,338 | 12% / 63% / 26% | 4% / 48% / 48% | +0.35 | −0.33 | **−0.68** (±0.07) |
+
+- **The league rule's loners gain +0.76 points per hand** over keeping partner.
+- **The extra loners gain +0.36 per hand:** smaller, but clearly real. With partner these hands take all 5 about a third of the time (2 points); alone about a quarter of the time (4 points). Euchres rise only from 5% to 8%.
+- **Hands neither rule picks lose 0.68 per hand** by going alone, so keeping your partner is clearly right there.
+- **Small gains on many hands add up.** The extra loners are about 3.7 times as common as the league rule's, which is why they move the game win rate.
+- **Good defence did not wipe out the extra loners.** With strong card play on both sides, the data rule still won (51.7%, compared with 52.3% under rule-bot play). So "the bots just defend badly" is **not** the explanation.
 
 **Answer:** the league rule is sound, but **a little too cautious**. Going alone with more hands wins slightly more games: in particular **3 trumps (2 big) with an outside Ace**, and **4 trumps (2 big) even without one**. The extra loners mostly score 1 point, as you'd expect, but enough of them become 4-point marches to make them worth it.
 

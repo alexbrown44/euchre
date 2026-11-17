@@ -14,6 +14,7 @@ npm run exp:round-two         # round-two experiment (~95s for 1,000,000 deals),
 npm run exp:alone             # after-call experiment (~150s for 2,000,000 deals), writes results/alone-after-call.md
 npm run exp:dealer-alone      # dealer go-alone by hand shape (~130s for 1,000,000 deals)
 npm run exp:mc-loners         # loner rules with Monte Carlo card play for everyone (~0.3s per game)
+npm run exp:mc-dealer-alone   # gain from going alone vs keeping partner, same hand, Monte Carlo play
 npm run exp:head-to-head      # two bot settings play each other, e.g. -- 20000 10 round2 round1
 node scripts/sample-deals.ts 5 123   # 5 deals using seed 123
 ```
