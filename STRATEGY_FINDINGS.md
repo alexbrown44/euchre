@@ -274,8 +274,37 @@ Full table: `npm run exp:dealer-alone`, written to the `results/` folder.
 
 ---
 
+## Finding 5: The Monte Carlo bot, and the loner question revisited
+
+*Experiments run 17 Nov 2026.*
+
+### A much stronger card player
+The **Monte Carlo bot** imagines many possible deals of the cards it can't see (20 per decision), consistent with everything it has seen: its own hand, the cards played, who has shown out of a suit, and whether the dealer picked up. For each imagined deal it plays out every card it could play, then picks the one that scored best on average. It never peeks at hidden cards.
+
+With **the same bidding**, Monte Carlo card play beat the rule bots' card play in **59.7%** of games (1,500 games to 10, ±2.5%). The rule bots' simple card play was the biggest weakness in Findings 1–4.
+
+### Do extra loners still pay when everyone defends well?
+Findings 3 and 4 left an open question: the bots did better going alone more often than the league does, but was that only because rule bots defend loners badly? To test it, **all card play** was done by the Monte Carlo bot, and only the bidding differed. 3,000 games to 10 for each comparison.
+
+| Bidding | Goes alone (of its contracts) | Dealer loners: all 5 / 3–4 / euchred | Points per dealer loner | Result vs league rule |
+|---|---:|---|---:|---|
+| **League rule** (3 big trumps, one outside suit) | 12% | 49% / 49% / **1%** | **+2.44** | baseline |
+| Data rule (Finding 4) | 25% | 32% / 61% / 7% | +1.73 | 51.6% (±1.8%) |
+| Loner-happy (dealer alone from strength 8) | 29% | 32% / 61% / 7% | +1.73 | 51.7% (±1.8%) |
+
+- **Good defence did not wipe out the extra loners.** Going alone more often came out slightly ahead with strong card play on both sides (51.6% here, 52.3% with rule-bot play). The data rule's loners were euchred about 7% of the time either way. So "the bots just defend badly" now looks **unlikely** as the explanation.
+- **But the edge is small,** about 1.5 percentage points, and within noise at 3,000 games. It isn't proven.
+- **The league rule's loners are excellent:** half take all 5, almost none are euchred, and they average **+2.44** points each. The data rule's loners average +1.73, less each time, but there are twice as many.
+
+**Current best answer:** the league rule is sound and a little cautious. Going alone a bit more often, especially with **3 trumps (2 big) and an outside Ace**, probably gains a percent or two of games. Settling it firmly would take about 12,000 games.
+
+Full results: `npm run exp:mc-loners -- 3000 league-v3-shape league-rule`, written to the `results/` folder.
+
+---
+
 ## Still to test
-- **Do dealers under-use loners, or do bots defend loners badly?** (See Finding 3's open question.) This needs a stronger bot.
+- **Settle the loner question firmly** with about 12,000 Monte Carlo games (Finding 5).
+- **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Score-aware calling ("die in the hole") and different winning totals (10, 15, 20).
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.
 - The dealer's discard: keep an off-suit Ace or a fifth trump?

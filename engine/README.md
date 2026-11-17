@@ -13,6 +13,7 @@ npm run exp:order-up          # round-one experiment (~90s for 200,000 deals), w
 npm run exp:round-two         # round-two experiment (~95s for 1,000,000 deals), writes results/round-two.md
 npm run exp:alone             # after-call experiment (~150s for 2,000,000 deals), writes results/alone-after-call.md
 npm run exp:dealer-alone      # dealer go-alone by hand shape (~130s for 1,000,000 deals)
+npm run exp:mc-loners         # loner rules with Monte Carlo card play for everyone (~0.3s per game)
 npm run exp:head-to-head      # two bot settings play each other, e.g. -- 20000 10 round2 round1
 node scripts/sample-deals.ts 5 123   # 5 deals using seed 123
 ```
@@ -30,6 +31,7 @@ node scripts/sample-deals.ts 5 123   # 5 deals using seed 123
 | `src/game.ts` | Full hands and games to an agreed total; "agents" (bots or people) only see what that player could see at the table |
 | `src/bots/ruleBot.ts` | Rule-based bot: bids by hand strength with adjustable thresholds, plays with common table habits |
 | `src/bots/evaluate.ts` | Hand strength, hand features, choosing the dealer's discard |
+| `src/bots/monteCarlo.ts` | Monte Carlo bot: imagines possible deals of the hidden cards and plays each card out to pick the best |
 | `src/bots/knowledge.ts` | What a player can work out from cards seen (unseen cards, boss cards, who's winning) |
 | `experiments/` | Simulation experiments; findings are written up in [../STRATEGY_FINDINGS.md](../STRATEGY_FINDINGS.md) |
 | `src/rng.ts` | Seeded shuffling, so any deal can be replayed exactly |
@@ -48,4 +50,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 4: rule-based bots, round-one (order up) experiment, bots retuned from it
 - [x] Session 5: round-two experiment (naming trump, next vs against colour), bots retuned
 - [x] Session 6: after-call experiment (defending alone, taking over, answering); bots calibrated to league loner and lone-defence rates
-- [ ] Next: stronger Monte Carlo bot (settles the dealer-loner question), score-aware calls, card play
+- [x] Session 7: Monte Carlo bot (card play), used to test the dealer-loner question
+- [ ] Next: score-aware calls, card-play experiments, Monte Carlo bidding

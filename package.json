@@ -11,6 +11,7 @@
     "exp:round-two": "npm --prefix engine run exp:round-two",
     "exp:alone": "npm --prefix engine run exp:alone",
     "exp:dealer-alone": "npm --prefix engine run exp:dealer-alone",
+    "exp:mc-loners": "npm --prefix engine run exp:mc-loners",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }
