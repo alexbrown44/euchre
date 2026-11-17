@@ -5,7 +5,9 @@
 // only paid because rule bots defend loners badly, its edge should shrink here.
 // Also records how every dealer loner ends: all 5, 3-4 tricks, or euchred.
 //
-// Usage: node experiments/mc-loners.ts [games=2000] [A=league-v3-shape] [B=league-rule] [worlds=20]
+// Usage: node experiments/mc-loners.ts [games=2000] [A=league-v3-shape] [B=league-rule] [worlds=20] [firstGame=0]
+// Run several chunks with different firstGame values in parallel, then combine their .json
+// files with experiments/mc-loners-combine.ts.
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createRng } from '../src/rng.ts';
@@ -18,6 +20,7 @@ const GAMES = Number(process.argv[2] ?? 2000);
 const A = process.argv[3] ?? 'league-v3-shape';
 const B = process.argv[4] ?? 'league-rule';
 const WORLDS = Number(process.argv[5] ?? 20);
+const FIRST = Number(process.argv[6] ?? 0);
 if (!PARAM_SETS[A] || !PARAM_SETS[B]) throw new Error(`Unknown settings. Choose from: ${Object.keys(PARAM_SETS).join(', ')}`);
 
 interface Side { wins: number; contracts: number; loners: number; dealerLoners: number; march: number; made: number; euchred: number; lonerPoints: number }
@@ -42,7 +45,7 @@ function record(h: HandRecord, teamOfA: Team): void {
 }
 
 const started = performance.now();
-for (let g = 0; g < GAMES; g++) {
+for (let g = FIRST; g < FIRST + GAMES; g++) {
   const a = monteCarloBot({ worlds: WORLDS, params: PARAM_SETS[A], seed: 2 * g });
   const b = monteCarloBot({ worlds: WORLDS, params: PARAM_SETS[B], seed: 2 * g + 1 });
   const aNS = g % 2 === 0;
@@ -73,5 +76,7 @@ const report = [
 ].join('\n');
 
 mkdirSync('results', { recursive: true });
-writeFileSync(`results/mc-loners-${A}-vs-${B}.md`, report);
+const tag = FIRST === 0 && process.argv[6] === undefined ? '' : `-from${FIRST}`;
+writeFileSync(`results/mc-loners-${A}-vs-${B}${tag}.md`, report);
+writeFileSync(`results/mc-loners-${A}-vs-${B}${tag}.json`, JSON.stringify({ A, B, worlds: WORLDS, firstGame: FIRST, games: GAMES, stats }, null, 2));
 console.log(report);

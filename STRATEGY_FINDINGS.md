@@ -284,26 +284,28 @@ The **Monte Carlo bot** imagines many possible deals of the cards it can't see (
 With **the same bidding**, Monte Carlo card play beat the rule bots' card play in **59.7%** of games (1,500 games to 10, ±2.5%). The rule bots' simple card play was the biggest weakness in Findings 1–4.
 
 ### Do extra loners still pay when everyone defends well?
-Findings 3 and 4 left an open question: the bots did better going alone more often than the league does, but was that only because rule bots defend loners badly? To test it, **all card play** was done by the Monte Carlo bot, and only the bidding differed. 3,000 games to 10 for each comparison.
+Findings 3 and 4 left an open question: the bots did better going alone more often than the league does, but was that only because rule bots defend loners badly? To test it, **all card play** was done by the Monte Carlo bot, and only the dealer's loner rule differed (everything else used the league-calibrated settings). The main comparison ran **12,000 games** to 10, in four chunks of 3,000.
 
 | Bidding | Goes alone (of its contracts) | Dealer loners: all 5 / 3–4 / euchred | Points per dealer loner | Result vs league rule |
 |---|---:|---|---:|---|
-| **League rule** (3 big trumps, one outside suit) | 12% | 49% / 49% / **1%** | **+2.44** | baseline |
-| Data rule (Finding 4) | 25% | 32% / 61% / 7% | +1.73 | 51.6% (±1.8%) |
-| Loner-happy (dealer alone from strength 8) | 29% | 32% / 61% / 7% | +1.73 | 51.7% (±1.8%) |
+| **League rule** (3 big trumps, one outside suit) | 12% | 48% / 50% / **2%** | **+2.36** | baseline |
+| Data rule (Finding 4) | 25% | 32% / 61% / 7% | +1.75 | **51.7% (±0.9%)** |
 
-- **Good defence did not wipe out the extra loners.** Going alone more often came out slightly ahead with strong card play on both sides (51.6% here, 52.3% with rule-bot play). The data rule's loners were euchred about 7% of the time either way. So "the bots just defend badly" now looks **unlikely** as the explanation.
-- **But the edge is small,** about 1.5 percentage points, and within noise at 3,000 games. It isn't proven.
-- **The league rule's loners are excellent:** half take all 5, almost none are euchred, and they average **+2.44** points each. The data rule's loners average +1.73, less each time, but there are twice as many.
+All four chunks favoured the data rule (51.6%, 52.9%, 51.3%, 50.8%). A separate 3,000-game run with an even more loner-happy setting (dealer alone from strength 8) gave 51.7% (±1.8%).
 
-**Current best answer:** the league rule is sound and a little cautious. Going alone a bit more often, especially with **3 trumps (2 big) and an outside Ace**, probably gains a percent or two of games. Settling it firmly would take about 12,000 games.
+- **Good defence did not wipe out the extra loners.** Going alone more often still came out ahead with strong card play on both sides (51.7% here, 52.3% with rule-bot play). The data rule's loners were euchred about 7% of the time either way. So "the bots just defend badly" is **not** the explanation.
+- **The edge is real but modest:** about 1.7 percentage points of games, outside the margin of error.
+- **The league rule's loners are excellent:** about half take all 5, only 2% are euchred, and they average **+2.36** points each. The data rule's loners average +1.75, less each time, but there are twice as many, and that adds up.
 
-Full results: `npm run exp:mc-loners -- 3000 league-v3-shape league-rule`, written to the `results/` folder.
+**Answer:** the league rule is sound, but **a little too cautious**. Going alone with more hands wins slightly more games: in particular **3 trumps (2 big) with an outside Ace**, and **4 trumps (2 big) even without one**. The extra loners mostly score 1 point, as you'd expect, but enough of them become 4-point marches to make them worth it.
+
+One caution remains: this is bots against bots. Bidding is still rule-based (only the card play is Monte Carlo), and real opponents may defend loners differently.
+
+Full results: `npm run exp:mc-loners -- 3000 league-v3-shape league-rule 20 <firstGame>` for each chunk, then `node experiments/mc-loners-combine.ts results/*-from*.json`.
 
 ---
 
 ## Still to test
-- **Settle the loner question firmly** with about 12,000 Monte Carlo games (Finding 5).
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Score-aware calling ("die in the hole") and different winning totals (10, 15, 20).
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.
