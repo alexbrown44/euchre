@@ -357,6 +357,32 @@ A march with your partner (2 points) already wins the game, so going alone only 
 - **Round two: name more freely.** From the dealer's left, naming with only 1–2 trumps gains about **+2.0**. If you pass, the opponents may call, and one more point wins it for them.
 - Round one ordering up from the dealer's left or right is still not worth it.
 
+### Testing a league theory: "if the opposition is in the hole, the dealer should always call"
+Tested on 1.5 million deals with the opponents on 9 and our team on 0–8, our player dealing.
+
+**Round one: only with 3+ trumps.** Picking up a weak hand risks a euchre, which hands them the game:
+
+| Dealer's trumps after picking up | Win chance if pass | If pick up | Gain from picking up |
+|---:|---:|---:|---:|
+| 1 | 8.1% | 5.2% | **−2.9** |
+| 2 | 9.4% | 8.3% | **−1.0** |
+| 3 | 10.5% | 12.1% | **+1.7** |
+| 4+ | 11.6% | 16.7% | **+5.2** |
+
+**Round two: yes, call.** If everyone passes and it comes back to the dealer, calling beats a throw-in. A throw-in keeps the score where it is **and gives the opponents the next deal**, which is the dealer's edge, for the team that only needs one point:
+
+| Dealer's trumps in their best suit | Win chance if thrown in | If call | Gain from calling |
+|---:|---:|---:|---:|
+| 2 | 9.6% | 12.0% | **+2.5** |
+| 3 | 9.2% | 15.1% | **+6.0** |
+| 4+ | 9.3% | 19.6% | **+10.4** |
+
+**As a whole policy,** "the dealer always calls in both rounds" did slightly worse than normal play: about −0.7 points of win chance on average, over 5,000 games from each score (us 0–8, them 9). It wasn't better at any score. The weak round-one pick-ups cost more than the round-two calls gain.
+
+**Refined rule:** when the opponents are in the hole, the dealer picks up in round one **only with 3+ trumps**, but **always calls if it comes back round in round two** (2+ trumps in the best suit, which is almost every hand).
+
+*Caveat:* with these bots, round two almost never reaches the dealer (0.01% of hands), because someone names first. The round-two numbers come from a setup where the other three pass with plausibly weak hands (no suit of strength 5+), not from natural play.
+
 ### 5. Neither close
 Matches Finding 1: the dealer picks up with 3 trumps, the left and right rarely order up, and going alone pays with 4 trumps.
 
