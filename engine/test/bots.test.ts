@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { cardId, parseCard, parseCards } from '../src/cards.ts';
 import { createRng } from '../src/rng.ts';
 import { playGame, randomAgent, type Agent } from '../src/game.ts';
-import { ruleBot } from '../src/bots/ruleBot.ts';
+import { ruleBot, scoreSituation } from '../src/bots/ruleBot.ts';
 import { chooseDiscard, dealerShouldGoAlone, features, handShape, strength } from '../src/bots/evaluate.ts';
 
 test('strength: more and higher trump scores higher', () => {
@@ -46,6 +46,41 @@ test('dealer go-alone rules match Finding 4', () => {
   assert.ok(dealerShouldGoAlone(shape('JH KH QH 10H AS'), 'shape'));
   assert.ok(!dealerShouldGoAlone(shape('JH KH QH 10H KS'), 'shape'));
   assert.ok(dealerShouldGoAlone(shape('KH QH 10H 9H JD'), 'shape'), '5 trumps');
+});
+
+test('score situations are read from the player\'s own team', () => {
+  assert.equal(scoreSituation([9, 9], 10, 0), 'bothNeed1');
+  assert.equal(scoreSituation([9, 4], 10, 0), 'weNeed1');
+  assert.equal(scoreSituation([9, 4], 10, 1), 'theyNeed1');
+  assert.equal(scoreSituation([8, 8], 10, 2), 'weNeed2');
+  assert.equal(scoreSituation([3, 5], 10, 3), 'normal');
+  assert.equal(scoreSituation([14, 2], 15, 0), 'weNeed1');
+});
+
+test('score-aware bots make legal moves from every end-of-game score', () => {
+  const bot = ruleBot({ scoreAware: true });
+  for (let g = 0; g < 400; g++) {
+    const startScore: [number, number] = [5 + (g % 5), 5 + (Math.floor(g / 5) % 5)];
+    const game = playGame({ agents: [bot, bot, bot, bot], target: 10, rng: createRng(g), startScore });
+    assert.ok(game.score[game.winner] >= 10);
+  }
+});
+
+test('score-aware: at 9-9 the dealer always picks up and nobody goes alone', () => {
+  const bot = ruleBot({ scoreAware: true });
+  for (let g = 0; g < 300; g++) {
+    const game = playGame({ agents: [bot, bot, bot, bot], target: 10, rng: createRng(g), startScore: [9, 9] });
+    const h = game.hands[0]!;
+    if (h.deal.upcard.kind !== 'suited') continue;
+    const dealerTurn = h.bidding.find((e) => e.seat === h.dealer && e.phase === 'round1');
+    if (dealerTurn) assert.equal(dealerTurn.action.type, 'orderUp');
+    // Only Up and Down (the dealer's partner ordering up) can create a loner at 9-9.
+    if (h.contract?.makerLoner != null) {
+      const call = h.bidding.find((e) => e.action.type === 'orderUp' || e.action.type === 'name')!;
+      assert.equal(call.seat, (h.dealer + 2) % 4);
+    }
+    assert.equal(h.contract?.loneDefender ?? null, null);
+  }
 });
 
 test('rule bots always make legal moves over many games', () => {

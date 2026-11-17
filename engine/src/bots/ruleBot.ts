@@ -9,7 +9,7 @@ import { SUITS, isTrump, sameColourSuit, trumpRank, type Card, type Suit } from 
 import { leftOf, partnerOf, teamOf, type Seat } from '../deal.ts';
 import type { BidAction } from '../bidding.ts';
 import type { Agent, BidView, PlayView } from '../game.ts';
-import { bestAfterPickup, chooseDiscard, dealerShouldGoAlone, handShape, keepValue, strength } from './evaluate.ts';
+import { bestAfterPickup, chooseDiscard, dealerShouldGoAlone, features, handShape, keepValue, strength } from './evaluate.ts';
 import {
   highestUnseenTrump, isBoss, knowledgeOf, partnerIsWinning, playersAfterMe, unseenTrumpCount, wouldWinNow,
 } from './knowledge.ts';
@@ -50,6 +50,8 @@ export interface RuleBotParams {
    * or by hand shape (see dealerShouldGoAlone in evaluate.ts). Defaults to 'strength'.
    */
   dealerAloneRule?: 'strength' | 'shape' | 'league';
+  /** Adjust calls for the score near the end of a game (Finding 6). Defaults to false. */
+  scoreAware?: boolean;
 }
 
 export type SeatRole = 'left' | 'dealersPartner' | 'right' | 'dealer';
@@ -168,8 +170,17 @@ export const LEAGUE_RULE_PARAMS: RuleBotParams = { ...LEAGUE_V3_PARAMS, dealerAl
  */
 export const SHAPE_TUNED_PARAMS: RuleBotParams = { ...AFTER_CALL_TUNED_PARAMS, dealerAloneRule: 'shape' };
 
+/**
+ * Strongest settings plus score-aware calling (Finding 6): beats SHAPE_TUNED_PARAMS 50.8%
+ * over 100,000 full games, and 51.9% in games starting from 7-9 each.
+ */
+export const SCORE_AWARE_PARAMS: RuleBotParams = { ...SHAPE_TUNED_PARAMS, scoreAware: true };
+
+/** League-calibrated, league dealer-loner rule, and score-aware: realistic but end-game savvy. */
+export const LEAGUE_RULE_SCORE_PARAMS: RuleBotParams = { ...LEAGUE_RULE_PARAMS, scoreAware: true };
+
 /** The strongest bot settings against other bots so far. */
-export const DEFAULT_PARAMS: RuleBotParams = SHAPE_TUNED_PARAMS;
+export const DEFAULT_PARAMS: RuleBotParams = SCORE_AWARE_PARAMS;
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
   initial: INITIAL_PARAMS,
@@ -182,13 +193,89 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   'league-rule': LEAGUE_RULE_PARAMS,
   'league-v3-shape': { ...LEAGUE_V3_PARAMS, dealerAloneRule: 'shape' },
   shape: SHAPE_TUNED_PARAMS,
+  'shape-score': SCORE_AWARE_PARAMS,
+  'league-rule-score': LEAGUE_RULE_SCORE_PARAMS,
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
 
 export function ruleBot(params: Partial<RuleBotParams> = {}, name = 'RuleBot'): Agent {
   const p = { ...DEFAULT_PARAMS, ...params };
-  return { name, bid: (v) => bid(v, p), play: (v) => play(v) };
+  return { name, bid: (v) => (p.scoreAware ? scoreAwareBid(v, p) : bid(v, p)), play: (v) => play(v) };
+}
+
+// ---------------------------------------------------------------------------
+// Score-aware bidding (Finding 6)
+
+export type ScoreSituation = 'normal' | 'weNeed2' | 'weNeed1' | 'theyNeed1' | 'bothNeed1';
+
+/** The end-of-game situation from this player's team's point of view. */
+export function scoreSituation(score: readonly [number, number], target: number, seat: Seat): ScoreSituation {
+  const us = score[teamOf(seat)]!;
+  const them = score[1 - teamOf(seat)]!;
+  if (us === target - 1 && them === target - 1) return 'bothNeed1';
+  if (us === target - 1) return 'weNeed1';
+  if (them === target - 1) return 'theyNeed1';
+  if (us === target - 2) return 'weNeed2';
+  return 'normal';
+}
+
+/**
+ * Calls adjusted for the score, from Finding 6 (judged by chance of winning the game):
+ * - Both need 1 (e.g. 9-9): call with almost anything (dealer always picks up; left of dealer
+ *   orders with 2+ trumps, right with 3+; always name in round two). Never go alone.
+ * - We need 1: dealer picks up with 2+ trumps (incl. the upcard). Never go alone (except Up and Down).
+ * - We need 2: a march with partner already wins, so never go alone (except Up and Down).
+ * - They need 1: dealer picks up only with 3+ trumps, goes alone with 4+; round two names more
+ *   freely, and the dealer always calls if it comes back round.
+ * Also: never defend alone when a normal euchre (2 points) already wins the game for us.
+ * Anything not covered falls back to the normal bidding.
+ */
+function scoreAwareBid(v: BidView, p: RuleBotParams): BidAction {
+  const sit = scoreSituation(v.score, v.target, v.seat);
+  if (sit === 'normal') return bid(v, p);
+  const pass: BidAction = { type: 'pass' };
+  const isDealer = v.seat === v.dealer;
+  const isUpAndDown = v.phase === 'round1' && v.seat === partnerOf(v.dealer);
+  const noLoners = sit === 'bothNeed1' || sit === 'weNeed1' || sit === 'weNeed2';
+  const up = v.upcard;
+  const withoutAlone = (a: BidAction): BidAction =>
+    noLoners && !isUpAndDown && (a.type === 'orderUp' || a.type === 'name') ? { ...a, alone: false } : a;
+
+  if (v.phase === 'round1' && up.kind === 'suited') {
+    const trump = up.suit;
+    if (isDealer) {
+      const after = bestAfterPickup(v.hand, up, trump);
+      const trumps = features(after, trump).trumps;
+      if (sit === 'bothNeed1') return { type: 'orderUp', alone: false };
+      if (sit === 'weNeed1') return trumps >= 2 ? { type: 'orderUp', alone: false } : pass;
+      if (sit === 'theyNeed1') {
+        if (trumps < 3) return pass;
+        const normal = bid(v, p);
+        const normallyAlone = normal.type === 'orderUp' && normal.alone;
+        return { type: 'orderUp', alone: trumps >= 4 || normallyAlone };
+      }
+    } else if (!isUpAndDown && sit === 'bothNeed1') {
+      const trumps = features(v.hand, trump).trumps;
+      const need = leftOf(v.dealer) === v.seat ? 2 : 3;
+      return trumps >= need ? { type: 'orderUp', alone: false } : pass;
+    }
+  }
+
+  if (v.phase === 'round2' && up.kind === 'suited') {
+    const banned = up.suit;
+    const bestSuit = SUITS.filter((s) => s !== banned).reduce((a, b) => (strength(v.hand, b) > strength(v.hand, a) ? b : a));
+    if (sit === 'bothNeed1') return { type: 'name', suit: bestSuit, alone: false };
+    if (sit === 'theyNeed1') {
+      if (isDealer && features(v.hand, bestSuit).trumps >= 2) return { type: 'name', suit: bestSuit, alone: false };
+      // Name more freely: lower the naming threshold by 2.
+      const looser = { ...p, round2: Object.fromEntries(Object.entries(p.round2).map(([k, t]) => [k, { ...t, name: t.name - 2 }])) as RuleBotParams['round2'] };
+      return bid(v, looser);
+    }
+  }
+
+  if (v.phase === 'afterCall' && noLoners) return pass; // no loners, no lone defence: 2 points already wins
+  return withoutAlone(bid(v, p));
 }
 
 // ---------------------------------------------------------------------------

@@ -412,8 +412,25 @@ Matches Finding 1: the dealer picks up with 3 trumps, the left and right rarely 
 | They need 1 | Round two looser | **More often**: you need the points |
 | Both need 1 (9–9) | **Call with almost anything**, especially the dealer and in round two | **Never** |
 
+### Teaching the bots to call by the score
+The bots were given these rules as an on/off option:
+- **Both need 1:** the dealer always picks up; the left of the dealer orders up with 2+ trumps, the right with 3+; always name in round two; never go alone.
+- **We need 1:** the dealer picks up with 2+ trumps (including the upcard); never go alone.
+- **We need 2:** never go alone.
+- **They need 1:** the dealer picks up only with 3+ trumps and goes alone with 4+; name more freely in round two; the dealer always calls if it comes back round.
+- **Never defend alone** when a normal euchre already wins the game.
+
+Head to head against identical bots that ignore the score (same deals, sides swapped):
+
+| Bot settings | Full games (100,000) | Games starting from 7–9 each (60,000) |
+|---|---:|---:|
+| League-calibrated, league loner rule | **50.9%** (±0.3) | **51.8%** (±0.4) |
+| Strongest (shape rule) | **50.8%** (±0.3) | **51.9%** (±0.4) |
+
+Calling by the score wins about **1 extra game in 100** overall, and about **2 in 100** in games that are already close. The gain is small over a whole game because the score only matters in the last few hands. Score-aware calling is now on by default for the strongest bots.
+
 ### Caveats
-- Rule bots and rule-bot card play. The bots themselves don't yet change their play by score, so the opponents in these games don't either.
+- Rule bots and rule-bot card play.
 - Games to 10 only. Games to 15 or 20 will have the same pattern near the end, but the table needs rebuilding for each target.
 - Full tables: `npm run exp:win-chance`, then `npm run exp:score-aware`, written to the `results/` folder.
 
@@ -421,6 +438,6 @@ Matches Finding 1: the dealer picks up with 3 trumps, the left and right rarely 
 
 ## Still to test
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
-- Teach the bots to call by the score (Finding 6), and build win-chance tables for games to 15 and 20.
+- Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.
 - The dealer's discard: keep an off-suit Ace or a fifth trump?
