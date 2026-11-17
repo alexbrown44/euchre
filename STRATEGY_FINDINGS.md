@@ -13,7 +13,7 @@ These findings come from bots playing hundreds of thousands of hands under leagu
 ### How it was tested
 Each time a player had to decide in round one, the same hand was played out every way they could have called it: **pass**, **order up**, or **go alone**. Everything else stayed the same, so any difference in points comes from that one decision. The tables show the **average net points per hand** for that player's team (their points minus the opponents'). A score of 0-0 was assumed.
 
-"Trumps" counts the Benny and the Left Bower. For the dealer, trumps are counted **after** picking up and discarding.
+"Trumps" counts the Benny and the Left Bower. For the dealer, trumps are counted **after** picking up and discarding, so they **include the card picked up**: "2 trumps" means the upcard plus 1 of the dealer's own. This applies to every dealer trump count in these findings.
 
 ### The short version
 
@@ -329,7 +329,7 @@ First, a **win-chance table** was built by playing 2,000 games from every score 
 
 Then every calling decision was played out every way (pass / call / call alone), and the win chance after each outcome was compared. Situations are from the deciding team's point of view: **neither close** (both on 0–7), **we need 2** (on 8), **we need 1** (on 9, "in the hole"), **they need 1**, and **both need 1** (9–9).
 
-Numbers below are **percentage points of game-winning chance** gained by calling instead of passing, or by going alone instead of keeping your partner. Bold = outside statistical noise.
+Numbers below are **percentage points of game-winning chance** gained by calling instead of passing, or by going alone instead of keeping your partner. Bold = outside statistical noise. Dealer trump counts **include the card picked up** ("2 trumps" = the upcard plus 1 of their own).
 
 ### 1. At 9–9, call with almost anything, and never go alone
 
