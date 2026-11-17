@@ -316,8 +316,69 @@ Full results: `npm run exp:mc-loners -- 3000 league-v3-shape league-rule 20 <fir
 
 ---
 
+## Finding 6: Calling by the score ("in the hole")
+
+*Experiment run 17 Nov 2026. 600,000 deals in games to 10, with league-calibrated rule bots.*
+
+### Why points stop mattering
+Near the end of a game, what matters is **winning the game**, not points. On 9 in a game to 10, a 4-point loner is worth no more than 1 point, and a euchre can hand the opponents the game. So this experiment judges every choice by **how much it changes your chance of winning the game**.
+
+First, a **win-chance table** was built by playing 2,000 games from every score (0–9 against 0–9), with each team dealing next. Two things stand out:
+- **At 9–9, the team dealing next wins about 61% of the time.** The dealer's edge is large at the end.
+- At 9 against 5, you win about 92% of the time. At 5 against 9, about 9%.
+
+Then every calling decision was played out every way (pass / call / call alone), and the win chance after each outcome was compared. Situations are from the deciding team's point of view: **neither close** (both on 0–7), **we need 2** (on 8), **we need 1** (on 9, "in the hole"), **they need 1**, and **both need 1** (9–9).
+
+Numbers below are **percentage points of game-winning chance** gained by calling instead of passing, or by going alone instead of keeping your partner. Bold = outside statistical noise.
+
+### 1. At 9–9, call with almost anything, and never go alone
+
+| 9–9, round one | Gain from calling vs passing | Gain from going alone vs keeping partner |
+|---|---:|---:|
+| Dealer, **1 trump** after picking up | **+4.7** | **−32.6** |
+| Dealer, 2 trumps | **+24.1** | **−31.0** |
+| Dealer, 3 trumps | **+42.6** | **−11.5** |
+| Left of dealer, 3 trumps | **+10.0** | **−15.5** |
+| Left of dealer, 2 trumps | **+2.6** | **−31.6** |
+
+In round two at 9–9, naming your best suit gains **+20 to +49 points** of winning chance, **even with a single trump**. Whoever makes trump first wins with any 3 tricks, so passing hands the opponents the chance. Going alone adds nothing (one point wins) and only adds euchre risk. This confirms your glossary entry: *"both teams have a stronger incentive to call trump."*
+
+### 2. In the hole (we need 1): call a bit more freely, never go alone
+
+- **Dealer: pick up with 2 trumps** (+1.7). Normally that's slightly negative (−1.2).
+- **Left/right of dealer:** still don't order up lightly. Even 3 trumps loses (−3.7). You need 4.
+- **Going alone is never worth it** when one point wins: −0.1 to −9 points of winning chance in every case.
+
+### 3. Needing 2 (on 8): don't go alone
+A march with your partner (2 points) already wins the game, so going alone only adds risk. It was negative in every group, for example the dealer with 4+ trumps: −1.4. Calling thresholds are about the same as usual, slightly stricter, because a euchre hurts more.
+
+### 4. When they need 1: be bolder
+- **Going alone is worth more:** you need big points to catch up. Dealer with 4+ trumps: **+5.3** for going alone. Round two with 4+ trumps from the dealer's left: **+3.4**.
+- **Round two: name more freely.** From the dealer's left, naming with only 1–2 trumps gains about **+2.0**. If you pass, the opponents may call, and one more point wins it for them.
+- Round one ordering up from the dealer's left or right is still not worth it.
+
+### 5. Neither close
+Matches Finding 1: the dealer picks up with 3 trumps, the left and right rarely order up, and going alone pays with 4 trumps.
+
+### Summary table: what changes with the score
+
+| Score | Calling | Going alone |
+|---|---|---|
+| Neither close | As Findings 1–2 | As Findings 3–5 |
+| We need 2 | About the same | **Don't**: a march with partner wins |
+| We need 1 (in the hole) | Dealer a bit looser (2 trumps) | **Never** |
+| They need 1 | Round two looser | **More often**: you need the points |
+| Both need 1 (9–9) | **Call with almost anything**, especially the dealer and in round two | **Never** |
+
+### Caveats
+- Rule bots and rule-bot card play. The bots themselves don't yet change their play by score, so the opponents in these games don't either.
+- Games to 10 only. Games to 15 or 20 will have the same pattern near the end, but the table needs rebuilding for each target.
+- Full tables: `npm run exp:win-chance`, then `npm run exp:score-aware`, written to the `results/` folder.
+
+---
+
 ## Still to test
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
-- Score-aware calling ("die in the hole") and different winning totals (10, 15, 20).
+- Teach the bots to call by the score (Finding 6), and build win-chance tables for games to 15 and 20.
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.
 - The dealer's discard: keep an off-suit Ace or a fifth trump?

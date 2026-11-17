@@ -15,6 +15,8 @@ npm run exp:alone             # after-call experiment (~150s for 2,000,000 deals
 npm run exp:dealer-alone      # dealer go-alone by hand shape (~130s for 1,000,000 deals)
 npm run exp:mc-loners         # loner rules with Monte Carlo card play for everyone (~0.3s per game)
 npm run exp:mc-dealer-alone   # gain from going alone vs keeping partner, same hand, Monte Carlo play
+npm run exp:win-chance        # win-chance table from every score, game to 10 (~4 min)
+npm run exp:score-aware       # score-aware calling, judged by chance of winning the game (needs the table)
 npm run exp:head-to-head      # two bot settings play each other, e.g. -- 20000 10 round2 round1
 node scripts/sample-deals.ts 5 123   # 5 deals using seed 123
 ```
@@ -52,4 +54,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 5: round-two experiment (naming trump, next vs against colour), bots retuned
 - [x] Session 6: after-call experiment (defending alone, taking over, answering); bots calibrated to league loner and lone-defence rates
 - [x] Session 7: Monte Carlo bot (card play), used to test the dealer-loner question
-- [ ] Next: score-aware calls, card-play experiments, Monte Carlo bidding
+- [x] Session 8: win-chance table and score-aware calling experiment
+- [ ] Next: card-play experiments, score-aware bots, recheck findings with Monte Carlo play

@@ -180,6 +180,8 @@ export interface GameOptions {
   firstDealer?: Seat;
   /** Safety limit, in case agents pass forever. */
   maxHands?: number;
+  /** Start from this score instead of 0-0 (used to study end-of-game situations). */
+  startScore?: Score;
 }
 
 export function playGame(opts: GameOptions): GameRecord {
@@ -187,7 +189,7 @@ export function playGame(opts: GameOptions): GameRecord {
   const firstDealer = opts.firstDealer ?? chooseFirstDealer(opts.rng);
   const maxHands = opts.maxHands ?? 1000;
   const hands: HandRecord[] = [];
-  let score: Score = [0, 0];
+  let score: Score = opts.startScore ?? [0, 0];
   let dealer = firstDealer;
 
   while (score[0] < opts.target && score[1] < opts.target) {
