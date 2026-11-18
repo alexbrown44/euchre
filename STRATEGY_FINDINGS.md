@@ -551,6 +551,17 @@ You play before your partner and could win the trick now, but go low to save you
 - **With a weak hand, especially as a defender with 1 trump,** going low is as good or slightly better. You keep your one good card for a later trick.
 - Overall it's a **narrow tactic**: in most situations, take a trick you can win.
 
+### Teaching the bots: some tactics need good follow-up play
+Each of the three new card-play rules was given to the rule bots on its own and tested over 100,000 games:
+
+| Rule added | Win rate vs bots without it |
+|---|---:|
+| **Take the trick when an opponent still to play could beat your partner's card** | **51.3%** (±0.3) ✅ |
+| Weak defender (1 trump or none) goes low, leaving it to partner | 49.4% (±0.3) ❌ |
+| Makers open with a low trump when not holding the top trump (gone fishing) | 48.8% (±0.3) ❌ |
+
+The tactics in sections 1 and 5 were measured with **strong play for the rest of the hand**. With the rule bots' simpler play for the remaining tricks, they backfire. For example, gone fishing gives away the lead cheaply, and only pays if the following tricks are played well. The lesson applies to people too: **the subtler tactics need good follow-up play.** The plain rule, taking a trick your partner could lose, works even for a simple player. The bots now use only that one.
+
 ### Caveats
 - These test one card choice at a time, with strong (Monte Carlo) play for everything else.
 - Loner hands were left out; they need their own tests.

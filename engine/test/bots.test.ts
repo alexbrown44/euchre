@@ -104,6 +104,29 @@ test('seat-aware score-aware bots make legal moves over many games', () => {
   for (let g = 0; g < 300; g++) assert.ok(playGame({ agents: [bot, bot, bot, bot], target: 10, rng: createRng(g) }).hands.length > 0);
 });
 
+test('Finding 8 card play: makers open with a low trump without the top trump, draw with it', () => {
+  const bot = ruleBot({ cardPlay: 'finding8' });
+  const base = {
+    seat: 1 as const, dealer: 0 as const, trump: 'H' as const, upcard: parseCard('9C'), maker: 1 as const, makerTeam: 1 as const,
+    makerLoner: null, loneDefender: null, sittingOut: [], dealerPickedUp: false, myDiscard: null,
+    current: { leader: 1 as const, plays: [], winner: null }, tricks: [], tricksWon: [0, 0] as const, score: [0, 0] as const, target: 10,
+  };
+  const noTop = parseCards('AH 10H AS KC QD');
+  assert.equal(cardId(bot.play({ ...base, hand: noTop, legal: noTop })), '10H', 'gone fishing, not the off-suit Ace');
+  const withTop = parseCards('Benny 10H AS KC QD');
+  assert.equal(cardId(bot.play({ ...base, hand: withTop, legal: withTop })), 'BENNY', 'draw with the top trump');
+});
+
+test('Finding 8 card play: bots make legal moves over many games and beat random players', () => {
+  const bot = ruleBot({ cardPlay: 'finding8' });
+  let wins = 0;
+  for (let g = 0; g < 300; g++) {
+    const rng = createRng(80_000 + g);
+    if (playGame({ agents: [bot, randomAgent(rng), bot, randomAgent(rng)], target: 10, rng }).winner === 0) wins++;
+  }
+  assert.ok(wins / 300 > 0.9);
+});
+
 test('rule bots always make legal moves over many games', () => {
   for (let g = 0; g < 300; g++) {
     const agents = [ruleBot(), ruleBot(), ruleBot(), ruleBot()];

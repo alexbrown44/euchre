@@ -60,6 +60,13 @@ export interface RuleBotParams {
    * Dealer's right: go alone with Benny + Right + Left (passing is worst); otherwise as normal.
    */
   seatAware?: boolean;
+  /**
+   * Card-play rules. 'basic' (default): the original habits. 'finding8': adds the Finding 8
+   * results (makers' opening lead, taking a trick partner could lose, weak defenders letting it go).
+   */
+  cardPlay?: 'basic' | 'finding8';
+  /** With cardPlay 'finding8': which of its three rules to use (all by default). For testing. */
+  finding8Rules?: { lead?: boolean; takeIt?: boolean; weakLow?: boolean };
 }
 
 export type SeatRole = 'left' | 'dealersPartner' | 'right' | 'dealer';
@@ -195,7 +202,14 @@ export const LEAGUE_RULE_SCORE_PARAMS: RuleBotParams = { ...LEAGUE_RULE_PARAMS, 
 export const SEAT_AWARE_PARAMS: RuleBotParams = { ...SCORE_AWARE_PARAMS, seatAware: true };
 
 /** The strongest bot settings against other bots so far. */
-export const DEFAULT_PARAMS: RuleBotParams = SEAT_AWARE_PARAMS;
+export const DEFAULT_PARAMS: RuleBotParams = {
+  ...SEAT_AWARE_PARAMS,
+  // Finding 8: of its three card-play rules, only "take the trick when an opponent still to play
+  // could beat partner's card" helps rule bots (51.3% over 100,000 games). The other two hurt them
+  // (gone fishing lead 48.8%, weak defender going low 49.4%): they need strong follow-up play.
+  cardPlay: 'finding8',
+  finding8Rules: { lead: false, takeIt: true, weakLow: false },
+};
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
   initial: INITIAL_PARAMS,
@@ -212,13 +226,14 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   'league-rule-score': LEAGUE_RULE_SCORE_PARAMS,
   'shape-score-seat': SEAT_AWARE_PARAMS,
   'league-rule-score-seat': { ...LEAGUE_RULE_SCORE_PARAMS, seatAware: true },
+  best: DEFAULT_PARAMS,
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
 
 export function ruleBot(params: Partial<RuleBotParams> = {}, name = 'RuleBot'): Agent {
   const p = { ...DEFAULT_PARAMS, ...params };
-  return { name, bid: (v) => (p.scoreAware ? scoreAwareBid(v, p) : bid(v, p)), play: (v) => play(v) };
+  return { name, bid: (v) => (p.scoreAware ? scoreAwareBid(v, p) : bid(v, p)), play: (v) => play(v, p) };
 }
 
 // ---------------------------------------------------------------------------
@@ -392,7 +407,7 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
 const lowest = (cards: Card[], trump: Suit) => [...cards].sort((a, b) => keepValue(a, trump) - keepValue(b, trump))[0]!;
 const highest = (cards: Card[], trump: Suit) => [...cards].sort((a, b) => keepValue(b, trump) - keepValue(a, trump))[0]!;
 
-function play(v: PlayView): Card {
+function play(v: PlayView, p: RuleBotParams): Card {
   const legal = v.legal;
   if (legal.length === 1) return legal[0]!;
   const trump = v.trump;
@@ -400,6 +415,34 @@ function play(v: PlayView): Card {
   const onMakers = teamOf(v.seat) === v.makerTeam;
   const trumps = legal.filter((c) => isTrump(c, trump));
   const nonTrumps = legal.filter((c) => !isTrump(c, trump));
+  const f8 = p.cardPlay === 'finding8';
+  const r8 = { lead: true, takeIt: true, weakLow: true, ...p.finding8Rules };
+
+  // Opening lead by the makers (Finding 8): draw with the top trump; otherwise lead a low trump
+  // (gone fishing). Never open with an off-suit Ace.
+  if (f8 && r8.lead && v.current.plays.length === 0 && v.tricks.length === 0 && onMakers && trumps.length > 0 && unseenTrumpCount(k, trump) > 0) {
+    const top = highest(trumps, trump);
+    return trumpRank(top, trump) > highestUnseenTrump(k, trump) ? top : lowest(trumps, trump);
+  }
+
+  if (f8 && v.current.plays.length > 0) {
+    const winners = legal.filter((c) => wouldWinNow(v, c));
+    const losers = legal.filter((c) => !wouldWinNow(v, c));
+    // Let it go when partner is winning, but take the trick if an opponent still to play could beat them.
+    if (r8.takeIt && partnerIsWinning(v) && playersAfterMe(v) > 0 && winners.length > 0) {
+      const partnerCard = v.current.plays.find((pl) => pl.seat === partnerOf(v.seat))!.card;
+      if (!isBoss(partnerCard, k, trump)) {
+        const safe = winners.filter((c) => isBoss(c, k, trump));
+        return lowest(safe.length > 0 ? safe : winners, trump);
+      }
+    }
+    // Partner still to play: a weak defender (1 trump or none) goes low and leaves it to partner.
+    const partnerToPlay = !v.current.plays.some((pl) => pl.seat === partnerOf(v.seat)) && !v.sittingOut.includes(partnerOf(v.seat));
+    if (r8.weakLow && partnerToPlay && !onMakers && !partnerIsWinning(v) && winners.length > 0 && losers.length > 0) {
+      const heldTrumps = v.hand.filter((c) => isTrump(c, trump)).length;
+      if (heldTrumps <= 1) return lowest(losers, trump);
+    }
+  }
 
   // Leading.
   if (v.current.plays.length === 0) {
