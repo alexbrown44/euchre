@@ -20,6 +20,7 @@
     "exp:mc-dealer-alone": "node experiments/mc-dealer-alone.ts",
     "exp:win-chance": "node experiments/win-chance.ts",
     "exp:score-aware": "node experiments/score-aware.ts run 150000 0 && node experiments/score-aware.ts combine results/score-aware-from0.json",
+    "exp:seat": "node experiments/seat-strong-hands.ts run 25000 0 && node experiments/seat-strong-hands.ts combine results/seat-strong-from0.json",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

@@ -15,6 +15,7 @@
     "exp:mc-dealer-alone": "npm --prefix engine run exp:mc-dealer-alone",
     "exp:win-chance": "npm --prefix engine run exp:win-chance",
     "exp:score-aware": "npm --prefix engine run exp:score-aware",
+    "exp:seat": "npm --prefix engine run exp:seat",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

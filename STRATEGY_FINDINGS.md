@@ -436,7 +436,55 @@ Calling by the score wins about **1 extra game in 100** overall, and about **2 i
 
 ---
 
+## Finding 7: Where you sit changes what to do with a strong hand
+
+*Experiment run 18 Nov 2026. 250,000 deals; about 23,000 strong-hand decisions (including 2,000 with the Benny, Right and Left). Monte Carlo card play for all four players, league-calibrated bidding.*
+
+**League theory:** with the Benny, Right and Left on the **dealer's left** you can pass, because you have first call in round two if the dealer doesn't pick up. On the **dealer's right** you should order up, or in round two your partner or the dealer's partner may call another suit.
+
+Each strong hand (in the upcard's suit) was played out three ways from the player's round-one turn. Numbers are average net points per hand.
+
+| Hand (in the upcard's suit) | Seat | Pass | Order up | Alone | Best |
+|---|---|---:|---:|---:|---|
+| **Benny + Right + Left** | **Left of dealer** | **+2.19** | +1.42 | +2.09 | **Pass** |
+| **Benny + Right + Left** | **Right of dealer** | +1.08 | +1.27 | **+1.59** | **Go alone** |
+| 4+ trumps | Left of dealer | +0.85 | +0.93 | **+1.10** | Go alone |
+| 4+ trumps | Right of dealer | +0.85 | +0.88 | +0.78 | Toss-up |
+| 3 trumps, 2 top trumps | Left of dealer | **+1.05** | +0.57 | +0.43 | Pass |
+| 3 trumps, 2 top trumps | Right of dealer | **+0.88** | +0.53 | −0.05 | Pass |
+
+**The theory is confirmed.** On the left, passing is best. On the right, passing is the **worst** choice, and going alone is best.
+
+### Why: what happens after you pass with the Benny, Right and Left
+
+| From the dealer's **left** | How often | Points |
+|---|---:|---:|
+| Round 2: **you** name trump | 77% | +2.25 |
+| Dealer picks up, and you euchre them | 23% | +2.00 |
+
+| From the dealer's **right** | How often | Points |
+|---|---:|---:|
+| Round 2: your **partner** names the other colour | 36% | +0.66 |
+| Dealer picks up, and you euchre them | 20% | +2.00 |
+| Round 2: your partner names the same colour | 18% | +1.51 |
+| Round 2: an **opponent** names the other colour | 17% | −0.11 |
+| Round 2: you get to name | 9% | +1.97 |
+
+- **From the left, every outcome is excellent.** Either the dealer picks up into your hand and you euchre them, or you name trump first in round two.
+- **Naming next keeps all three top trumps.** In the same-colour suit, the Benny is still trump, your Left Bower becomes the Right Bower, and your Right Bower becomes the Left. So passing costs you nothing.
+- **From the right,** half the time someone else names trump in round two. When it's the other colour, your bowers become ordinary Jacks.
+
+### Other seat effects
+- **4 trumps:** going alone pays on the dealer's left (+0.25 over passing). On the right it's a toss-up.
+- **3 trumps with 2 top trumps:** pass from either seat, but passing is worth more from the left (+1.05 against +0.88), again because of first call in round two.
+- **General principle:** the dealer's left can **afford to wait**, because round two comes to them first. The dealer's right **can't**: if they pass, two other players get to name before them in round two.
+
+Full results: `npm run exp:seat`, written to the `results/` folder.
+
+---
+
 ## Still to test
+- Teach the bots seat-aware calling for strong hands (Finding 7).
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.

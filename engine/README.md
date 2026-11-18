@@ -17,6 +17,7 @@ npm run exp:mc-loners         # loner rules with Monte Carlo card play for every
 npm run exp:mc-dealer-alone   # gain from going alone vs keeping partner, same hand, Monte Carlo play
 npm run exp:win-chance        # win-chance table from every score, game to 10 (~4 min)
 npm run exp:score-aware       # score-aware calling, judged by chance of winning the game (needs the table)
+npm run exp:seat              # strong hands on the dealer's left vs right, Monte Carlo play (run chunks in parallel for big samples)
 npm run exp:head-to-head      # two bot settings play each other, e.g. -- 20000 10 round2 round1
 node scripts/sample-deals.ts 5 123   # 5 deals using seed 123
 ```
