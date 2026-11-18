@@ -105,7 +105,7 @@ test('seat-aware score-aware bots make legal moves over many games', () => {
 });
 
 test('Finding 8 card play: makers open with a low trump without the top trump, draw with it', () => {
-  const bot = ruleBot({ cardPlay: 'finding8' });
+  const bot = ruleBot({ cardPlay: 'finding8', finding8Rules: { lead: true, takeIt: true, weakLow: true } });
   const base = {
     seat: 1 as const, dealer: 0 as const, trump: 'H' as const, upcard: parseCard('9C'), maker: 1 as const, makerTeam: 1 as const,
     makerLoner: null, loneDefender: null, sittingOut: [], dealerPickedUp: false, myDiscard: null,
