@@ -490,6 +490,74 @@ Full results: `npm run exp:seat`, written to the `results/` folder.
 
 ---
 
+## Finding 8: Card play (opening lead, trumping in, let it go)
+
+*Experiments run 18 Nov 2026. 160,000 hands bid and played by Monte Carlo bots; about 250,000 card decisions. Whenever a tactic applied, the hand was played out from that exact card each way (all four players Monte Carlo). Numbers are average net points per hand for the deciding player's team. Only four-handed hands (no loners). Gaps under about 0.05 are within noise.*
+
+### 1. Opening lead by the makers: draw with the top trump; never open with an off-suit Ace
+
+| Makers' leader holds… | Highest trump (draw) | Low trump (gone fishing) | Low off-suit | Off-suit Ace |
+|---|---:|---:|---:|---:|
+| 2 trumps, **including the top trump** | **+0.59** | +0.44 | +0.50 | +0.36 |
+| 3+ trumps, **including the top trump** | **+1.07** | +0.77 | +0.95 | +0.38 |
+| 2 trumps, not the top trump | +0.25 | **+0.28** | +0.20 | +0.22 |
+| 3+ trumps, not the top trump | +0.78 | **+0.79** | +0.67 | +0.29 |
+
+- **Holding the top trump outstanding: draw with it.** That's clearly the best lead.
+- **Without it, gone fishing and drawing are equally good.** The difference is within noise.
+- **An off-suit Ace is the makers' worst opening lead,** especially with 3+ trumps (about +0.3 against +1.0). Draw trump first and cash the Ace later.
+- The **maker's partner** leading with one trump should lead it (+0.78, against +0.50 for low off-suit).
+
+### 2. Opening lead by the defenders: lead an off-suit Ace if you have one; don't lead trump
+
+| Defender's leader holds… | Off-suit Ace | Low off-suit | Low trump |
+|---|---:|---:|---:|
+| 1 trump, an off-suit Ace | **−0.75** | −0.82 | −0.85 |
+| 2 trumps, an off-suit Ace | **−0.11** | −0.19 | −0.35 |
+| 1 trump, no off-suit Ace | | **−1.00** | −1.13 |
+| 2 trumps, no off-suit Ace | | **−0.40** | −0.70 |
+
+### 3. Trumping in: almost always trump in
+When you're out of the suit led and an opponent is winning, trumping in beat throwing off in **every** situation tested:
+- **Last to play, or one opponent still to play:** better by about **+0.4 to +1.0**.
+- **Two players still to play:** a smaller gain, about **+0.1 to +0.2**, because someone may still over-trump.
+
+### 4. Let it go, when your partner is already winning: only if their card is safe
+
+| Situation | Let it go | Take it |
+|---|---:|---:|
+| You're last to play (makers) | **+0.81** | +0.42 |
+| You're last to play (defenders) | **+0.39** | −0.16 |
+| Opponent still to play, partner's card **can't** be beaten (makers) | **+1.13** | +0.91 |
+| Opponent still to play, partner's card **can't** be beaten (defenders) | **+0.22** | −0.14 |
+| Opponent still to play, partner's card **could** be beaten (makers) | +0.78 | **+1.00** |
+| Opponent still to play, partner's card **could** be beaten (defenders) | −0.18 | **+0.10** |
+
+**Let it go when your partner's card is safe. Take the trick when an opponent still to play could beat it.**
+
+### 5. Let it go, when your partner plays after you: only with a weak hand
+You play before your partner and could win the trick now, but go low to save your better cards for later tricks:
+
+| Your side, and your trumps | Win it now | Go low (leave it to partner) |
+|---|---:|---:|
+| Makers, 3+ trumps | **+0.76 to +1.09** | +0.56 to +0.79 |
+| Makers, 2 trumps | **+0.42 to +0.95** | +0.23 to +0.72 |
+| Makers, 1 trump | **+0.18 to +0.54** | −0.08 to +0.24 |
+| Defenders, 2–3 trumps | **−0.24 to +0.25** | −0.38 to +0.10 |
+| Defenders, **1 trump**, your winner can't be beaten | −0.50 | **−0.42** |
+| Defenders, **1 trump**, your winner could be beaten (suit led) | −0.74 | **−0.68** |
+
+- **With 2+ trumps, win it now.** It's better by about 0.2–0.3 points. If your hand is strong overall, you don't need to save anything.
+- **With a weak hand, especially as a defender with 1 trump,** going low is as good or slightly better. You keep your one good card for a later trick.
+- Overall it's a **narrow tactic**: in most situations, take a trick you can win.
+
+### Caveats
+- These test one card choice at a time, with strong (Monte Carlo) play for everything else.
+- Loner hands were left out; they need their own tests.
+- Full tables: `npm run exp:card-play`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
@@ -502,5 +570,5 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 ## Still to test
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
-- Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.
+- Card play: the value of **the lead** and **back hand**, later leads (not just the first trick), and play in loner hands. Teach the bots the Finding 8 rules.
 - The dealer's discard: keep an off-suit Ace or a fifth trump?

@@ -16,6 +16,7 @@
     "exp:win-chance": "npm --prefix engine run exp:win-chance",
     "exp:score-aware": "npm --prefix engine run exp:score-aware",
     "exp:seat": "npm --prefix engine run exp:seat",
+    "exp:card-play": "npm --prefix engine run exp:card-play",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

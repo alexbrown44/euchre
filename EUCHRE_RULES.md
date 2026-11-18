@@ -169,7 +169,7 @@ A **scoring board with pegs** (matchsticks work well) is also common and works f
 | **Trump** | The suit that beats all other suits for the hand |
 | **The lead** | The right to play first in a trick. You have the lead when you win a trick (the first lead goes to the player on the dealer's left). Having the lead helps you **control the game**, because you choose which suit is played. |
 | **Back hand** | The opposite of the lead: being the **last to play** in a trick. This can also be an advantage, because you see every other card before choosing yours. See also *The lead*. |
-| **Let it go** | A player chooses **not** to try to win a trick, hoping their partner will win it instead. This saves their strong card for a later trick when the team still needs another one. |
+| **Let it go** | A player chooses **not** to try to win a trick, hoping their partner will win it instead. This saves their strong card for a later trick when the team still needs another one. It applies both when the partner is **already winning** the trick, and when the player plays **before** their partner and goes low, leaving the trick for the partner to win. |
 | **Trumping in** | Playing a trump card on a trick when you can't follow the suit led |
 | **Drawing / Drag** | Leading trump, often to pull the opponents' trump out of their hands. A well-timed one might earn a "Nice drag" from the table. |
 | **Gone fishing** | A player on the makers' team plays a **low trump** while holding higher trumps. They hope to drag out the opponents' higher trumps, so their own remaining trumps become more powerful. See also *Drawing / Drag*. |
