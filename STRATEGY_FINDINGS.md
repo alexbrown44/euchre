@@ -479,12 +479,18 @@ Each strong hand (in the upcard's suit) was played out three ways from the playe
 - **3 trumps with 2 top trumps:** pass from either seat, but passing is worth more from the left (+1.05 against +0.88), again because of first call in round two.
 - **General principle:** the dealer's left can **afford to wait**, because round two comes to them first. The dealer's right **can't**: if they pass, two other players get to name before them in round two.
 
+### Teaching the bots
+The bots now use a seat-aware rule in round one:
+- **Dealer's left:** pass with the Benny, Right and Left; go alone with 4+ trumps.
+- **Dealer's right:** go alone with the Benny, Right and Left; otherwise as normal.
+
+Head to head over **400,000 games** (rule-bot card play), seat-aware bots won **50.1%** (±0.2%), too small a difference to measure. That's expected: these hands are rare (the Benny, Right and Left in the upcard's suit turns up for a given player in about 0.4% of deals). So even a gain of nearly a point per hand adds up to perhaps 1 extra game in 300–500. The hand-by-hand evidence above is solid, so the rule is on by default for the strongest bots.
+
 Full results: `npm run exp:seat`, written to the `results/` folder.
 
 ---
 
 ## Still to test
-- Teach the bots seat-aware calling for strong hands (Finding 7).
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: **drawing**, **gone fishing**, **let it go**, **trumping in**, and the value of **the lead** and **back hand**.

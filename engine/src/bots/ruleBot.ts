@@ -9,7 +9,9 @@ import { SUITS, isTrump, sameColourSuit, trumpRank, type Card, type Suit } from 
 import { leftOf, partnerOf, teamOf, type Seat } from '../deal.ts';
 import type { BidAction } from '../bidding.ts';
 import type { Agent, BidView, PlayView } from '../game.ts';
-import { bestAfterPickup, chooseDiscard, dealerShouldGoAlone, features, handShape, keepValue, strength } from './evaluate.ts';
+import {
+  bestAfterPickup, chooseDiscard, dealerShouldGoAlone, features, handShape, hasBennyAndBothBowers, keepValue, strength,
+} from './evaluate.ts';
 import {
   highestUnseenTrump, isBoss, knowledgeOf, partnerIsWinning, playersAfterMe, unseenTrumpCount, wouldWinNow,
 } from './knowledge.ts';
@@ -52,6 +54,12 @@ export interface RuleBotParams {
   dealerAloneRule?: 'strength' | 'shape' | 'league';
   /** Adjust calls for the score near the end of a game (Finding 6). Defaults to false. */
   scoreAware?: boolean;
+  /**
+   * Seat-aware round-one calls with strong hands (Finding 7). Defaults to false.
+   * Dealer's left: pass with Benny + Right + Left (first call in round two); go alone with 4+ trumps.
+   * Dealer's right: go alone with Benny + Right + Left (passing is worst); otherwise as normal.
+   */
+  seatAware?: boolean;
 }
 
 export type SeatRole = 'left' | 'dealersPartner' | 'right' | 'dealer';
@@ -179,8 +187,15 @@ export const SCORE_AWARE_PARAMS: RuleBotParams = { ...SHAPE_TUNED_PARAMS, scoreA
 /** League-calibrated, league dealer-loner rule, and score-aware: realistic but end-game savvy. */
 export const LEAGUE_RULE_SCORE_PARAMS: RuleBotParams = { ...LEAGUE_RULE_PARAMS, scoreAware: true };
 
+/**
+ * Plus seat-aware calls with strong hands (Finding 7). Supported hand by hand with Monte Carlo
+ * play; over 400,000 rule-bot games the effect was too small to measure (+0.1% ±0.2), because
+ * these hands are rare.
+ */
+export const SEAT_AWARE_PARAMS: RuleBotParams = { ...SCORE_AWARE_PARAMS, seatAware: true };
+
 /** The strongest bot settings against other bots so far. */
-export const DEFAULT_PARAMS: RuleBotParams = SCORE_AWARE_PARAMS;
+export const DEFAULT_PARAMS: RuleBotParams = SEAT_AWARE_PARAMS;
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
   initial: INITIAL_PARAMS,
@@ -195,6 +210,8 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   shape: SHAPE_TUNED_PARAMS,
   'shape-score': SCORE_AWARE_PARAMS,
   'league-rule-score': LEAGUE_RULE_SCORE_PARAMS,
+  'shape-score-seat': SEAT_AWARE_PARAMS,
+  'league-rule-score-seat': { ...LEAGUE_RULE_SCORE_PARAMS, seatAware: true },
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -308,6 +325,12 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
       const s = strength(v.hand, trump);
       if (v.seat === partnerOf(v.dealer)) {
         return s >= p.upAndDownThreshold ? { type: 'orderUp', alone: true } : pass;
+      }
+      if (p.seatAware) {
+        const onLeft = leftOf(v.dealer) === v.seat;
+        if (hasBennyAndBothBowers(v.hand, trump)) return onLeft ? pass : { type: 'orderUp', alone: true };
+        // 4+ trumps: go alone from the dealer's left. On the right it's a toss-up, so play as normal.
+        if (onLeft && features(v.hand, trump).trumps >= 4) return { type: 'orderUp', alone: true };
       }
       if (s >= p.orderThreshold) return { type: 'orderUp', alone: s >= p.orderAloneThreshold };
       return pass;

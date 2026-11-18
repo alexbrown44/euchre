@@ -83,6 +83,27 @@ test('score-aware: at 9-9 the dealer always picks up and nobody goes alone', () 
   }
 });
 
+test('seat-aware: Benny + both bowers passes on the dealer\'s left, goes alone on the right', () => {
+  const bot = ruleBot({ seatAware: true });
+  const hand = parseCards('Benny JH JD 9S 10C');
+  const view = (seat: 1 | 3) => ({
+    seat, dealer: 0 as const, phase: 'round1' as const, upcard: parseCard('KH'), hand,
+    history: [], trump: null, maker: null, makerLoner: null, loneDefender: null,
+    legal: [{ type: 'pass' as const }, { type: 'orderUp' as const, alone: false }, { type: 'orderUp' as const, alone: true }],
+    score: [0, 0] as const, target: 10,
+  });
+  assert.deepEqual(bot.bid(view(1)), { type: 'pass' }, 'West is on the dealer\'s left');
+  assert.deepEqual(bot.bid(view(3)), { type: 'orderUp', alone: true }, 'East is on the dealer\'s right');
+  const four = parseCards('JH AH KH 9H 10C');
+  assert.deepEqual(bot.bid({ ...view(1), hand: four }), { type: 'orderUp', alone: true });
+  assert.deepEqual(bot.bid({ ...view(3), hand: four }), ruleBot().bid({ ...view(3), hand: four }), 'right of dealer: as normal');
+});
+
+test('seat-aware score-aware bots make legal moves over many games', () => {
+  const bot = ruleBot({ seatAware: true, scoreAware: true });
+  for (let g = 0; g < 300; g++) assert.ok(playGame({ agents: [bot, bot, bot, bot], target: 10, rng: createRng(g) }).hands.length > 0);
+});
+
 test('rule bots always make legal moves over many games', () => {
   for (let g = 0; g < 300; g++) {
     const agents = [ruleBot(), ruleBot(), ruleBot(), ruleBot()];

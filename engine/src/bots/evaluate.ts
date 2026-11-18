@@ -107,6 +107,12 @@ export function dealerShouldGoAlone(s: HandShape, rule: 'league' | 'shape'): boo
   return false;
 }
 
+/** Holds the Benny, Right Bower and Left Bower of `trump` (still all top trumps in next). */
+export function hasBennyAndBothBowers(hand: readonly Card[], trump: Suit): boolean {
+  const ranks = hand.filter((c) => isTrump(c, trump)).map((c) => trumpRank(c, trump));
+  return ranks.includes(8) && ranks.includes(7) && ranks.includes(6);
+}
+
 /** Hand after the dealer picks up `upcard` and makes their best discard. */
 export function bestAfterPickup(hand: readonly Card[], upcard: Card, trump: Suit): Card[] {
   const six = [...hand, upcard];
