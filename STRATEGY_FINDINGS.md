@@ -490,6 +490,15 @@ Full results: `npm run exp:seat`, written to the `results/` folder.
 
 ---
 
+## Testing a new strategy idea
+
+New ideas from league play can be tested at any time, the same way as Findings 4–7:
+1. **Hand by hand:** play the same hands both ways (the idea against the alternative) with Monte Carlo card play, and measure the **gain over the alternative**, not just the points scored.
+2. **What happens next:** where useful, break down how hands end, or what follows a pass, to see *why* the idea works or doesn't.
+3. **Teach the bots** if it holds up, and check the effect over whole games. Rare situations won't show up in game results, so step 1 is the real test.
+
+---
+
 ## Still to test
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
