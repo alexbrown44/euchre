@@ -569,6 +569,73 @@ The tactics in sections 1 and 5 were measured with **strong play for the rest of
 
 ---
 
+## Finding 9: The opening lead, and the player on the dealer's left
+
+*Experiment run 19 Nov 2026. 120,000 deals. Monte Carlo card play for all four players, league-calibrated bidding. Part A: about 99,000 four-handed hands, each played out four times. Part B: about 120,000 call-or-pass decisions.*
+
+**Question:** the player on the dealer's left always leads the first trick. Can they take advantage of that, beyond passing with the Benny, Right and Left (Finding 7)?
+
+### Part A: leading the first trick is worth very little in itself
+Each hand was played out with the same cards and trump, changing **only who leads the first trick**. Numbers are the change in net points for the left player's team if they had **not** led (bold = outside noise).
+
+| Left player is… | Hands | Leads (normal) | Plays second | Plays third (partner leads) | Plays last (back hand) |
+|---|---:|---:|---:|---:|---:|
+| **Maker** | 25,347 | +0.54 | **−0.03** | −0.01 | −0.00 |
+| Maker's partner | 2,345 | +0.75 | **+0.10** | **+0.08** | −0.00 |
+| Maker's partner, **no trumps** | 526 | +0.44 | **+0.33** | **+0.24** | **+0.12** |
+| **Defender** | 71,312 | −0.60 | **+0.03** | **+0.07** | **+0.04** |
+| Defender, 2 trumps | 23,288 | −0.33 | +0.00 | **+0.11** | **+0.09** |
+| Defender, **3+ trumps** | 5,965 | +0.49 | **+0.10** | **+0.14** | **+0.18** |
+
+- **For a maker, the opening lead is worth only about 0.03 points per hand.** Holding the trumps matters; who leads hardly does. It's **not a reason to call on a weaker hand.**
+- **For a defender, leading is a slight disadvantage.** A defender with trumps would rather sit **behind** the makers (back hand), so they can over-trump or let it go. The gain is +0.18 for a defender with 3+ trumps playing last.
+- The left player is a **defender in about 70%** of hands, so most of the time the lead isn't helping them at all.
+- **Worst case:** the maker's partner on the left with **no trumps**. They have to lead from nothing, and would be +0.33 better off playing second.
+
+### Part B: calling by seat, the same hand on the left and the right
+Call against pass for the same hand shape. If the left player's team makes trump, the left player leads. If the right player's team makes it, the left player (an opponent) leads.
+
+**Round one (order up, keep partner), trumps in the upcard's suit:**
+
+| Hand | Left: call vs pass | Right: call vs pass | Left minus right |
+|---|---:|---:|---:|
+| 2 trumps (any) | **−1.11** | **−0.93 to −1.17** | small |
+| 3 trumps, no or 1 top trump | **−0.52 to −0.76** | **−0.62 to −0.82** | +0.07 to +0.10 |
+| 3 trumps, **2+ top trumps** | **−0.54** | **−0.28** | **−0.27** |
+| 4+ trumps, 1 top trump | **+0.29** | +0.06 | +0.23 (noise) |
+| 4+ trumps, **2+ top trumps** | −0.04 | **+0.32** | **−0.37** |
+
+*(Top trumps = the Benny, Right and Left.)*
+
+- **Ordering up with 2–3 trumps loses from either seat,** which confirms Finding 1.
+- **The seat difference is in the strong hands, and it goes against calling from the left.** With 2 or more top trumps, ordering up is worth 0.27–0.37 **less** from the left than from the right. This is the Finding 7 effect: the left player gets first say in round two, so they can afford to pass. The right player can't.
+- **4+ trumps with 2+ top trumps:** on the right, order up (+0.32). On the left, ordering up gains nothing over passing. (Finding 7 shows going alone is better still from the left.)
+
+**Round two (name your best suit, keep partner):**
+
+| Hand | Left of dealer (speaks first) | Right of dealer (speaks third) |
+|---|---:|---:|
+| 2 trumps, 1 top trump | **−0.20** | −0.11 |
+| 3 trumps, 1 top trump | **+0.27** | **+0.55** |
+| 3 trumps, 2+ top trumps | **+0.42** | **+0.37** |
+
+- **On the left, name with 3 trumps including a top trump. Pass with 2.** Your partner and the right of dealer still get a chance.
+- The right of dealer rarely gets a 3-trump chance in round two (about 300 hands each), but when they do, naming pays well, because passing usually means a throw-in.
+
+### The short version
+- **The opening lead is not much of an advantage in itself:** about 0.03 points per hand for a maker. Don't call lighter because you'll lead.
+- **The left seat's real advantage is first say in round two.** With strong hands (2+ top trumps), pass more readily in round one from the left than from the right. Finding 7 is the extreme case of this.
+- **As a defender, the back hand beats the lead** when you hold trumps.
+
+No bot change was needed: the seat-aware rules from Finding 7 already cover the hands where this matters.
+
+### Caveats
+- With strong players everywhere, the lead may matter less than at the pub, where an early lead can set the tone. The test can't measure that.
+- Only four-handed hands; loners leave out a player and change who leads.
+- Full tables: `npm run exp:lead`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
@@ -581,5 +648,5 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 ## Still to test
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
-- Card play: the value of **the lead** and **back hand**, later leads (not just the first trick), and play in loner hands. Teach the bots the Finding 8 rules.
+- Card play: later leads (not just the first trick), and play in loner hands.
 - The dealer's discard: keep an off-suit Ace or a fifth trump?

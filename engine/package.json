@@ -22,6 +22,7 @@
     "exp:score-aware": "node experiments/score-aware.ts run 150000 0 && node experiments/score-aware.ts combine results/score-aware-from0.json",
     "exp:seat": "node experiments/seat-strong-hands.ts run 25000 0 && node experiments/seat-strong-hands.ts combine results/seat-strong-from0.json",
     "exp:card-play": "node experiments/card-play.ts run 6000 0 && node experiments/card-play.ts combine results/card-play-from0.json",
+    "exp:lead": "node experiments/lead-seat.ts run 2000 0 && node experiments/lead-seat.ts combine results/lead-seat-from0.json",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }
