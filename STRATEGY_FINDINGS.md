@@ -326,6 +326,8 @@ Full results: `npm run exp:mc-loners -- 3000 league-v3-shape league-rule 20 <fir
 
 *Experiment run 17 Nov 2026. 600,000 deals in games to 10, with league-calibrated rule bots.*
 
+> **Games to 15 or 20:** these rules apply unchanged. What matters is how many points each team still **needs**, not the score itself: 14–14 in a game to 15 is the same position as 9–9 in a game to 10. Read "on 9" as "needing 1", and so on.
+
 ### Why points stop mattering
 Near the end of a game, what matters is **winning the game**, not points. On 9 in a game to 10, a 4-point loner is worth no more than 1 point, and a euchre can hand the opponents the game. So this experiment judges every choice by **how much it changes your chance of winning the game**.
 
@@ -887,5 +889,4 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 ---
 
 ## Still to test
-- Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: later leads (not just the first trick), and throwing off (which card to keep) in loner hands.
