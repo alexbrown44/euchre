@@ -22,6 +22,7 @@
     "exp:discard": "npm --prefix engine run exp:discard",
     "exp:recheck": "npm --prefix engine run exp:recheck",
     "exp:loner-play": "npm --prefix engine run exp:loner-play",
+    "exp:card-play-leads": "npm --prefix engine run exp:card-play-leads",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

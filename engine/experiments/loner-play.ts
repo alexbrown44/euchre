@@ -22,7 +22,7 @@
 //   node experiments/loner-play.ts combine results/loner-play-from*.json
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { isTrump, sameCard, trumpRank, type Card, type Suit } from '../src/cards.ts';
+import { effectiveSuit, isTrump, sameCard, trumpRank, type Card, type Suit } from '../src/cards.ts';
 import { dealHand, partnerOf, teamOf, type Seat } from '../src/deal.ts';
 import { createRng } from '../src/rng.ts';
 import { applyBidAction, contractOf, startBidding } from '../src/bidding.ts';
@@ -34,7 +34,9 @@ import { monteCarloBot } from '../src/bots/monteCarlo.ts';
 import { keepValue } from '../src/bots/evaluate.ts';
 import { highestUnseenTrump, isBoss, knowledgeOf, partnerIsWinning, playersAfterMe, unseenTrumpCount, wouldWinNow } from '../src/bots/knowledge.ts';
 
-interface Stat { n: number; sum: Record<string, number> }
+// Not every option exists in every hand (e.g. an off-suit Ace). Each option's result is kept as a
+// paired difference from the first option (present in every hand), over the hands where it exists.
+interface Stat { n: number; sum: Record<string, number>; cnt: Record<string, number>; diff: Record<string, number> }
 type Results = Record<string, Stat>; // key = tactic|situation
 
 const lowest = (cards: Card[], trump: Suit) => [...cards].sort((a, b) => keepValue(a, trump) - keepValue(b, trump))[0]!;
@@ -59,9 +61,15 @@ function run(deals: number, first: number, worlds: number): void {
   const record = (key: string, options: Record<string, Card>, state: PlayState, seat: Seat) => {
     const distinct = Object.entries(options).filter(([, c], i, all) => all.findIndex(([, d]) => sameCard(c, d)) === i);
     if (distinct.length < 2) return;
-    const st = (results[key] ??= { n: 0, sum: {} });
+    const st = (results[key] ??= { n: 0, sum: {}, cnt: {}, diff: {} });
     st.n++;
-    for (const [name, card] of Object.entries(options)) st.sum[name] = (st.sum[name] ?? 0) + finish(applyPlay(state, card), seat);
+    const vals = Object.entries(options).map(([name, card]) => [name, finish(applyPlay(state, card), seat)] as const);
+    const base = vals[0]![1];
+    for (const [name, v] of vals) {
+      st.sum[name] = (st.sum[name] ?? 0) + v;
+      st.cnt[name] = (st.cnt[name] ?? 0) + 1;
+      st.diff[name] = (st.diff[name] ?? 0) + (v - base);
+    }
   };
 
   for (let i = first; i < first + deals; i++) {
@@ -103,7 +111,7 @@ function run(deals: number, first: number, worlds: number): void {
           if (aces.length) opts['Off-suit Ace'] = aces[0]!;
           if (offs.length) opts['Lowest off-suit'] = lowest(offs, trump);
           const tactic = loner ? 'Loner leads' : 'Makers lead against a lone defender';
-          record(`${tactic}|${trick}, ${nT} trumps, ${boss}`, opts, state, seat);
+          record(`${tactic}|${trick}, ${nT} trumps, ${boss}, ${aces.length ? 'holding an off-suit Ace' : 'no off-suit Ace'}`, opts, state, seat);
         } else if (!onMakers && offs.length) {
           // 2 / 5. A defender's lead.
           const opts: Record<string, Card> = { 'Lowest off-suit': lowest(offs, trump) };
@@ -136,6 +144,27 @@ function run(deals: number, first: number, worlds: number): void {
           const safe = after === 0 ? 'last to play' : isBoss(partnerCard, k, trump) ? "loner still to play, partner's card can't be beaten" : "loner still to play, partner's card could be beaten";
           record(`Defender, partner winning, against a loner|${safe}`, { 'Let it go': lowest(losers, trump), 'Take it': lowest(winners, trump) }, state, seat);
         }
+        // 7. Throwing off against a loner: can't follow suit, and throwing an off-suit card.
+        const led = effectiveSuit(state.current.plays[0]!.card, trump);
+        const cantFollow = !v.hand.some((c) => effectiveSuit(c, trump) === led);
+        const throwable = offs.filter((c) => !wouldWinNow(v, c));
+        if (cantFollow && throwable.length >= 2) {
+          const suitOf = (c: Card) => effectiveSuit(c, trump);
+          const opts: Record<string, Card> = { 'Lowest card': lowest(throwable, trump) };
+          const lone = throwable.filter((c) => throwable.filter((x) => suitOf(x) === suitOf(c)).length === 1 && !isBoss(c, k, trump));
+          if (lone.length) opts['Make a void (a lone card)'] = lowest(lone, trump);
+          const fromLong = throwable.filter((c) => throwable.filter((x) => suitOf(x) === suitOf(c)).length >= 2);
+          if (fromLong.length) opts['From a longer suit (keep every suit)'] = lowest(fromLong, trump);
+          const partnerSuits = state.tricks.filter((t) => t.leader === partnerOf(seat) && !isTrump(t.plays[0]!.card, trump)).map((t) => suitOf(t.plays[0]!.card));
+          const inPartner = throwable.filter((c) => partnerSuits.includes(suitOf(c)));
+          const notPartner = throwable.filter((c) => !partnerSuits.includes(suitOf(c)));
+          if (inPartner.length && notPartner.length) {
+            opts["From partner's suit"] = lowest(inPartner, trump);
+            opts["Keep partner's suit (throw elsewhere)"] = lowest(notPartner, trump);
+          }
+          const who = partnerIsWinning(v) ? 'partner winning' : 'loner winning';
+          record(`Throwing off against a loner|${who}, ${trumps.length ? 'holding trump' : 'no trumps'}, ${trickNo <= 2 ? 'tricks 1-2' : 'tricks 3-4'}`, opts, state, seat);
+        }
       }
 
       state = applyPlay(state, main[seat]!.play(v));
@@ -149,9 +178,13 @@ function combine(files: string[]): void {
   const all: Results = {};
   for (const f of files) {
     for (const [k, s] of Object.entries(JSON.parse(readFileSync(f, 'utf8')) as Results)) {
-      const a = (all[k] ??= { n: 0, sum: {} });
+      const a = (all[k] ??= { n: 0, sum: {}, cnt: {}, diff: {} });
       a.n += s.n;
-      for (const [o, v] of Object.entries(s.sum)) a.sum[o] = (a.sum[o] ?? 0) + v;
+      for (const o of Object.keys(s.sum)) {
+        a.sum[o] = (a.sum[o] ?? 0) + s.sum[o]!;
+        a.cnt[o] = (a.cnt[o] ?? 0) + s.cnt[o]!;
+        a.diff[o] = (a.diff[o] ?? 0) + s.diff[o]!;
+      }
     }
   }
   const fmt = (x: number) => (x >= 0 ? '+' : '') + x.toFixed(2);
@@ -161,7 +194,10 @@ function combine(files: string[]): void {
     out += `\n## ${t}\n\n| Situation | Hands | Results by choice | Best |\n|---|---:|---|---|\n`;
     for (const [k, s] of Object.entries(all).filter(([k]) => k.startsWith(t + '|')).sort(([a], [b]) => a.localeCompare(b))) {
       if (s.n < 150) continue;
-      const opts = Object.entries(s.sum).map(([o, v]) => [o, v / s.n] as const).sort((a, b) => b[1] - a[1]);
+      // Base option's average over all hands, plus each option's paired difference from it.
+      const baseName = Object.keys(s.sum)[0]!;
+      const baseAvg = s.sum[baseName]! / s.n;
+      const opts = Object.keys(s.sum).map((o) => [o + (s.cnt[o]! < s.n ? ` (${Math.round((100 * s.cnt[o]!) / s.n)}% of hands)` : ''), baseAvg + s.diff[o]! / s.cnt[o]!] as const).sort((a, b) => b[1] - a[1]);
       out += `| ${k.split('|')[1]} | ${s.n.toLocaleString()} | ${opts.map(([o, v]) => `${o}: ${fmt(v)}`).join('; ')} | ${opts[0]![0]} |\n`;
     }
   }

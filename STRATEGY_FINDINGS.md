@@ -502,19 +502,23 @@ Full results: `npm run exp:seat`, written to the `results/` folder.
 
 *Experiments run 18 Nov 2026. 160,000 hands bid and played by Monte Carlo bots; about 250,000 card decisions. Whenever a tactic applied, the hand was played out from that exact card each way (all four players Monte Carlo). Numbers are average net points per hand for the deciding player's team. Only four-handed hands (no loners). Gaps under about 0.05 are within noise.*
 
-### 1. Opening lead by the makers: draw with the top trump; never open with an off-suit Ace
+### 1. Opening lead by the makers: draw with the top trump; don't open with an off-suit Ace
 
-| Makers' leader holds… | Highest trump (draw) | Low trump (gone fishing) | Low off-suit | Off-suit Ace |
+> **Corrected 20 Nov 2026.** The first version of this table averaged "Off-suit Ace" over every hand, including hands without one, which made the Ace look much worse than it is. The figures below are from a fresh run (96,000 hands) with the hands split by whether the maker holds an off-suit Ace. The advice is the same, but the Ace's gap is smaller.
+
+| Maker holds… | Highest trump (draw) | Low trump (gone fishing) | Low off-suit | Off-suit Ace |
 |---|---:|---:|---:|---:|
-| 2 trumps, **including the top trump** | **+0.59** | +0.44 | +0.50 | +0.36 |
-| 3+ trumps, **including the top trump** | **+1.07** | +0.77 | +0.95 | +0.38 |
-| 2 trumps, not the top trump | +0.25 | **+0.28** | +0.20 | +0.22 |
-| 3+ trumps, not the top trump | +0.78 | **+0.79** | +0.67 | +0.29 |
+| 2 trumps **including the top trump**, an off-suit Ace | **+0.84** | +0.67 | +0.62 | +0.78 |
+| 3+ trumps **including the top trump**, an off-suit Ace | **+1.28** | +1.02 | +1.05 | +1.01 |
+| 3+ trumps **including the top trump**, no off-suit Ace | **+0.96** | +0.60 | +0.86 | |
+| 2 trumps, not the top trump, an off-suit Ace | +0.43 | **+0.48** | +0.29 | +0.38 |
+| 3+ trumps, not the top trump, an off-suit Ace | +0.95 | **+1.02** | +0.77 | +0.81 |
+| 3+ trumps, not the top trump, no off-suit Ace | +0.63 | **+0.64** | +0.58 | |
 
-- **Holding the top trump outstanding: draw with it.** That's clearly the best lead.
-- **Without it, gone fishing and drawing are equally good.** The difference is within noise.
-- **An off-suit Ace is the makers' worst opening lead,** especially with 3+ trumps (about +0.3 against +1.0). Draw trump first and cash the Ace later.
-- The **maker's partner** leading with one trump should lead it (+0.78, against +0.50 for low off-suit).
+- **Holding the top trump: draw with it.** It's the best lead every time, by about 0.1–0.3 points.
+- **Without it, gone fishing and drawing are about equally good** (gone fishing slightly ahead).
+- **Don't open with the off-suit Ace.** It's never the best lead, usually 0.05–0.3 points behind drawing. Draw first and cash the Ace later.
+- The **maker's partner** leading should lead trump: with 1 trump, +1.15 against +0.99 for the Ace.
 
 ### 2. Opening lead by the defenders: lead an off-suit Ace if you have one; don't lead trump
 
@@ -821,46 +825,51 @@ Full tables: `npm run exp:recheck`, written to the `results/` folder.
 
 *Experiment run 20 Nov 2026. 360,000 deals; about 33,000 loner hands and 13,000 lone-defence hands. Whenever a decision came up, the hand was played out from that exact card each way (all players Monte Carlo). Numbers are average net points per hand for the deciding player's team.*
 
-### 1. The loner: always draw trump while any are out
-| Loner holds… | Highest trump (draw) | Low trump | Low off-suit | Off-suit Ace |
-|---|---:|---:|---:|---:|
-| First lead, 3+ trumps, **with** the top trump | **+1.93** | +0.98 | +1.17 | +0.63 |
-| First lead, 3+ trumps, **without** the top trump | **+1.38** | +0.76 | +0.83 | +0.50 |
-| Later lead, 2 trumps, without the top trump | **+2.20** | +2.11 | +1.08 | +0.60 |
-| Later lead, 1 trump, without the top trump | **+2.16** | | +1.90 | +1.08 |
+> **Corrected 20 Nov 2026.** The first version averaged "Off-suit Ace" over hands without one, which exaggerated its gaps. These tables are from a fresh run (360,000 deals) split by whether the player holds an off-suit Ace. The advice stands; some gaps are smaller.
 
-- **Draw with your highest trump on every lead until the defenders' trumps are gone**, even when you don't hold the top trump. It was best in every situation tested.
-- **Cash the off-suit Ace last.** Leading it early is the loner's worst choice, often a full point or more worse. With your partner out, a defender who is void in that suit just trumps it.
+### 1. The loner: always draw trump while any are out
+| Loner holds (and an off-suit Ace) | Highest trump (draw) | Low trump | Low off-suit | Off-suit Ace |
+|---|---:|---:|---:|---:|
+| First lead, 3+ trumps, **with** the top trump | **+2.48** | +1.31 | +1.60 | +1.85 |
+| First lead, 3+ trumps, **without** the top trump | **+1.91** | +1.11 | +1.17 | +1.41 |
+| Later lead, 2 trumps, with the top trump | **+2.81** | +2.35 | +1.98 | +2.24 |
+| Later lead, 1 trump, with the top trump | **+2.53** | | +1.85 | +2.21 |
+
+- **Draw with your highest trump on every lead until the defenders' trumps are gone**, even when you don't hold the top trump. It was best in all 17 situations tested, usually by 0.3–0.7 points.
+- **Cash the off-suit Ace after the trumps are drawn.** Leading it early costs about 0.3–0.6 points. With your partner out, a defender who is void in that suit just trumps it.
 - Gone fishing (a low trump) doesn't suit a loner: you have no partner to win the trick for you.
 
 ### 2. Defending against a loner: lead off-suit, never trump
 | Defender's first lead | Off-suit Ace | Low off-suit | High off-suit (not an Ace) | Low trump | High trump |
 |---|---:|---:|---:|---:|---:|
-| 1 trump, holding an off-suit Ace | **−2.01** | −2.06 | −2.02 | −2.32 | −2.33 |
-| 1 trump, no off-suit Ace | | **−2.27** | −2.29 | −2.64 | −2.67 |
-| 2 trumps, no off-suit Ace | | **−1.89** | −1.90 | −2.46 | −2.56 |
-| 3+ trumps, no off-suit Ace | | −1.10 | **−1.07** | −1.78 | −2.07 |
+| 1 trump, holding an off-suit Ace | −2.06 | −2.11 | **−2.05** | −2.43 | −2.43 |
+| 1 trump, no off-suit Ace | | **−2.32** | −2.34 | −2.74 | −2.74 |
+| 2 trumps, no off-suit Ace | | **−1.94** | −1.95 | −2.46 | −2.62 |
+| 3+ trumps, no off-suit Ace | | **−1.08** | −1.08 | −1.77 | −2.12 |
 
-- **Never lead trump against a loner.** It costs about 0.3–0.9 points, because it helps the loner draw.
+- **Never lead trump against a loner.** It costs about 0.3–1.0 points, because it helps the loner draw.
 - **Which off-suit card hardly matters** (within about 0.05). Lead the Ace if you have one.
 
 ### 3. Defending against a loner: trump in, and let it go only when it's safe
-- **Trump in when you can't follow and the loner is winning**, every time. Last to play on the first trick, it's worth **+1.4** (−0.76 against −2.16), because it stops the march.
+- **Trump in when you can't follow and the loner is winning**, every time. Last to play on the first trick, it's worth **+1.5** (−0.74 against −2.27), because it stops the march.
 - **Partner winning:** the same rule as Finding 8. Let it go if partner's card is safe (+0.14 to +0.27); take it if the loner, still to play, could beat it (+0.22).
 
 ### 4. Against a lone defender, the makers should NOT draw trump
 | Makers' first lead | Off-suit Ace | Low off-suit | Low trump | Highest trump (draw) |
 |---|---:|---:|---:|---:|
-| 3+ trumps, without the top trump | **−0.46** | −1.53 | −1.53 | −2.13 |
-| 3+ trumps, with the top trump | **−0.03** | −0.15 | −1.07 | −0.78 |
-| 2 trumps, without the top trump | **−1.81** | −2.31 | −2.67 | −3.16 |
-| 2 trumps, with the top trump | −0.97 | **−0.93** | −2.22 | −2.02 |
+| 3+ trumps with the top trump, an off-suit Ace | **−0.20** | **−0.20** | −0.77 | −0.45 |
+| 3+ trumps with the top trump, no off-suit Ace | | **−0.36** | −1.29 | −1.00 |
+| 3+ trumps without the top trump, an off-suit Ace | −1.22 | −1.28 | **−1.20** | −1.86 |
+| 3+ trumps without the top trump, no off-suit Ace | | **−1.51** | −1.56 | −2.22 |
+| 2 trumps without the top trump, an off-suit Ace | **−2.12** | −2.32 | −2.68 | −3.13 |
+| 2 trumps with the top trump, an off-suit Ace | −1.02 | **−0.71** | −2.18 | −2.03 |
 
-- **This is the opposite of normal play.** A lone defender usually holds 3+ good trumps, so drawing just feeds them tricks. **Lead your off-suit Ace, otherwise a low off-suit card,** and make the lone defender use their trumps on your side suits, where your partner can over-trump.
-- The gap is large: about **1–1.7 points per hand** between the off-suit Ace and drawing.
+- **This is the opposite of normal play.** A lone defender usually holds 3+ good trumps, so drawing just feeds them tricks. **Lead off-suit (the Ace or a low card, about equally good)** and make the lone defender use their trumps on your side suits, where your partner can over-trump.
+- **Drawing with your highest trump was the worst or second-worst first lead every time,** about **0.3–1.0 points** behind leading off-suit.
+- **One exception, later in the hand:** if you're down to **one trump and it's the top trump**, cash it (−0.24 against −1.01 for a low off-suit card).
 
 ### 5. The lone defender's own leads
-- **With an off-suit Ace, lead it** (2 trumps: +2.50, against +1.36 for a low trump).
+- **With an off-suit Ace, lead it** (2 trumps: +2.38, against +1.36 for a low trump).
 - **Otherwise lead a low off-suit card;** a low trump is the worst lead.
 - The lone defender is never on the dealer's left (that player has always had their turn before the call, so can't defend alone), so they never lead the first trick.
 
@@ -879,6 +888,42 @@ Full tables: `npm run exp:loner-play`, written to the `results/` folder.
 
 ---
 
+## Finding 14: Leads after the first trick, and throwing off against a loner
+
+*Experiments run 20 Nov 2026. Later leads: 96,000 four-handed hands, about 190,000 lead decisions. Throwing off: about 72,000 decisions in loner hands from the Finding 13 run. Every option was played out from the same position (all players Monte Carlo). Numbers are average net points per hand for the deciding player's team.*
+
+### 1. Leads after the first trick (four-handed)
+Whoever wins a trick leads the next. Options: an **off-suit winner** (an Ace, or a King once the Ace has gone), a low off-suit card, the highest or lowest trump, or leading back a suit your partner led earlier.
+
+| Leader | Holds | Off-suit winner | Low off-suit | Highest trump | Partner's suit |
+|---|---|---:|---:|---:|---:|
+| Makers | the **top trump** (1 trump) | +0.97 | +0.88 | **+1.03** | +0.85 |
+| Makers | the **top trump** (2+ trumps) | +1.18 | +1.16 | **+1.25** | +1.13 |
+| Makers | 1 trump, not the top one | **+0.87** | +0.79 | +0.70 | +0.80 |
+| Makers | 2+ trumps, not the top one | +0.83 | +0.80 | +0.81 | +0.83 |
+| Makers | no trumps | **+0.82** | +0.63 | | +0.66 |
+| Defenders | the top trump, 2+ trumps | **+1.40** | +1.33 | +0.95 | +1.22 |
+| Defenders | 1–2 trumps, not the top one | **+0.06 to +0.47** | −0.02 to +0.46 | −0.22 to +0.20 | −0.01 to +0.46 |
+| Defenders | no trumps | **−0.21** | −0.33 | | −0.27 |
+
+- **Makers holding the top trump: keep drawing with it** (about +0.06 to +0.07 over the next best).
+- **Makers without the top trump: cash an off-suit winner if you have one.** Don't lead a trump that can be beaten.
+- **Defenders: cash an off-suit winner if you have one; otherwise lead low off-suit.** Don't lead trump, even when you hold the top trump: with 2+ trumps, cashing a winner is +1.40 against +0.95 for drawing. As a defender, your trumps are worth more for trumping in.
+- **Leading back your partner's suit was never better than the plain choices.** It's fine, but not a special play.
+
+### 2. Throwing off against a loner: it hardly matters
+When a defender can't follow suit against a loner, the options tried were: the lowest card, making a void (a lone card), a card from a longer suit (keeping something in every suit), and a card from, or away from, the suit their partner led.
+
+- **In almost every situation, all the options were within about 0.03 points of each other.** Which card you throw off barely matters, so **throw your lowest card**.
+- **One small exception, late in the hand (tricks 3–4):** if your partner led a suit earlier, **throw from your partner's suit and keep your own** (−2.56 against −2.66). Your partner is guarding that suit, so you guard the others. It applies in about 3 throw-offs in 10, worth about 0.1 points each.
+
+### Teaching the bots
+The bots already lead this way (draw with the top trump; otherwise an off-suit winner, then a low off-suit card; defenders don't lead trump) and throw their lowest card. No change was needed.
+
+Full tables: `npm run exp:card-play-leads` and `npm run exp:loner-play`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
@@ -889,4 +934,5 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 ---
 
 ## Still to test
-- Card play: later leads (not just the first trick), and throwing off (which card to keep) in loner hands.
+
+Nothing outstanding. New ideas from the league can be tested at any time using the recipe in "Testing a new strategy idea" above.
