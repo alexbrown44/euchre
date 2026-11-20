@@ -20,6 +20,7 @@
     "exp:lead": "npm --prefix engine run exp:lead",
     "exp:next": "npm --prefix engine run exp:next",
     "exp:discard": "npm --prefix engine run exp:discard",
+    "exp:recheck": "npm --prefix engine run exp:recheck",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

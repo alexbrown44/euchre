@@ -8,6 +8,8 @@ These findings come from bots playing hundreds of thousands of hands under leagu
 
 ## Finding 1: Round one, ordering up and picking up
 
+> **Rechecked 20 Nov 2026 with Monte Carlo card play: holds.** One update: on the dealer's right, go alone with 4+ trumps including two top trumps. See Finding 12.
+
 *Experiment run 16 Nov 2026. 200,000 deals and about 640,000 decisions, run twice (the second time with bots retuned from the first run's results).*
 
 ### How it was tested
@@ -74,6 +76,8 @@ Bots retuned with these findings won **60.8%** of games against the original bot
 
 ## Finding 2: Round two, naming trump, and "against colour"
 
+> **Rechecked 20 Nov 2026 with Monte Carlo card play: holds.** Both teams also need 3 trumps to name in round two (the non-dealing team can name next with 2 and an off-suit Ace). See Findings 10 and 12.
+
 *Experiment run 16 Nov 2026 (run 2). 1,000,000 deals, with about 395,000 round-two decisions. The bots were calibrated so round two comes up in about **a third of hands** (33.6%), matching the league's estimate of 30–35%.*
 
 ### How it was tested
@@ -137,6 +141,8 @@ The first run of this experiment (also 16 Nov) used bots whose dealer picked up 
 ---
 
 ## Finding 3: Going alone after the call (defending alone, taking over, answering)
+
+> **Rechecked 20 Nov 2026 with Monte Carlo card play: holds.** One update: defend alone against a loner with 3 trumps including any top trump. See Finding 12.
 
 *Experiment run 16 Nov 2026, three times. Run 3 used 2,000,000 deals and about 1.6 million decisions, with bots calibrated to the league: makers go alone in about **1 hand in 10**, someone defends alone in about 1 in 20, and round two comes up in about a third of hands. All three runs agreed closely, including runs with loners at 1 in 3 and 1 in 7.*
 
@@ -740,6 +746,75 @@ The bots made a void only with a lone 9, 10 or Jack, and kept a lone King or Que
 
 ---
 
+## Finding 12: Findings 1–3 rechecked with strong card play
+
+*Experiment run 20 Nov 2026. 96,000 deals; about 250,000 decisions. Findings 1–3 were first measured with the rule bots' simpler card play. Here each decision was played out every way from the same position with Monte Carlo card play for all four players (league-calibrated bidding). Numbers are the gain over passing, in net points per hand; bold in the tables below = outside noise.*
+
+**Verdict: all three findings hold.** The stronger card play changed the sizes a little but not the advice, apart from three small refinements (marked ✱).
+
+### Round one (Finding 1)
+
+| Seat | Hand | Pick up / order up | Alone | Advice |
+|---|---|---:|---:|---|
+| **Dealer** (trumps incl. the upcard) | 2 trumps | −0.01 to −0.06 | −1.0 | Pass |
+| | 3 trumps | **+0.55 to +0.67** | −0.21 to +0.64 | Pick up |
+| | 3 trumps, 2+ top trumps | +0.55 | **+0.64** | Toss-up: either |
+| | 4+ trumps with a top trump | +1.04 to +1.36 | **+1.55 to +1.83** | Go alone |
+| | 4+ trumps, no top trump | **+1.39** | +1.11 | Pick up |
+| **Dealer's partner** (Up and Down) | 2–3 trumps | | −0.15 to −1.53 | Pass |
+| | 4+ trumps | | **+0.91 to +0.97** | Up and Down |
+| **Left of dealer** | 3 trumps | −0.53 to −0.68 | −0.63 to −1.61 | Pass |
+| | 4+ trumps, 2+ top trumps | −0.09 | **+0.47** | Go alone |
+| **Right of dealer** | 3 trumps | −0.33 to −0.81 | −0.86 to −1.80 | Pass |
+| | 4+ trumps, 1 top trump | −0.11 | −0.46 | Pass |
+| | ✱ 4+ trumps, 2+ top trumps | +0.24 | **+0.43** | Go alone |
+
+✱ Finding 1 said the right of dealer should almost never order up, even with 4 trumps. With strong play, 4+ trumps including two top trumps is worth going alone from the right, which fits Finding 7.
+
+### Round two, the dealing team (Finding 2)
+The non-dealing team was rechecked in Finding 10.
+
+| Who | Hand | Next | Opposite colour |
+|---|---|---:|---:|
+| Dealer's partner | 2 trumps | **−0.36 to −0.81** | **−0.13 to −0.23** |
+| | 3 trumps, no top trump | **−0.31** | **+0.29** |
+| | 3 trumps with a top trump | **+0.12 to +0.32** | **+0.44 to +0.48** |
+| | 4+ trumps | **+0.70 to +0.79** | **+1.09 to +1.25** |
+| Dealer (last to speak) | 2 trumps | −0.23 | −0.27 to −0.88 |
+| | 3 trumps, 1 top trump | – | **+0.32** |
+
+- **Confirmed: the dealing team should prefer the opposite colour.** That's "against colour" for the dealing team. Next is worse in every row.
+- ✱ **The dealing team needs 3 trumps too.** With 2 trumps, pass in either colour. With 3 in next and no top trump, pass.
+- **The dealer, last to speak in round two, should pass with 2 trumps** and let the hand be thrown in. A throw-in scores nothing; naming on 2 trumps loses about 0.25–0.9.
+
+The bots were also tested with this round-two rule for the dealing team: 49.8% (±0.2%) over 200,000 games, no gain. They already call close to it, so it's left off.
+
+### After the call (Finding 3)
+
+| Situation | Hand | Drop vs pass | Advice |
+|---|---|---:|---|
+| Defend alone against two makers | 2 trumps | −0.35 to −0.48 | Pass |
+| | 3 trumps, no top trump | −0.25 | Pass |
+| | **3 trumps with a top trump** | **+0.11 to +0.95** | Defend alone |
+| | 4+ trumps | **+1.05 to +1.85** | Defend alone |
+| Defend alone against a loner | 2 trumps | −0.29 to −1.00 | Pass |
+| | ✱ **3 trumps with a top trump** | **+0.32** | Defend alone |
+| | 3 trumps, no top trump | −0.49 | Pass |
+| Take over partner's loner | 2–3 trumps | **−1.2 to −2.8** | Never |
+| Dealer takes over Up and Down | 2–3 trumps | **−0.4 to −2.4** | Never |
+| Take over partner's lone defence | 2 trumps | −2.55 | Never |
+| Answer a lone defender | 2 trumps | **−2.4 to −2.8** | Never |
+
+✱ Finding 3 said to defend alone against a loner only with 3 trumps including **the Benny**. With strong play, any top trump (Benny, Right or Left) is enough. These hands are rare (about 1 in 200 deals), so the bots weren't changed.
+
+### Finding 4 and the others
+- Finding 4 (the dealer's loner shape) was rechecked with Monte Carlo play in Finding 5, and the discard results (Finding 11) support it from another angle.
+- The round-one seat effects were rechecked in Finding 9, and the non-dealing team's round two in Finding 10.
+
+Full tables: `npm run exp:recheck`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
@@ -750,6 +825,6 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 ---
 
 ## Still to test
-- **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: later leads (not just the first trick), and play in loner hands.
+- Pub-style opponents: give bots common league habits (always lead an off-suit Ace, never let it go, make next with 2 trumps) and look for ways to exploit them.

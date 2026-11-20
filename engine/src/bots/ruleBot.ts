@@ -73,6 +73,11 @@ export interface RuleBotParams {
    */
   round2TrumpRule?: boolean;
   /**
+   * Round two for the dealing team (Finding 12). Defaults to false. Name only with 3+ trumps;
+   * next (same colour as the turned-down card) with exactly 3 trumps also needs a top trump.
+   */
+  round2DealingTeamRule?: boolean;
+  /**
    * The dealer's discard. 'basic' (default): make a void only with a lone 9, 10 or Jack.
    * 'finding11': make a void with any lone card except an Ace (never throw an off-suit Ace or a trump).
    */
@@ -244,6 +249,7 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   best: DEFAULT_PARAMS,
   'best-no-round2-rule': { ...DEFAULT_PARAMS, round2TrumpRule: false },
   'best-basic-discard': { ...DEFAULT_PARAMS, discardRule: 'basic' },
+  'best-dealing-r2': { ...DEFAULT_PARAMS, round2DealingTeamRule: true },
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -381,6 +387,12 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
           const trumps = v.hand.filter((c) => isTrump(c, suit)).length;
           const offAce = v.hand.some((c) => c.kind === 'suited' && c.rank === 'A' && !isTrump(c, suit));
           if (trumps < 2 || (trumps === 2 && !(sameColour && offAce))) continue;
+        }
+        if (p.round2DealingTeamRule && !nonDealerTeam) {
+          // Finding 12: the dealing team needs 3 trumps; next also needs a top trump.
+          const t = v.hand.filter((c) => isTrump(c, suit));
+          const tops = t.filter((c) => trumpRank(c, suit) >= 6).length;
+          if (t.length < 3 || (sameColour && t.length === 3 && tops === 0)) continue;
         }
         if (sameColour === nonDealerTeam) score += p.colourBonus; // follows the usual colour expectation
         if (!best || score > best.score) best = { suit, score };
