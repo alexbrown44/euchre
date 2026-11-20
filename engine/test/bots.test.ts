@@ -137,6 +137,20 @@ test('Finding 8 card play: makers open with a low trump without the top trump, d
   assert.equal(cardId(bot.play({ ...base, hand: withTop, legal: withTop })), 'BENNY', 'draw with the top trump');
 });
 
+test('loner play (Finding 13): the loner draws; makers lead off-suit against a lone defender', () => {
+  const bot = ruleBot({ lonerPlay: true });
+  const base = {
+    seat: 1 as const, dealer: 0 as const, trump: 'H' as const, upcard: parseCard('9C'), maker: 1 as const, makerTeam: 1 as const,
+    sittingOut: [], dealerPickedUp: false, myDiscard: null,
+    current: { leader: 1 as const, plays: [], winner: null }, tricks: [], tricksWon: [0, 0] as const, score: [0, 0] as const, target: 10,
+  };
+  const hand = parseCards('AH 10H AS KC QD');
+  const lonerView = { ...base, makerLoner: 1 as const, loneDefender: null, sittingOut: [3 as const], hand, legal: hand };
+  assert.equal(cardId(bot.play(lonerView)), 'AH', 'loner draws without the top trump');
+  const vsLoneDef = { ...base, makerLoner: null, loneDefender: 0 as const, sittingOut: [2 as const], hand, legal: hand };
+  assert.equal(cardId(bot.play(vsLoneDef)), 'AS', 'off-suit Ace first against a lone defender');
+});
+
 test('Finding 8 card play: bots make legal moves over many games and beat random players', () => {
   const bot = ruleBot({ cardPlay: 'finding8' });
   let wins = 0;

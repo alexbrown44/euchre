@@ -78,6 +78,12 @@ export interface RuleBotParams {
    */
   round2DealingTeamRule?: boolean;
   /**
+   * Leads in loner hands (Finding 13). Defaults to false. A loner always draws with their highest
+   * trump while trumps are out; makers against a lone defender lead an off-suit Ace, else a low
+   * off-suit card, rather than drawing trump.
+   */
+  lonerPlay?: boolean | 'loner' | 'vsLoneDefender';
+  /**
    * The dealer's discard. 'basic' (default): make a void only with a lone 9, 10 or Jack.
    * 'finding11': make a void with any lone card except an Ace (never throw an off-suit Ace or a trump).
    */
@@ -229,6 +235,9 @@ export const DEFAULT_PARAMS: RuleBotParams = {
   round2TrumpRule: true,
   // Finding 11: the dealer makes a void with any lone card except an Ace (50.8% ±0.2 over 200,000 games).
   discardRule: 'finding11',
+  // Finding 13: the loner always draws; makers lead off-suit against a lone defender
+  // (51.7% ±0.2 over 200,000 games).
+  lonerPlay: true,
 };
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
@@ -250,6 +259,9 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   'best-no-round2-rule': { ...DEFAULT_PARAMS, round2TrumpRule: false },
   'best-basic-discard': { ...DEFAULT_PARAMS, discardRule: 'basic' },
   'best-dealing-r2': { ...DEFAULT_PARAMS, round2DealingTeamRule: true },
+  'best-loner-play': { ...DEFAULT_PARAMS, lonerPlay: true },
+  'best-loner-draws': { ...DEFAULT_PARAMS, lonerPlay: 'loner' },
+  'best-vs-lone-defender': { ...DEFAULT_PARAMS, lonerPlay: 'vsLoneDefender' },
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -480,6 +492,14 @@ function play(v: PlayView, p: RuleBotParams): Card {
 
   // Leading.
   if (v.current.plays.length === 0) {
+    if ((p.lonerPlay === true || p.lonerPlay === 'loner') && onMakers && v.makerLoner === v.seat && v.loneDefender === null && trumps.length > 0 && unseenTrumpCount(k, trump) > 0) {
+      return highest(trumps, trump); // Finding 13: the loner always draws while trumps are out.
+    }
+    if ((p.lonerPlay === true || p.lonerPlay === 'vsLoneDefender') && onMakers && v.loneDefender !== null && v.makerLoner === null && nonTrumps.length > 0) {
+      // Finding 13: against a lone defender, lead an off-suit Ace, otherwise a low off-suit card. Don't draw.
+      const aces = nonTrumps.filter((c) => c.kind === 'suited' && c.rank === 'A');
+      return aces.length > 0 ? aces[0]! : lowest(nonTrumps, trump);
+    }
     if (onMakers && trumps.length > 0 && unseenTrumpCount(k, trump) > 0) {
       const top = highest(trumps, trump);
       // Draw trump with the boss, or when holding plenty of trump.

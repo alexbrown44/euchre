@@ -26,6 +26,7 @@
     "exp:next": "node experiments/next-two.ts run 10000 0 && node experiments/next-two.ts combine results/next-two-from0.json",
     "exp:discard": "node experiments/discard.ts run 3000 0 && node experiments/discard.ts combine results/discard-from0.json",
     "exp:recheck": "node experiments/recheck.ts run 2000 0 && node experiments/recheck.ts combine results/recheck-from0.json",
+    "exp:loner-play": "node experiments/loner-play.ts run 10000 0 && node experiments/loner-play.ts combine results/loner-play-from0.json",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

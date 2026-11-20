@@ -815,6 +815,68 @@ Full tables: `npm run exp:recheck`, written to the `results/` folder.
 
 ---
 
+## Finding 13: Card play in loner hands
+
+*Experiment run 20 Nov 2026. 360,000 deals; about 33,000 loner hands and 13,000 lone-defence hands. Whenever a decision came up, the hand was played out from that exact card each way (all players Monte Carlo). Numbers are average net points per hand for the deciding player's team.*
+
+### 1. The loner: always draw trump while any are out
+| Loner holds… | Highest trump (draw) | Low trump | Low off-suit | Off-suit Ace |
+|---|---:|---:|---:|---:|
+| First lead, 3+ trumps, **with** the top trump | **+1.93** | +0.98 | +1.17 | +0.63 |
+| First lead, 3+ trumps, **without** the top trump | **+1.38** | +0.76 | +0.83 | +0.50 |
+| Later lead, 2 trumps, without the top trump | **+2.20** | +2.11 | +1.08 | +0.60 |
+| Later lead, 1 trump, without the top trump | **+2.16** | | +1.90 | +1.08 |
+
+- **Draw with your highest trump on every lead until the defenders' trumps are gone**, even when you don't hold the top trump. It was best in every situation tested.
+- **Cash the off-suit Ace last.** Leading it early is the loner's worst choice, often a full point or more worse. With your partner out, a defender who is void in that suit just trumps it.
+- Gone fishing (a low trump) doesn't suit a loner: you have no partner to win the trick for you.
+
+### 2. Defending against a loner: lead off-suit, never trump
+| Defender's first lead | Off-suit Ace | Low off-suit | High off-suit (not an Ace) | Low trump | High trump |
+|---|---:|---:|---:|---:|---:|
+| 1 trump, holding an off-suit Ace | **−2.01** | −2.06 | −2.02 | −2.32 | −2.33 |
+| 1 trump, no off-suit Ace | | **−2.27** | −2.29 | −2.64 | −2.67 |
+| 2 trumps, no off-suit Ace | | **−1.89** | −1.90 | −2.46 | −2.56 |
+| 3+ trumps, no off-suit Ace | | −1.10 | **−1.07** | −1.78 | −2.07 |
+
+- **Never lead trump against a loner.** It costs about 0.3–0.9 points, because it helps the loner draw.
+- **Which off-suit card hardly matters** (within about 0.05). Lead the Ace if you have one.
+
+### 3. Defending against a loner: trump in, and let it go only when it's safe
+- **Trump in when you can't follow and the loner is winning**, every time. Last to play on the first trick, it's worth **+1.4** (−0.76 against −2.16), because it stops the march.
+- **Partner winning:** the same rule as Finding 8. Let it go if partner's card is safe (+0.14 to +0.27); take it if the loner, still to play, could beat it (+0.22).
+
+### 4. Against a lone defender, the makers should NOT draw trump
+| Makers' first lead | Off-suit Ace | Low off-suit | Low trump | Highest trump (draw) |
+|---|---:|---:|---:|---:|
+| 3+ trumps, without the top trump | **−0.46** | −1.53 | −1.53 | −2.13 |
+| 3+ trumps, with the top trump | **−0.03** | −0.15 | −1.07 | −0.78 |
+| 2 trumps, without the top trump | **−1.81** | −2.31 | −2.67 | −3.16 |
+| 2 trumps, with the top trump | −0.97 | **−0.93** | −2.22 | −2.02 |
+
+- **This is the opposite of normal play.** A lone defender usually holds 3+ good trumps, so drawing just feeds them tricks. **Lead your off-suit Ace, otherwise a low off-suit card,** and make the lone defender use their trumps on your side suits, where your partner can over-trump.
+- The gap is large: about **1–1.7 points per hand** between the off-suit Ace and drawing.
+
+### 5. The lone defender's own leads
+- **With an off-suit Ace, lead it** (2 trumps: +2.50, against +1.36 for a low trump).
+- **Otherwise lead a low off-suit card;** a low trump is the worst lead.
+- The lone defender is never on the dealer's left (that player has always had their turn before the call, so can't defend alone), so they never lead the first trick.
+
+### Teaching the bots
+The bots already defended against loners correctly (off-suit leads, trumping in, let it go only when safe). Two changes were made to their leads:
+
+| Rule added | Win rate vs bots without it |
+|---|---:|
+| **The loner always draws while trumps are out** | **51.4%** (±0.2) ✅ |
+| **Against a lone defender, makers lead an off-suit Ace, else low off-suit** | **50.4%** (±0.2) ✅ |
+| **Both** | **51.7%** (±0.2) ✅ |
+
+Over 200,000 games each, this is **the biggest gain from any rule so far**. Loner hands are only about 1 in 10, but each one swings up to 4 points. Both rules are now on by default for the strongest bots.
+
+Full tables: `npm run exp:loner-play`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
@@ -826,5 +888,5 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 
 ## Still to test
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
-- Card play: later leads (not just the first trick), and play in loner hands.
+- Card play: later leads (not just the first trick), and throwing off (which card to keep) in loner hands.
 - Pub-style opponents: give bots common league habits (always lead an off-suit Ace, never let it go, make next with 2 trumps) and look for ways to exploit them.
