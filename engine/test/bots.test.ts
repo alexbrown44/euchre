@@ -27,6 +27,13 @@ test('discard: throw a low singleton to make a void, keep trump and aces', () =>
   assert.equal(cardId(chooseDiscard(parseCards('JH AH 9S AS 10C KD'), 'H')), '10C', 'drop the low singleton, keep the ace');
 });
 
+test('discard (Finding 11): make a void with any lone card but an Ace; keep Aces and trumps', () => {
+  assert.equal(cardId(chooseDiscard(parseCards('JH AH KH KS 9C 10C'), 'H', 10)), 'KS', 'a lone King goes, to make a void');
+  assert.equal(cardId(chooseDiscard(parseCards('JH AH KH KS 9C 10C'), 'H')), '9C', 'basic rule keeps the lone King');
+  assert.equal(cardId(chooseDiscard(parseCards('JH AH KH AS 9C 10C'), 'H', 10)), '9C', 'never throw the lone Ace');
+  assert.equal(cardId(chooseDiscard(parseCards('JH AH KH QH 10H AS'), 'H', 10)), 'AS', '5 trumps and an Ace: a toss-up, keep the trumps');
+});
+
 test('hand shape: big trumps, outside suits and outside Ace', () => {
   const s = handShape(parseCards('Benny JH AH 9H AS'), 'H');
   assert.deepEqual(s, { trumps: 4, big: 3, outsideSuits: 1, outsideAce: true });

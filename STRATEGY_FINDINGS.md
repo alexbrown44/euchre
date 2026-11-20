@@ -686,6 +686,60 @@ The bots were naming next with only 2 trumps about 80% of the time. That's a com
 
 ---
 
+## Finding 11: The dealer's discard (shape, the off-suit Ace, and voids)
+
+*Experiment run 20 Nov 2026. 120,000 deals; about 50,000 dealer pickups, each played out once for every sensible discard (every off-suit card, and the lowest trump). Monte Carlo card play for all four players, league-calibrated bidding. A turned-up Benny (blind call) is left out.*
+
+**Question:** apart from trumps, is it better to keep **one suit outside**, or **more suits that might include an Ace**?
+
+### 1. Keep the off-suit Ace, even if it means an extra suit
+Off-suit discards from the same hand, compared by the shape they leave. Trumps are counted after the pickup, so they're the same either way. Positive = the first shape is better. Bold = outside noise.
+
+| Trumps | Shape left | vs | Dealer with partner | Dealer alone |
+|---|---|---|---:|---:|
+| 3 | 1 suit, no Ace | 2 suits, **with an Ace** | **−0.21** | – |
+| 2 | 1 suit, no Ace | 2 suits, **with an Ace** | **−0.27** | – |
+| 3 | 1 suit, no Ace | 2 suits, no Ace | **+0.21** | **+0.48** |
+| 3 | 1 suit, **with an Ace** | 2 suits, with an Ace | **+0.20** | **+1.33** |
+| 3 | 1 suit, **with an Ace** | 2 suits, no Ace | **+0.54** | **+1.73** |
+| 4 | 1 suit, no Ace | 1 suit, **with an Ace** | **−0.33** | **−1.52** |
+
+- **The Ace comes first.** Keeping an off-suit Ace is worth about 0.2–0.35 points, more than the 0.2 gained from having one fewer suit.
+- **With the Ace settled, fewer suits are better,** by about 0.2 points with a partner and far more when alone (+0.5 to +1.3).
+- **The best shape is trumps plus one outside suit holding the Ace.** That's the league's dealer-loner rule (Finding 4), and the alone column shows why: +1.33 to +1.73 over two outside suits.
+
+### 2. Never throw a lone off-suit Ace to make a void
+Discarding a lone Ace instead of a low card from another suit: **−0.44** with a partner (−1.75 alone), even when the low card would also make a void. Against a low card from a longer suit it's **−0.18**.
+
+### 3. Make a void with any other lone card, even a King
+Discarding a lone off-suit card (making a void) against the lowest card of a longer suit:
+
+| Lone card | vs 10 or 9 from a 2-card suit | vs Queen or Jack from a 2-card suit | vs King from a 2-card suit |
+|---|---:|---:|---:|
+| 10 or 9 | **+0.23** | **+0.27** | **+0.39** |
+| Queen or Jack | **+0.22** | **+0.24** | **+0.38** |
+| **King** | **+0.13** | **+0.15** | **+0.25** |
+
+Making a void won in **every** case (+0.6 to +1.3 when alone). A lone King is worth less than a void, because the King rarely wins once the Ace is out, while a void lets you trump in.
+
+### 4. Don't throw a trump
+Throwing the lowest trump instead of an off-suit card costs **0.4–0.7 points** with 2–4 trumps (up to 2.3 when alone).
+- **5 trumps and an off-suit Ace (keep the fifth trump or the Ace?):** a toss-up with a partner (−0.04). Alone, throwing the Ace is slightly better (+0.13), so keep the fifth trump.
+- **5 trumps and a non-Ace:** throw the off-suit card and keep all trumps (+0.39 with a partner, +1.76 alone).
+
+### The rule
+**Never throw a trump or an off-suit Ace. Otherwise, make a void if you can (throw any lone card, even a King). If not, throw your lowest card.** The resulting priority: trumps, then the off-suit Ace, then as few outside suits as possible.
+
+### Teaching the bots
+The bots made a void only with a lone 9, 10 or Jack, and kept a lone King or Queen. With the new rule they won **50.8%** (±0.2%) over **200,000 games**, the biggest gain from a single rule so far, because the dealer discards in about half of all hands. It's now on by default for the strongest bots.
+
+### Caveats
+- These compare one discard at a time, with strong (Monte Carlo) play for the rest of the hand.
+- The Benny turned up (a blind call) was left out.
+- Full tables: `npm run exp:discard`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
@@ -699,4 +753,3 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 - **Re-check Findings 1–4 with Monte Carlo card play,** since the rule bots' card play was their main weakness.
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: later leads (not just the first trick), and play in loner hands.
-- The dealer's discard: keep an off-suit Ace or a fifth trump?

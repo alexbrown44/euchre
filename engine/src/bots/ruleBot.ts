@@ -72,6 +72,11 @@ export interface RuleBotParams {
    * only 2 trumps, unless it's next and you hold an off-suit Ace; 3+ trumps as normal.
    */
   round2TrumpRule?: boolean;
+  /**
+   * The dealer's discard. 'basic' (default): make a void only with a lone 9, 10 or Jack.
+   * 'finding11': make a void with any lone card except an Ace (never throw an off-suit Ace or a trump).
+   */
+  discardRule?: 'basic' | 'finding11';
 }
 
 export type SeatRole = 'left' | 'dealersPartner' | 'right' | 'dealer';
@@ -217,6 +222,8 @@ export const DEFAULT_PARAMS: RuleBotParams = {
   // Finding 10: the non-dealing team doesn't name with only 2 trumps in round two, unless it's
   // next and they hold an off-suit Ace (50.5% ±0.2 over 200,000 games).
   round2TrumpRule: true,
+  // Finding 11: the dealer makes a void with any lone card except an Ace (50.8% ±0.2 over 200,000 games).
+  discardRule: 'finding11',
 };
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
@@ -236,6 +243,7 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   'league-rule-score-seat': { ...LEAGUE_RULE_SCORE_PARAMS, seatAware: true },
   best: DEFAULT_PARAMS,
   'best-no-round2-rule': { ...DEFAULT_PARAMS, round2TrumpRule: false },
+  'best-basic-discard': { ...DEFAULT_PARAMS, discardRule: 'basic' },
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -408,7 +416,7 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
     }
 
     case 'discard':
-      return { type: 'discard', card: chooseDiscard(v.hand, v.trump!) };
+      return { type: 'discard', card: chooseDiscard(v.hand, v.trump!, p.discardRule === 'finding11' ? 10 : 2.5) };
 
     default:
       return v.legal[0]!;

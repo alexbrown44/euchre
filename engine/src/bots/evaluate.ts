@@ -60,17 +60,18 @@ export function keepValue(c: Card, trump: Suit): number {
  * leaves a void (a lone card in its suit). Aces are kept over other non-trumps; trump is
  * only discarded if every card is trump.
  */
-export function chooseDiscard(hand: readonly Card[], trump: Suit): Card {
-  const candidates = [...hand].sort((a, b) => discardScore(a, hand, trump) - discardScore(b, hand, trump));
+/** voidBonus 2.5 (basic): only a lone 9, 10 or Jack is thrown to make a void. 10 (Finding 11): any lone non-Ace. */
+export function chooseDiscard(hand: readonly Card[], trump: Suit, voidBonus = 2.5): Card {
+  const candidates = [...hand].sort((a, b) => discardScore(a, hand, trump, voidBonus) - discardScore(b, hand, trump, voidBonus));
   return candidates[0]!;
 }
 
-function discardScore(c: Card, hand: readonly Card[], trump: Suit): number {
+function discardScore(c: Card, hand: readonly Card[], trump: Suit, voidBonus: number): number {
   let v = keepValue(c, trump);
   if (!isTrump(c, trump)) {
     const suit = effectiveSuit(c, trump);
     const inSuit = hand.filter((x) => effectiveSuit(x, trump) === suit).length;
-    if (inSuit === 1 && !(c.kind === 'suited' && c.rank === 'A')) v -= 2.5; // discarding it makes a void
+    if (inSuit === 1 && !(c.kind === 'suited' && c.rank === 'A')) v -= voidBonus; // discarding it makes a void
   }
   return v;
 }
