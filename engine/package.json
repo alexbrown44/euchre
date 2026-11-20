@@ -23,6 +23,7 @@
     "exp:seat": "node experiments/seat-strong-hands.ts run 25000 0 && node experiments/seat-strong-hands.ts combine results/seat-strong-from0.json",
     "exp:card-play": "node experiments/card-play.ts run 6000 0 && node experiments/card-play.ts combine results/card-play-from0.json",
     "exp:lead": "node experiments/lead-seat.ts run 2000 0 && node experiments/lead-seat.ts combine results/lead-seat-from0.json",
+    "exp:next": "node experiments/next-two.ts run 10000 0 && node experiments/next-two.ts combine results/next-two-from0.json",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

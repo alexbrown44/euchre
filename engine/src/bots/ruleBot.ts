@@ -67,6 +67,11 @@ export interface RuleBotParams {
   cardPlay?: 'basic' | 'finding8';
   /** With cardPlay 'finding8': which of its three rules to use (all by default). For testing. */
   finding8Rules?: { lead?: boolean; takeIt?: boolean; weakLow?: boolean };
+  /**
+   * Round two for the non-dealing team (Finding 10). Defaults to false. Don't name a suit with
+   * only 2 trumps, unless it's next and you hold an off-suit Ace; 3+ trumps as normal.
+   */
+  round2TrumpRule?: boolean;
 }
 
 export type SeatRole = 'left' | 'dealersPartner' | 'right' | 'dealer';
@@ -209,6 +214,9 @@ export const DEFAULT_PARAMS: RuleBotParams = {
   // (gone fishing lead 48.8%, weak defender going low 49.4%): they need strong follow-up play.
   cardPlay: 'finding8',
   finding8Rules: { lead: false, takeIt: true, weakLow: false },
+  // Finding 10: the non-dealing team doesn't name with only 2 trumps in round two, unless it's
+  // next and they hold an off-suit Ace (50.5% ±0.2 over 200,000 games).
+  round2TrumpRule: true,
 };
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
@@ -227,6 +235,7 @@ export const PARAM_SETS: Record<string, RuleBotParams> = {
   'shape-score-seat': SEAT_AWARE_PARAMS,
   'league-rule-score-seat': { ...LEAGUE_RULE_SCORE_PARAMS, seatAware: true },
   best: DEFAULT_PARAMS,
+  'best-no-round2-rule': { ...DEFAULT_PARAMS, round2TrumpRule: false },
   /** For testing the colour rule on its own: round-two tuned, but ignoring colour. */
   'round2-no-colour': { ...ROUND2_TUNED_PARAMS, colourBonus: 0 },
 };
@@ -360,6 +369,11 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
         if (suit === banned) continue;
         let score = strength(v.hand, suit);
         const sameColour = banned !== null && suit === sameColourSuit(banned);
+        if (p.round2TrumpRule && nonDealerTeam) {
+          const trumps = v.hand.filter((c) => isTrump(c, suit)).length;
+          const offAce = v.hand.some((c) => c.kind === 'suited' && c.rank === 'A' && !isTrump(c, suit));
+          if (trumps < 2 || (trumps === 2 && !(sameColour && offAce))) continue;
+        }
         if (sameColour === nonDealerTeam) score += p.colourBonus; // follows the usual colour expectation
         if (!best || score > best.score) best = { suit, score };
       }

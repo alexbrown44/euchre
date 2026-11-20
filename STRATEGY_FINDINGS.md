@@ -627,12 +627,62 @@ Call against pass for the same hand shape. If the left player's team makes trump
 - **The left seat's real advantage is first say in round two.** With strong hands (2+ top trumps), pass more readily in round one from the left than from the right. Finding 7 is the extreme case of this.
 - **As a defender, the back hand beats the lead** when you hold trumps.
 
-No bot change was needed: the seat-aware rules from Finding 7 already cover the hands where this matters.
+No bot change was needed: the seat-aware rules from Finding 7 already cover the hands where this matters. (Finding 10 follows up the round-two result.)
 
 ### Caveats
 - With strong players everywhere, the lead may matter less than at the pub, where an early lead can set the tone. The test can't measure that.
 - Only four-handed hands; loners leave out a player and change who leads.
 - Full tables: `npm run exp:lead`, written to the `results/` folder.
+
+---
+
+## Finding 10: Making next needs 3 trumps (or 2 and an off-suit Ace)
+
+*Experiment run 20 Nov 2026. 240,000 deals; about 130,000 round-two decisions by the non-dealing team. Every suit the player could name with 2+ trumps was played out against passing, from the same position. Monte Carlo card play for all four players, league-calibrated bidding.*
+
+**Question:** Finding 2 says the non-dealing team should make next. Finding 9 says the dealer's left should pass in round two with only 2 trumps. Which wins when the 2 trumps are in next?
+
+### Both are right: next is much better, but 2 trumps still isn't enough
+Gain from naming the suit (partner kept) instead of passing, for the player on the **dealer's left**. Bold = outside noise.
+
+| Trumps in the suit | Top trumps | **Next** | Opposite colour |
+|---|---|---:|---:|
+| 2 | none | **−0.23** | **−0.67** |
+| 2 | 1 | **−0.20** | **−0.60** |
+| 2 | 2+ | **−0.18** | **−0.53** |
+| 3+ | none | **+0.39** | +0.04 |
+| 3+ | 1 | **+0.50** | **+0.14** |
+| 3+ | 2+ | **+0.71** | **+0.30** |
+
+*(Top trumps = the Benny, Right and Left in that suit.)*
+
+- **Next is worth about 0.4 points more than the opposite colour** for every hand shape. Finding 2 holds strongly.
+- **But with only 2 trumps, even next loses** (about −0.2). Passing is better, because your partner and the dealer's right still get a turn.
+- **With 3 trumps, make next** even without a top trump (+0.39). The opposite colour needs a top trump to pay.
+
+### The off-suit Ace tips the 2-trump hands
+
+| 2 trumps in next, top trumps | With an off-suit Ace | Without |
+|---|---:|---:|
+| none | −0.11 | **−0.36** |
+| 1 | −0.09 | **−0.32** |
+| 2+ | +0.04 | **−0.31** |
+
+- **2 trumps in next plus an off-suit Ace is about break-even.** Naming is fine.
+- **2 trumps in next with no off-suit Ace: pass** (about −0.3).
+- In the opposite colour, 2 trumps loses even with an Ace (−0.40 to −0.57).
+
+The dealer's right (speaking third) shows the same pattern, from fewer hands: 2 trumps loses (−0.2 to −0.5), and 3 trumps in next pays well (+0.79 to +0.88).
+
+### The rule
+**Non-dealing team in round two: make next with 3 trumps, or with 2 trumps and an off-suit Ace. Don't name the opposite colour with only 2 trumps.**
+
+### Teaching the bots
+The bots were naming next with only 2 trumps about 80% of the time. That's a common hand: a left-of-dealer player holds 2 trumps in next in round two in about 1 deal in 8. With the new rule, the bots won **50.5%** (±0.2%) over **200,000 games**. It's a small gain but a real one, unlike the rare-hand rules of Finding 7. It's now on by default for the strongest bots.
+
+### Caveats
+- At the pub, "make next" with 2 trumps may be the common habit. The test assumes the passing player's partner and the dealer's right call sensibly after them.
+- Full tables: `npm run exp:next`, written to the `results/` folder.
 
 ---
 

@@ -18,6 +18,7 @@
     "exp:seat": "npm --prefix engine run exp:seat",
     "exp:card-play": "npm --prefix engine run exp:card-play",
     "exp:lead": "npm --prefix engine run exp:lead",
+    "exp:next": "npm --prefix engine run exp:next",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }

@@ -59,4 +59,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 8: win-chance table and score-aware calling experiment
 - [x] Sessions 8-9: score-aware and seat-aware bots, card-play experiments (Finding 8)
 - [x] Session 10: Finding 8 rules taught to bots (takeIt only); lead and seat experiment (Finding 9)
-- [ ] Next: recheck Findings 1-4 with Monte Carlo play, later leads, loner card play
+- [x] Session 11: round-two next rule (Finding 10), taught to bots
+- [ ] Next: dealer discard test, recheck Findings 1-4 with Monte Carlo play, later leads, loner card play
