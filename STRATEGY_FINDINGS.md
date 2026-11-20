@@ -889,4 +889,3 @@ New ideas from league play can be tested at any time, the same way as Findings 4
 ## Still to test
 - Build win-chance tables for games to 15 and 20, and check the score rules there.
 - Card play: later leads (not just the first trick), and throwing off (which card to keep) in loner hands.
-- Pub-style opponents: give bots common league habits (always lead an off-suit Ace, never let it go, make next with 2 trumps) and look for ways to exploit them.
