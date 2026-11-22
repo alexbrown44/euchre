@@ -64,4 +64,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 11c: Findings 1-3 rechecked with Monte Carlo play (Finding 12)
 - [x] Session 11d: loner card play (Finding 13), taught to bots
 - [x] Session 11e: later leads and loner throw-offs (Finding 14); fixed averaging bug in card-play and loner-play (Findings 8 and 13 corrected)
-- [ ] Next: the strategy guide, then the app
+- [x] Session 12: league hand test, dealer with Q-10-9 (Finding 15)
+- [ ] Next: more league hand tests if any, then the strategy guide and the app

@@ -924,6 +924,50 @@ Full tables: `npm run exp:card-play-leads` and `npm run exp:loner-play`, written
 
 ---
 
+## Finding 15: Worked example: should the dealer make on Queen, 10, 9?
+
+*Experiment run 22 Nov 2026, a league question. 48,000 samples: about 43,000 round-one decisions and 45,000 round-two decisions. The dealer's hand is fixed to the shape being tested; everything else is dealt at random each time. Monte Carlo card play for all four players, league-calibrated bidding. Bold in the tables = outside noise.*
+
+**The hand:** Queen, 10 and 9 of trumps (no Benny, Right, Left, Ace or King) plus two outside cards, in four shapes. In round one, one of the three is the upcard, so the dealer's count **includes the card picked up**.
+
+### Round one: always pick up (with your partner)
+Everyone has passed to the dealer. Gain over passing, in net points per hand:
+
+| Shape | Pick up | Go alone | If you pick up: made 3–4 | Marched | Euchred |
+|---|---:|---:|---:|---:|---:|
+| **One outside suit, with its Ace** | **+0.82** | +0.11 | 60% | 12% | 29% |
+| One outside suit, no Ace | **+0.63** | −0.62 | 52% | 7% | 41% |
+| Two outside suits, one card an Ace | **+0.58** | −0.26 | 55% | 8% | 37% |
+| Two outside suits, no Ace | **+0.30** | −0.90 | 45% | 4% | 51% |
+
+- **Pick it up, whatever the shape.** Even the weakest shape (two suits, no Ace), which is euchred half the time, does better than passing.
+- **Why?** Passing is worse. If the dealer passes, the opponents name trump in round two about **4 times in 5** and make it most of the time. The dealer's three trumps are then mostly wasted: their suit was turned down, so it can't be trump.
+- **Never go alone** on this hand. Picking up with your partner beats it by 0.7–1.3 points.
+- **The shape matters as Finding 11 predicts:** one outside suit with its Ace is best, two outside suits with no Ace is worst. The Ace is worth about 0.2–0.3 points; one fewer outside suit, about 0.05–0.25.
+
+### Round two: it's come back to you as the dealer, last to speak
+The dealer holds Q-10-9 of a suit that wasn't turned down. Passing means the hand is thrown in (0 points).
+
+| Shape | Name it: next | Name it: opposite colour |
+|---|---:|---:|
+| **One outside suit, with its Ace** | **+0.61** | **+0.15** |
+| One outside suit, no Ace | +0.06 | **−0.69** |
+| Two outside suits, one card an Ace | **+0.23** | **−0.34** |
+| Two outside suits, no Ace | **−0.42** | **−1.04** |
+
+- **Next: name it if you have an off-suit Ace.** With one outside suit and no Ace it's break-even; with two suits and no Ace, pass and let it be thrown in.
+- **Opposite colour: only with one outside suit and its Ace** (+0.15). Otherwise pass.
+- **Next does better than the opposite colour here.** By the time it comes round to the dealer, the non-dealing team has passed on next twice, which suggests they're weak in that colour. This differs from the dealer's partner in Finding 12, who speaks before the opponents have shown anything.
+- Never go alone.
+
+### The short version
+- **Round one, dealer with Q-10-9 (counting the upcard): pick up.** Best with one outside suit and its Ace, still right with two suits and no Ace.
+- **Round two, last to speak: name next with an off-suit Ace; name the opposite colour only with one outside suit and its Ace; otherwise let it be thrown in.**
+
+Full tables: `npm run exp:dealer-q109`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:

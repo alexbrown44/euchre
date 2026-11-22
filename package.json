@@ -23,6 +23,7 @@
     "exp:recheck": "npm --prefix engine run exp:recheck",
     "exp:loner-play": "npm --prefix engine run exp:loner-play",
     "exp:card-play-leads": "npm --prefix engine run exp:card-play-leads",
+    "exp:dealer-q109": "npm --prefix engine run exp:dealer-q109",
     "exp:head-to-head": "npm --prefix engine run exp:head-to-head"
   }
 }
