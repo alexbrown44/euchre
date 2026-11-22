@@ -29,6 +29,7 @@
     "exp:loner-play": "node experiments/loner-play.ts run 10000 0 && node experiments/loner-play.ts combine results/loner-play-from0.json",
     "exp:card-play-leads": "node experiments/card-play.ts run 3000 200000 20 \"Opening lead (makers),Later lead\" && node experiments/card-play.ts combine results/card-play-opening-lead-makers-later-lead-from200000.json",
     "exp:dealer-q109": "node experiments/dealer-q109.ts run 1000 0 && node experiments/dealer-q109.ts combine results/dealer-q109-from0.json",
+    "exp:dealer-right2": "node experiments/dealer-right2.ts run 1000 0 && node experiments/dealer-right2.ts combine results/dealer-right2-from0.json",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

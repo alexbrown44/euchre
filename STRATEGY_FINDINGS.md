@@ -968,6 +968,32 @@ Full tables: `npm run exp:dealer-q109`, written to the `results/` folder.
 
 ---
 
+## Finding 16: Worked example: should the dealer pick up with two trumps, one the Right Bower?
+
+*Experiment run 22 Nov 2026, a league question. 48,000 samples, about 45,000 round-one decisions. Same method as Finding 15. Round one only: everyone has passed to the dealer.*
+
+**The hand after picking up:** the Right Bower plus one other trump (9, 10, Queen, King or Ace), and three outside cards in four shapes. One of the two trumps is the upcard. Gain over passing, in net points per hand (all outside noise):
+
+| Shape (three outside cards) | **Right Bower turned up** | **Dealer holds the Right**, other trump turned up | If you pick up: euchred |
+|---|---:|---:|---:|
+| One suit, with its Ace | **+0.55** | **+0.36** | 33% |
+| One suit, no Ace | **+0.45** | **+0.42** | 38–41% |
+| Two suits, one card an Ace | **+0.43** | **+0.28** | 35% |
+| Two suits, no Ace | **+0.31** | **+0.08** | 45–46% |
+
+- **Pick it up in every shape.** With the Right Bower and one more trump, picking up beats passing, though it's euchred about a third of the time.
+- **It's stronger when the Right Bower is the card turned up** (by about 0.1–0.2). Everyone has seen it go to the dealer, and the opponents have passed in round one knowing that.
+- **The weakest case is close:** the dealer holds the Right, a low trump is turned up, and there are two outside suits with no Ace. That's only +0.08.
+- **The second trump hardly matters:** an Ace or King scored within about 0.05 of a 9, 10 or Queen.
+- **Never go alone:** it loses 0.5–1.2 points against passing.
+- **Why picking up pays:** as in Finding 15, passing is worse. After a pass the opponents name trump in round two more than half the time, and your Right Bower is no longer a top trump in their suit.
+
+**How this fits Finding 12.** Finding 12 found the dealer with 2 trumps including a top trump roughly break-even (−0.05). That average included hands where the top trump is only the Left Bower, and hands with **three** outside suits, the worst shape after picking up. This test covers one or two outside suits. So the rule is: **with the Right Bower and one more trump, pick up if your outside cards are in at most two suits.** With three outside suits, expect it to be roughly break-even or worse (untested).
+
+Full tables: `npm run exp:dealer-right2`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:
