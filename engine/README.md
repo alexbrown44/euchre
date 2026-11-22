@@ -65,4 +65,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 11d: loner card play (Finding 13), taught to bots
 - [x] Session 11e: later leads and loner throw-offs (Finding 14); fixed averaging bug in card-play and loner-play (Findings 8 and 13 corrected)
 - [x] Session 12: league hand tests, dealer with Q-10-9 (Finding 15) and Right Bower + 1 (Finding 16)
-- [ ] Next: more league hand tests if any, then the strategy guide and the app
+- [x] Session 13: strategy guide for league players (`../STRATEGY_GUIDE.md`), built from Findings 1–16
+- [ ] Next: the playable app, then hints, tutorial and quizzes
