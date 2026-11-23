@@ -48,7 +48,7 @@ Go alone with **3 big trumps and one outside suit holding its Ace**, the league 
 
 ### After the call
 - **Defend alone** against two makers with **3 trumps including a top trump**. Against a loner, the same.
-- **Never** take over your partner's loner, take over a lone defence, or answer a lone defender.
+- **Don't take over your partner's loner or lone defence, and don't answer a lone defender** (the maker's partner dropping the player who chose trump). These lost in every hand tested. Defending alone **against** a loner is different, and fine with the hand above.
 - The dealer takes over Up and Down only with **4 trumps** after picking up.
 
 ### The discard
@@ -199,25 +199,38 @@ If it's come all the way round, passing means a **throw-in** (no score).
 |---|---|---|
 | **Defend alone against two makers** | **3 trumps including a top trump.** Clearly with 4. | +0.11 to +0.95; with 4, +1.05 to +1.85 |
 | **Defend alone against a loner** | **3 trumps including a top trump** | +0.32 |
-| **Take over your partner's loner** | **Never** | −1.2 to −2.8 |
+| **Take over your partner's loner** | **Don't** (lost in every hand tested) | −1.2 to −2.8 |
 | **Dealer takes over Up and Down** | Only with **4 trumps** after picking up | (with 2–3, −0.4 to −2.4) |
-| **Take over your partner's lone defence** | **Never** | −2.55 |
-| **Answer a lone defender** | **Never** | −2.4 to −2.8 |
+| **Take over your partner's lone defence** | **Don't** (lost in every hand tested) | −2.55 |
+| **Answer a lone defender** | **Don't** (lost in every hand tested) | −2.4 to −2.8 |
 
 **(F3, F12)**
+
+### Who drops first matters
+These situations sound alike at the table but are very different:
+
+| What happens | What it's called | Advice |
+|---|---|---|
+| A maker drops (goes alone), then a defender drops | **Defending alone against a loner** | ✔ With 3 trumps including a top trump |
+| The makers call with partners, a defender drops, then the **maker's partner** drops in reply | **Answering a lone defender** | ✘ Don't |
+| Your partner goes alone, and you drop them to go alone yourself | **Taking over a partner's loner** | ✘ Don't |
+| Your partner defends alone, and you drop them to defend alone yourself | **Taking over a lone defence** | ✘ Don't |
+
+**How firm is "don't"?** These lost in every hand tested, usually by 1–3 points. The tests mostly covered hands with 2–3 trumps. With a very strong hand (say 4 trumps including the Benny) one of them might occasionally pay, but those hands are too rare to measure. The one known exception is the dealer taking over Up and Down with 4 trumps, below.
 
 - **Defending alone pays more often than you'd think.**
   - **Why:** without your partner you euchre less often (with 3 trumps including a top trump, about 29% instead of 47%), but each euchre is worth **4 instead of 2**. With 3 good trumps, the bigger prize outweighs the fewer euchres.
 - **Defending alone against a loner needs the same strength.**
   - **Likely why (untested):** against a single opponent, your partner's cards help less, so dropping them costs less. But a loner is usually strong, so you still need 3 trumps with a top trump to stop them.
-- **Never take over your partner's loner.**
+- **Don't take over your partner's loner.**
   - **Likely why (untested):** your partner only went alone on a very strong hand, and chose trump to suit it. Taking over throws that hand away and replaces it with yours, which wasn't strong enough for you to call.
 - **The dealer takes over Up and Down only with 4 trumps.**
   - **Why:** if the dealer takes over, they pick up the upcard and discard, which the partner can't. With 4 trumps after picking up, that can make the dealer's hand the stronger one.
-- **Never take over your partner's lone defence.**
+- **Don't take over your partner's lone defence.**
   - **Likely why (untested):** the same reason as a partner's loner. They chose to defend alone on a strong hand.
-- **Never answer a lone defender.**
-  - **Likely why (untested):** a lone defender holds strong trumps. Answering removes half your team's cards while the euchre still costs you 4. It only helps them.
+- **Don't answer a lone defender.**
+  - **Why:** under league rules, the maker's partner who answers drops **their partner, the player who chose trump**. The hand built around that trump suit sits out, and a euchre still costs 4.
+  - **Likely why (untested):** a lone defender holds strong trumps. Taking on that player with only half your team's cards, and without the hand that picked trump, plays into their hands.
 
 ---
 
@@ -407,7 +420,7 @@ Everyone has passed to you in round one. Three outside cards.
 - **Against a lone defender, don't draw trump.** It's the opposite of every other hand: their trumps are strong, so make them spend those trumps on your side suits.
 - **The league's dealer-loner rule is a sound, safe version** of the data. It could go alone a little more with an outside Ace.
 - **Defending alone with 3 trumps and a top trump pays,** against two makers or a loner, because each euchre is worth 4.
-- **Answering a lone defender, or taking over a partner's loner, is always wrong.**
+- **Answering a lone defender, or taking over a partner's loner, lost in every hand tested.** Answering drops the very player who chose trump. (Defending alone *against* a loner is a different situation, and often right.)
 
 ---
 
