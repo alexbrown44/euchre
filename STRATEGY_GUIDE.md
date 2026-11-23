@@ -430,6 +430,7 @@ Everyone has passed to you in round one. Three outside cards.
 - **Ordering up with 3 trumps is a mistake from the left or right of the dealer.** It feels strong, but it hands the dealer a trump and a discard.
 - **The opening lead is barely an advantage.** About 0.03 points per hand. The dealer's left gains from first say in round two, not from leading.
 - **"Make next" still needs 3 trumps** (or 2 and an off-suit Ace). Next is clearly better than the opposite colour, but 2 bare trumps rarely make 3 tricks.
+- **The dealer, last to speak in round two, should make next**, the reverse of the dealing team's usual "against colour". "Avoid next" is a guess about the dealer's hand, and the dealer can see their own. Both opponents passing on next also suggests they're weak in it. With Q-10-9, next beat the opposite colour by about 0.5 points in every shape tested.
 - **Don't open with your off-suit Ace as a maker.** Draw first, so nobody can trump it.
 - **Make a void with a lone King.** Most players keep it; a void that lets you trump in is worth more.
 - **Q-10-9 is a pick-up for the dealer**, in every shape. Passing is worse, because the opponents usually take over in round two.
