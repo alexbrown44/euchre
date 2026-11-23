@@ -957,7 +957,7 @@ The dealer holds Q-10-9 of a suit that wasn't turned down. Passing means the han
 
 - **Next: name it if you have an off-suit Ace.** With one outside suit and no Ace it's break-even; with two suits and no Ace, pass and let it be thrown in.
 - **Opposite colour: only with one outside suit and its Ace** (+0.15). Otherwise pass.
-- **Next does better than the opposite colour here.** By the time it comes round to the dealer, the non-dealing team has passed on next twice, which suggests they're weak in that colour. This differs from the dealer's partner in Finding 12, who speaks before the opponents have shown anything.
+- **Next does better than the opposite colour here.** By the time it comes round to the dealer, both opponents have passed in round two. The non-dealing team makes next readily, so their passes suggest they're weak in that colour; they'd need a stronger hand to name the opposite colour, so their passes say less about it (untested reasoning). The dealer's partner in Finding 12 has seen only one opponent pass in round two, and the "avoid next" hint is about the dealer's hand, which the dealer can see.
 - Never go alone.
 
 ### The short version

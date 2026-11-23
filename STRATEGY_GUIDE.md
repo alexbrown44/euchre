@@ -188,8 +188,9 @@ If it's come all the way round, passing means a **throw-in** (no score).
   - **Next:** name it if you hold an **off-suit Ace** (+0.23 to +0.61). Otherwise pass.
   - **Opposite colour:** only with **one outside suit and its Ace** (+0.15). Otherwise pass.
   - **Likely why (untested):** three low trumps win tricks only after the higher trumps have gone. The Ace supplies a trick of its own, which is often the difference between 2 tricks and 3.
-- **Late in round two, next looks better for the dealer** than it does for the dealer's partner.
-  - **Likely why (untested):** by the time it reaches the dealer, both opponents have passed on next twice, which suggests they're weak in that colour.
+- **For the dealer, last to speak, next is better than the opposite colour**, the reverse of the dealer's partner's "against colour" rule. With Q-10-9, next beat the opposite colour by about 0.5 points in every shape tested. **(F15)**
+  - **Why "avoid next" doesn't apply here:** that rule is a guess about the **dealer's** hand: turning the card down hints the dealer is short in that colour. The dealer's partner has to guess. The dealer doesn't: they can see they hold three trumps in next.
+  - **Likely why (untested) next is actually better:** by the time it reaches the dealer, **both opponents have passed in round two**. The non-dealing team names next readily (with 3 trumps, or 2 and an Ace), so their passing suggests neither of them holds much in next. They need a stronger hand to name the opposite colour, so their passes say less about it, and one of them may still be strong there. In short, the opponents' passes have told you next is the safer suit.
 - **Never go alone on a 3-trump hand.**
 
 ### Going alone in round two
@@ -385,7 +386,7 @@ Everyone has passed to you in round one. Two outside cards.
 - **Why:** if you pass, the opponents name trump about 4 times in 5 and usually make it, and your three trumps can't be trump in round two.
 
 **Round two: name next with an off-suit Ace; the opposite colour only with one outside suit and its Ace.**
-- **Likely why (untested):** low trumps need help to reach 3 tricks, and an Ace is the most reliable help. Next is better than the opposite colour here because both opponents have already passed on it twice.
+- **Likely why (untested):** low trumps need help to reach 3 tricks, and an Ace is the most reliable help. Next is better than the opposite colour here because both opponents passed in round two, when the non-dealing team would usually make next on a decent hand. So they're probably weak in next.
 
 ### Dealer with the Right Bower plus one trump **(F16)**
 Everyone has passed to you in round one. Three outside cards.
