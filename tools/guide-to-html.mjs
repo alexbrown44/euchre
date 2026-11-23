@@ -75,6 +75,11 @@ while (i < lines.length) {
 }
 html += '</section>';
 
+// Explanation notes: "Why:" (measured, or follows from the rules) and "Likely why (untested):" (reasoning).
+html = html
+  .replace(/<li><strong>Why:<\/strong>/g, '<li class="why"><strong>Why:</strong>')
+  .replace(/<li><strong>Likely why \(untested\):<\/strong>/g, '<li class="likely"><strong>Likely why (untested):</strong>');
+
 const page = `<!doctype html>
 <html lang="en-GB"><head><meta charset="utf-8"><title>${esc(title)}</title>
 <style>
@@ -112,6 +117,11 @@ const page = `<!doctype html>
   section.card table { background: #fff; }
   section.card ul { margin-bottom: 1.5mm; }
   section.card li { margin-bottom: .6mm; }
+  li.why, li.likely { list-style: none; margin: 1mm 0 1.4mm -4mm; padding: 1mm 2.5mm; border-left: 2pt solid; border-radius: 0 1.5mm 1.5mm 0; font-size: 9pt; break-inside: avoid; }
+  li.why { background: var(--green-soft); border-color: var(--green); }
+  li.why strong:first-child { color: var(--green); }
+  li.likely { background: var(--gold-soft); border-color: var(--gold); }
+  li.likely strong:first-child { color: #8a6418; font-style: italic; }
   .footer-note { margin-top: 6mm; font-size: 8pt; color: var(--muted); border-top: .5pt solid var(--line); padding-top: 2mm; }
 </style></head><body>
 <div class="cover">
