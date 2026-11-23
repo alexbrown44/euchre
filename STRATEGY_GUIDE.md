@@ -31,9 +31,9 @@ The simulations prove **what** works. They don't always show **why**. So each ex
 ### Round one
 | Seat | Order up / pick up with… | Go alone with… |
 |---|---|---|
-| **Left of dealer** | Almost never. Pass with 3 trumps. | 4+ trumps including **two** top trumps. **Benny + Right + Left: pass** (you name next in round two). |
+| **Left of dealer** | Almost never. Pass with 3 trumps. | 4+ trumps including **two** top trumps, or any 5 trumps. **Benny + Right + Left: pass** (you name next in round two). |
 | **Dealer's partner** | Up and Down with **4+ trumps** (always alone) | Same |
-| **Right of dealer** | Almost never. Pass with 3, and with 4 if only one top trump. | 4+ trumps including **two** top trumps. **Benny + Right + Left: go alone.** |
+| **Right of dealer** | Almost never. Pass with 3, and with 4 if only one top trump. | 4+ trumps including **two** top trumps, or any 5 trumps. **Benny + Right + Left: go alone.** |
 | **Dealer** | **3 trumps.** Also the **Right Bower + 1**, unless your outside cards are in three different suits. | See *The dealer's loner* below |
 
 ### Round two
@@ -84,6 +84,7 @@ When you order up from the dealer's left or right, the upcard goes into the **de
 - **4+ trumps with two top trumps: go alone** (+0.47 over passing). **(F12)**
   - **Likely why (untested):** holding two of the three top trumps plus two more, you can usually draw all the opponents' trumps yourself, and you lead first, so you start drawing at once. Your partner adds little to a hand that strong.
 - **4 trumps with one top trump:** close. Passing is fine.
+- **5 trumps: go alone.** Too rare to test from this seat; the reasoning is the same as for the dealer's right, below.
   - **Likely why (untested):** with only one of the top three, the opponents may hold the other two, which makes a march (the only way a loner gains) much less likely.
 - **Benny + Right + Left: pass.** This is the league's seat theory, and it's right. Pass +2.19, alone +2.09, order up +1.42. **(F7)**
   - **Why:** after you pass, about 77% of the time the dealer turns it down and you name trump first in round two (worth +2.25). The other 23%, the dealer picks up into your three top trumps and you euchre them (+2.00). Naming **next** costs you nothing: the Benny is still trump, your Left Bower becomes the Right, and your Right becomes the Left.
@@ -100,7 +101,10 @@ When you order up from the dealer's left or right, the upcard goes into the **de
 ### Right of dealer
 - **3 trumps: pass** (ordering up loses 0.3–0.8).
   - **Likely why (untested):** the same as on the left: the dealer gains a trump and a discard. Your partner (on the dealer's left) leads the first trick, but the dealer, holding the extra trump, plays last to it and sees everyone's cards before choosing. The tests found passing even more clearly right from this seat than from the left; why is untested.
-- **4+ trumps with one top trump: pass.**
+- **4 trumps with one top trump: pass**, but it's close. Ordering up was 0.11 worse than passing in the main test, and about even in another. **(F7, F9, F12)**
+  - **Likely why (untested):** if the dealer picks up, your 4 trumps are sitting against them and you have a strong chance to euchre. If you order up instead, you face a dealer who now holds a trump and a discard, while the opponents may hold the two top trumps you're missing.
+- **5 trumps: go alone.** Five-trump hands are too rare to have shown up in the tests from this seat, so this is reasoning.
+  - **Likely why (untested):** there are only 8 trumps, so with 5 in your hand the opponents hold at most 3, including the upcard the dealer picks up. Only the top trumps you're missing can beat your best cards, so you're very hard to euchre, and you have a good chance of all 5. For the dealer, 5 trumps was always worth going alone. **(F4)**
 - **4+ trumps with two top trumps: go alone** (+0.43). **(F12)**
   - **Likely why (untested):** a hand this strong wants to choose trump itself. From the right, if you pass, two other players name before you in round two (see the next point).
 - **Benny + Right + Left: go alone** (+1.59). Passing is the **worst** choice here. **(F7)**
