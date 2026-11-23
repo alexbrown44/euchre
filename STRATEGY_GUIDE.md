@@ -19,6 +19,12 @@ The simulations prove **what** works. They don't always show **why**. So each ex
 - **Top trumps** means the **Benny, Right Bower and Left Bower**. **Big trumps** (used for the dealer's loner) also include the **Ace of trumps**.
 - **The dealer's trump count includes the upcard.** "Dealer with 3 trumps" means the card picked up plus 2 of their own.
 - **Next** is the suit of the same colour as the turned-down card. **Against colour** depends on your team: for the non-dealing team it's the opposite colour; for the dealing team it's next.
+- **Off-suit** means any suit that isn't trump. An **off-suit Ace** is the Ace of one of those suits.
+- **Void:** having no cards left in a suit. If you're void in the suit led, you can trump in.
+- **Drawing** (or dragging): leading trump to make the other players use up their trumps.
+- **Cashing** a card: leading a card that's sure to win, such as an Ace, to take the trick with it.
+- **Throwing off:** when you can't follow suit and don't trump, playing a card of another suit, which can't win.
+- **Over-trumping:** playing a higher trump on a trick someone else has already trumped.
 
 ### The numbers
 - **Gains are in points per hand**, compared with the alternative for the **same hand**. A gain of +0.3 means that, on average, the choice is worth about a third of a point more per hand. Over a night of play, choices worth 0.2 or more add up quickly.
@@ -331,8 +337,9 @@ These situations sound alike at the table but are very different:
   - **Why:** one trick for your team stops the march, so the loner scores 1 point instead of 4.
 - **Partner winning:** let it go if their card is safe; take it if the loner, still to play, could beat it.
   - **Why:** the same reasoning as in ordinary play.
-- **Throwing off hardly matters** (within about 0.03): throw your lowest card. Late in the hand, if your partner led a suit earlier, **throw from your partner's suit and keep your own.**
-  - **Likely why (untested):** your partner is guarding that suit, so you guard the others. Between you, every suit stays covered.
+- **When you can't follow suit and aren't trumping in, which card should you throw away?** It hardly matters: every choice scored within about 0.03 points of the others. So **throw your lowest card.**
+- **One small exception, near the end of the hand (the 3rd or 4th trick):** if your partner led a suit earlier in the hand, **throw away a card of that suit**, and keep your cards in the other suits. It's worth about 0.1 points when it applies.
+  - **Likely why (untested):** you only need to win **one** trick to stop the loner's march. To win it, one of you needs a card that can beat the loner's card in whatever suit they lead. Your partner leading a suit suggests they're strong in it, so your cards in that suit are spare. Keep your cards in the other suits. Then, whichever suit the loner leads, one of you is more likely to have a card that can win it.
 
 ### Makers against a lone defender: don't draw **(F13)**
 This is **the opposite of normal play**.
