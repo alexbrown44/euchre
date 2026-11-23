@@ -52,7 +52,7 @@ Go alone with **3 big trumps and one outside suit holding its Ace**, the league 
 - The dealer takes over Up and Down only with **4 trumps** after picking up.
 
 ### The discard
-**Never throw a trump or an off-suit Ace. Make a void if you can, even throwing a lone King. Otherwise throw your lowest card.**
+**Never throw a trump or an off-suit Ace** (except with 5 trumps, below). **Make a void if you can, even throwing a lone King. Otherwise throw your lowest card.** With 5 trumps and an Ace, it's a toss-up with your partner; alone, throw the Ace.
 
 ### Card play
 - **Makers holding the top trump: draw with it.** Don't open with an off-suit Ace.
@@ -246,7 +246,7 @@ These situations sound alike at the table but are very different:
 
 1. **Never throw a trump.** It costs 0.4–0.7 points (up to 2.3 when alone).
    - **Likely why (untested):** a trump can win a trick in any suit. A low off-suit card almost never wins one.
-2. **Never throw a lone off-suit Ace** to make a void (−0.44; −1.75 when alone).
+2. **Don't throw a lone off-suit Ace** to make a void (−0.44; −1.75 when alone). **The exception: 5 trumps** (counting the upcard). Then the Ace is your only off-suit card, so it's the Ace or a trump; see the end of this section.
    - **Likely why (untested):** an Ace usually wins the first time its suit is led. That's a near-certain trick, worth more than the chance to trump in that a void would give.
 3. **Make a void with any other lone card, even a King** (+0.13 to +0.39; +0.6 to +1.3 when alone).
    - **Likely why (untested):** a lone King wins only if the Ace is in the kitty or already played. A void lets you trump the suit the first time it's led, which is a trick you can count on as long as you have trumps.
@@ -254,7 +254,7 @@ These situations sound alike at the table but are very different:
 
 **One outside suit, or more suits including an Ace?** Keep the Ace. It's worth about 0.2–0.35, more than the 0.2 gained from one fewer suit. With the Ace settled, fewer suits is better. **The best shape is trumps plus one outside suit holding its Ace**, which is exactly the league's dealer-loner shape.
 
-**5 trumps and an off-suit Ace:** a toss-up with a partner. When alone, keep the fifth trump and throw the Ace (slightly better).
+**5 trumps and an off-suit Ace** (your six cards after picking up): you must throw the Ace or a trump. It's a toss-up with a partner. When alone, keep the fifth trump and throw the Ace (slightly better).
 - **Likely why (untested):** with all five cards trumps, you can draw and win every trick yourself. With an Ace instead, a defender who is void in that suit can trump it.
 
 ---
