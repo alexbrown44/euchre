@@ -99,7 +99,7 @@ When you order up from the dealer's left or right, the upcard goes into the **de
 
 ### Right of dealer
 - **3 trumps: pass** (ordering up loses 0.3–0.8).
-  - **Likely why (untested):** the same as on the left, and worse: if you order up, the opponent on the dealer's left leads the first trick, not you.
+  - **Likely why (untested):** the same as on the left: the dealer gains a trump and a discard. Your partner (on the dealer's left) leads the first trick, but the dealer, holding the extra trump, plays last to it and sees everyone's cards before choosing. The tests found passing even more clearly right from this seat than from the left; why is untested.
 - **4+ trumps with one top trump: pass.**
 - **4+ trumps with two top trumps: go alone** (+0.43). **(F12)**
   - **Likely why (untested):** a hand this strong wants to choose trump itself. From the right, if you pass, two other players name before you in round two (see the next point).
