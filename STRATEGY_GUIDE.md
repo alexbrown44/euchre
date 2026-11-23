@@ -287,7 +287,8 @@ These situations sound alike at the table but are very different:
   - **Likely why (untested):** a trump that can be beaten may hand the lead to an opponent holding the higher one.
 - **Defenders: cash an off-suit winner; otherwise lead low off-suit. Don't lead trump, even holding the top trump** (+1.40 cashing a winner against +0.95 drawing).
   - **Likely why (untested):** a defender's trumps are worth more for trumping in on the makers' winners than for drawing.
-- **Leading back your partner's suit is fine, but not special.** It was never better than the plain choices.
+- **Don't go out of your way to lead back your partner's suit.** "Return your partner's lead" (leading the suit your partner led earlier) is a common habit, but it never beat the normal choices above. It was often only a little behind, so it isn't a mistake, just not a special play.
+  - **Likely why (untested):** with only 5 cards each, your partner's lead tells you little. They may have led their Ace, which has already won its trick, or a lone card to make a void. Leading that suit back can mean leading into a suit the opponents can now trump, or one your partner has run out of.
 
 ### Trumping in **(F8)**
 **Trump in when you can't follow and an opponent is winning.** It beat throwing off in every situation tested: by +0.4 to +1.0 when you're last or one opponent is still to play, and by +0.1 to +0.2 when two players are still to play.
