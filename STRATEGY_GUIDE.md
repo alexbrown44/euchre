@@ -58,7 +58,8 @@ Go alone with **3 big trumps and one outside suit holding its Ace**, the league 
 - **Makers holding the top trump: draw with it.** Don't open with an off-suit Ace.
 - **Defenders: lead an off-suit Ace, otherwise a low off-suit card. Don't lead trump.**
 - **Trump in** whenever an opponent is winning and you can't follow.
-- **Let it go** only if your partner's card can't be beaten.
+- **Let it go, partner already winning:** only if their card can't be beaten. If an opponent still to play could beat it, take the trick.
+- **Let it go, partner still to play** (going low to save your best cards): only with a weak hand, such as a defender with 1 trump. With 2+ trumps, win it now.
 - **Loner: draw with your highest trump until the defenders' trumps are gone.**
 - **Against a lone defender: don't draw.** Lead off-suit.
 
