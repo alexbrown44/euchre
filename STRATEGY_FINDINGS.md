@@ -399,9 +399,9 @@ Tested on 1.5 million deals with the opponents on 9 and our team on 0–8, our p
 
 So the dealer who always picks up **stays in the game about twice as often** (69% against 37%). Yet the chance of winning the game barely changes, because:
 - **After picking up and making it,** you usually score just 1 point. They still need only 1, and **they deal next**.
-- **When you pass and survive,** it's usually because you **euchred them for +2**, which leaves you much closer to winning.
+- **When you pass and survive,** your team has scored, either by euchring them (+2) or by naming trump in round two and making it (+1, or +2 for a march). *Corrected 24 Nov 2026: an earlier version said this was "usually" a euchre, but the test didn't split these outcomes, so that was an assumption.*
 
-For example, at 5–9 with 2 trumps: picking up survives 59% of the time but leaves you on 6 against their deal (about a 12% chance of winning from there). Passing survives 35% of the time but leaves you on 7 (about 20%). These come out nearly even.
+For example, at 5–9 with 2 trumps: picking up survives 59% of the time but leaves you on 6 against their deal (about a 12% chance of winning from there). Passing survives 35% of the time; *if* that were a euchre, it would leave you on 7 (about 20%). These come out nearly even. (This example is an illustration under that assumption; the measured result is the win-chance table above.)
 
 **Refined rule:** when the opponents are in the hole, the dealer picks up in round one **only with 3+ trumps**, but **always calls if it comes back round in round two** (2+ trumps in the best suit, which is almost every hand).
 
