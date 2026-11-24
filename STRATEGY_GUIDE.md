@@ -360,7 +360,7 @@ This is **the opposite of normal play**.
 
 ## 7. Playing to the score **(F6)**
 
-Near the end of a game, what matters is **winning the game**, not points. These rules work for any game total (10, 15 or 20): what counts is how many points each team still **needs**. "9–9 in a game to 10" is the same as "14–14 in a game to 15".
+Near the end of a game, what matters is **winning the game**, not points. So in this section, the numbers are your **chance of winning the game** (as a percentage), not points per hand. These rules work for any game total (10, 15 or 20): what counts is how many points each team still **needs**. "9–9 in a game to 10" is the same as "14–14 in a game to 15".
 
 | Position | Calling | Going alone |
 |---|---|---|
@@ -376,9 +376,19 @@ Near the end of a game, what matters is **winning the game**, not points. These 
   - **Likely why (untested) the left and right still need 4:** ordering up still hands the dealer a trump, and a euchre would put the opponents back in the game.
 - **Why go alone more when they need 1:** you need big points to catch up before they get their one.
 - **"If the opposition is in the hole, the dealer should always call":** half right.
-  - **In round one, pick up only with 3+ trumps.** **Why:** this was measured as the change in your chance of winning the game. Picking up with 1 trump cost about 3 points of win chance, and with 2 trumps about 1 point. With 3 trumps it gained about 2, and with 4+ about 5. The 2-trump case is close.
+  - **In round one, pick up only with 3+ trumps.** **Why:** this was measured directly as your chance of **winning the game** (not points per hand), with the opponents needing 1 and your team on anything from 0 to 8. With 1 or 2 trumps, picking up made you **less** likely to win the game; with 3 or more, more likely. The 2-trump case is close (9.4% against 8.3%). See the table below.
   - **Likely why (untested):** picking up with 2 trumps keeps you alive on this hand more often (made 59% of the time, against 35% of hands where your team scores after you pass). But staying alive isn't the same as winning. A euchre ends the game at once. When you do make it, you usually score just 1 point and the opponents deal next, still needing only 1. When you pass, your team can still score in other ways, such as euchring them if they call, or your partner naming a suit in round two. The test didn't split those outcomes, so which matters most is unknown.
   - **In round two, if it comes back to you, always call.** **Why:** a throw-in keeps the score the same **and gives them the next deal**. At 9–9, the team dealing next wins about 61% of the time.
+
+**They need 1, you're dealing, everyone has passed to you in round one: your chance of winning the game**
+
+| Dealer's trumps (with the upcard) | If you pass | If you pick up |
+|---:|---:|---:|
+| 1 | 8.1% | 5.2% |
+| 2 | 9.4% | 8.3% |
+| 3 | 10.5% | **12.1%** |
+| 4+ | 11.6% | **16.7%** |
+
 - **Never defend alone** when an ordinary euchre already wins the game.
   - **Why:** the extra 2 points of a lone-defence euchre are worth nothing, and euchres happen less often without your partner.
 
