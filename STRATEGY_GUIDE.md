@@ -360,14 +360,14 @@ This is **the opposite of normal play**.
 
 ## 7. Playing to the score **(F6)**
 
-Near the end of a game, what matters is **winning the game**, not points. So in this section, the numbers are your **chance of winning the game** (as a percentage), not points per hand. These rules work for any game total (10, 15 or 20): what counts is how many points each team still **needs**. "9–9 in a game to 10" is the same as "14–14 in a game to 15".
+Near the end of a game, what matters is **winning the game**, not points. These rules work for any game total (10, 15 or 20): what counts is how many points each team still **needs**. "9–9 in a game to 10" is the same as "14–14 in a game to 15".
 
 | Position | Calling | Going alone |
 |---|---|---|
 | **Neither close** | As this guide | As this guide |
 | **We need 2** | About the same, slightly stricter | **Don't.** A march with your partner already wins. |
 | **We need 1** ("in the hole") | **Dealer picks up with 2 trumps.** Left and right of dealer still need 4 to order up. | **Never.** |
-| **They need 1** | Dealer picks up only with **3+**. **Name more freely in round two** (even with 1–2 trumps from the dealer's left). If it comes back round, **the dealer always calls.** | **More readily.** |
+| **They need 1** | Dealer picks up with **3+** (2 is close). **Name more freely in round two** (even with 1–2 trumps from the dealer's left). If it comes back round, **the dealer always calls.** | **More readily.** |
 | **Both need 1** (9–9) | **Call with almost anything**, especially as dealer and in round two. | **Never.** |
 
 - **Why going alone is pointless when you need 1 or 2:** 1 point (or a 2-point march with your partner) already wins the game. Going alone can't win it any more surely, and only adds euchre risk.
@@ -376,18 +376,20 @@ Near the end of a game, what matters is **winning the game**, not points. So in 
   - **Likely why (untested) the left and right still need 4:** ordering up still hands the dealer a trump, and a euchre would put the opponents back in the game.
 - **Why go alone more when they need 1:** you need big points to catch up before they get their one.
 - **"If the opposition is in the hole, the dealer should always call":** half right.
-  - **In round one, pick up only with 3+ trumps.** **Why:** this was measured directly as your chance of **winning the game** (not points per hand), with the opponents needing 1 and your team on anything from 0 to 8. With 1 or 2 trumps, picking up made you **less** likely to win the game; with 3 or more, more likely. The 2-trump case is close (9.4% against 8.3%). See the table below.
-  - **Likely why (untested):** picking up with 2 trumps keeps you alive on this hand more often (made 59% of the time, against 35% of hands where your team scores after you pass). But staying alive isn't the same as winning. A euchre ends the game at once. When you do make it, you usually score just 1 point and the opponents deal next, still needing only 1. When you pass, your team can still score in other ways, such as euchring them if they call, or your partner naming a suit in round two. The test didn't split those outcomes, so which matters most is unknown.
+  - **In round one: pick up with 3+ trumps; pass with 1; 2 trumps is close.** See the table below for how the hand ends each way.
+  - **Why the 2-trump hand is close:** on this hand alone, picking up looks better: you make it 59% of the time, while after a pass your team scores only 35% of the time. But making it usually scores just 1 point, and **the deal then passes to the opponents**, who still need only 1. When the whole game was played out, picking up with 2 trumps did slightly worse than passing on average, but only slightly, and the answer will depend on how many points you need. Needing just 1 or 2 yourself, picking up looks more attractive (untested).
   - **In round two, if it comes back to you, always call.** **Why:** a throw-in keeps the score the same **and gives them the next deal**. At 9–9, the team dealing next wins about 61% of the time.
 
-**They need 1, you're dealing, everyone has passed to you in round one: your chance of winning the game**
+**They need 1, you're dealing, everyone has passed to you in round one: how this hand ends**
 
-| Dealer's trumps (with the upcard) | If you pass | If you pick up |
-|---:|---:|---:|
-| 1 | 8.1% | 5.2% |
-| 2 | 9.4% | 8.3% |
-| 3 | 10.5% | **12.1%** |
-| 4+ | 11.6% | **16.7%** |
+| Dealer's trumps (with the upcard) | Pick up: you make it | Pick up: euchred (they win) | Pass: they win this hand | Pass: your team scores |
+|---:|---:|---:|---:|---:|
+| 1 | 37% | **63%** | 67% | 33% |
+| 2 | 59% | 41% | 65% | 35% |
+| 3 | **81%** | 19% | 62% | 38% |
+| 4+ | **96%** | 4% | 59% | 41% |
+
+After a pass, "your team scores" means you euchred them or your partner named trump in round two and made it; the test didn't split the two. Whichever way this hand goes, **the next deal is the opponents'**.
 
 - **Never defend alone** when an ordinary euchre already wins the game.
   - **Why:** the extra 2 points of a lone-defence euchre are worth nothing, and euchres happen less often without your partner.
