@@ -152,7 +152,7 @@ Go alone only if **both** are true:
 
 - **The outside Ace is the biggest single factor**, adding about 0.8–1.2 points to a loner.
   - **Why:** with 3 big trumps and an outside Ace, a loner takes all 5 tricks 45% of the time against 48% with a partner, so going alone keeps nearly every march and doubles what each is worth. Without the Ace, the march chance halves when you go alone and the euchre risk doubles.
-  - **Likely why (untested):** once you've drawn the trumps, an Ace in your side suit is a near-certain trick. Any other side card is a likely loser, and one lost trick ends the march.
+  - **Likely why (untested):** once no one else has a trump left, an Ace in your side suit is a certain trick. The catch is knowing: some trumps may be sleeping in the kitty, so you can't always count them all out. Any other side card is a likely loser, and one lost trick ends the march.
 - **One outside suit is better than two.**
   - **Likely why (untested):** with one side suit, there's only one place the defenders can win a trick. With two, there are two.
 - **On a strong hand, your partner adds very little.**
