@@ -22,7 +22,7 @@ The simulations prove **what** works. They don't always show **why**. So each ex
 - **Off-suit** means any suit that isn't trump. An **off-suit Ace** is the Ace of one of those suits.
 - **Void:** having no cards left in a suit. If you're void in the suit led, you can trump in.
 - **Drawing** (or dragging): leading trump to make the other players use up their trumps.
-- **Cashing** a card: leading a card that's sure to win, such as an Ace, to take the trick with it.
+- **Cashing** a card: leading your highest card in a suit, such as an Ace, hoping to win the trick with it. An off-suit Ace can't be beaten in its own suit, but it isn't sure to win: a player who is void in that suit can trump it.
 - **Throwing off:** when you can't follow suit and don't trump, playing a card of another suit, which can't win.
 - **Over-trumping:** playing a higher trump on a trick someone else has already trumped.
 
@@ -253,7 +253,7 @@ These situations sound alike at the table but are very different:
 1. **Never throw a trump.** It costs 0.4–0.7 points (up to 2.3 when alone).
    - **Likely why (untested):** a trump can win a trick in any suit. A low off-suit card almost never wins one.
 2. **Don't throw a lone off-suit Ace** to make a void (−0.44; −1.75 when alone). **The exception: 5 trumps** (counting the upcard). Then the Ace is your only off-suit card, so it's the Ace or a trump; see the end of this section.
-   - **Likely why (untested):** an Ace usually wins the first time its suit is led. That's a near-certain trick, worth more than the chance to trump in that a void would give.
+   - **Likely why (untested):** an Ace usually wins the first time its suit is led, unless someone is void and trumps it. That's a likely trick, worth more than the chance to trump in that a void would give.
 3. **Make a void with any other lone card, even a King** (+0.13 to +0.39; +0.6 to +1.3 when alone).
    - **Likely why (untested):** a lone King wins only if the Ace is in the kitty or already played. A void lets you trump the suit the first time it's led, which is a trick you can count on as long as you have trumps.
 4. **Otherwise throw your lowest card.**
