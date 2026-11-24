@@ -77,8 +77,9 @@ html += '</section>';
 
 // Explanation notes: "Why:" (measured, or follows from the rules) and "Likely why (untested):" (reasoning).
 html = html
-  .replace(/<li><strong>Why:<\/strong>/g, '<li class="why"><strong>Why:</strong>')
-  .replace(/<li><strong>Likely why \(untested\):<\/strong>/g, '<li class="likely"><strong>Likely why (untested):</strong>');
+  // Labels may carry a topic, e.g. "Likely why (untested) next is better:".
+  .replace(/<li><strong>(Why\b[^<]*:)<\/strong>/g, '<li class="why"><strong>$1</strong>')
+  .replace(/<li><strong>(Likely why \(untested\)[^<]*:)<\/strong>/g, '<li class="likely"><strong>$1</strong>');
 
 const page = `<!doctype html>
 <html lang="en-GB"><head><meta charset="utf-8"><title>${esc(title)}</title>
