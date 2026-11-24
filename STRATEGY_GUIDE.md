@@ -64,7 +64,7 @@ Go alone with **3 big trumps and one outside suit holding its Ace**, the league 
 - **Makers holding the top trump: draw with it.** Don't open with an off-suit Ace.
 - **Defenders: lead an off-suit Ace, otherwise a low off-suit card. Don't lead trump.**
 - **Trump in** whenever an opponent is winning and you can't follow.
-- **Let it go, partner already winning:** if their card is the highest still out in that suit, including their off-suit Ace. If a higher card is still out and an opponent is still to play, take the trick.
+- **Let it go, partner already winning:** if their card is the highest still out in that suit, including their off-suit Ace. If an opponent still to play could hold a higher card (one that isn't in your hand and hasn't been played), take the trick.
 - **Let it go, partner still to play** (going low to save your best cards): only with a weak hand, such as a defender with 1 trump. With 2+ trumps, win it now.
 - **Loner: draw with your highest trump until the defenders' trumps are gone.**
 - **Against a lone defender: don't draw.** Lead off-suit.
@@ -302,12 +302,15 @@ These situations sound alike at the table but are very different:
 
 ### Let it go
 **When your partner is already winning the trick:** **(F8)**
-- **If their card is the highest still out in that suit** (you're last, or no higher card of the suit led, or higher trump, is still unplayed): **let it go.**
+- **If their card is the highest still out in that suit** (you're last, or every higher card of that suit, and every higher trump, is in your hand or already played): **let it go.**
   - **This includes your partner's off-suit Ace.** The standard table rule is right: let it go, even though an opponent still to play might be out of the suit and trump it. That's how the test counted it ("can't be beaten" only looked for higher cards in the suit, not for trumping), and letting it go scored better (+1.13 against +0.91 for makers; +0.22 against −0.14 for defenders).
   - **Why:** the trick is probably already your team's, so a winning card from you would be wasted. Save it for a later trick.
   - **Likely why (untested) not to trump partner's Ace:** an opponent may not be void at all, and if they are, they may over-trump you anyway. Trumping costs you a trump for certain, to guard against a risk that often isn't there.
-- **If a higher card of that suit is still out, or partner led a low trump that could be beaten, and an opponent is still to play: take the trick.** For example, your partner's King when the Ace hasn't been seen. This is the single most useful card-play rule for ordinary play.
+- **If an opponent still to play could hold a higher card, take the trick.** "Could hold" means a higher card you haven't seen: it's not in your hand and hasn't been played. This is the single most useful card-play rule for ordinary play. Two common cases:
+  - Your partner's King is winning, the Ace hasn't appeared, and you're out of the suit: **trump it.**
+  - Your partner's low trump is winning and a higher trump is still out: **over-trump with a higher one of yours.**
   - **Why:** if you don't take it, an opponent may win it with the higher card. Taking it makes the trick much more likely to be yours.
+- **If you hold the higher card yourself, let it go.** Your partner's King with the Ace in your hand is as good as the Ace: no opponent can beat it in that suit. Playing your Ace on it doesn't make the trick any safer. It only changes which of you leads next, and it uses up a winner you could take a later trick with. (The test counted this case as "let it go".)
 
 **When you play before your partner** and could win the trick now: **(F8)**
 - **With 2+ trumps, win it now.**
