@@ -376,11 +376,7 @@ Near the end of a game, what matters is **winning the game**, not points. These 
   - **Likely why (untested) the left and right still need 4:** ordering up still hands the dealer a trump, and a euchre would put the opponents back in the game.
 - **Why go alone more when they need 1:** you need big points to catch up before they get their one.
 - **"If the opposition is in the hole, the dealer should always call":** half right.
-  - **In round one: pick up with 3+ trumps; pass with 1; 2 trumps is close.** See the table below for how the hand ends each way, and why it isn't the whole story.
-  - **On this hand alone, picking up always looks better**, even with 1 trump: they win the hand 63% of the time if you pick up, against 67% if you pass. So the table alone would say "always pick up".
-  - **Why the whole game says otherwise with 1–2 trumps:** surviving this hand isn't enough. They still need only 1, and they deal next, so what matters is **how many points you score**. A 1-trump pick-up that's made almost always scores just 1 point. When the whole game was played out, picking up lost about 3% of game-winning chance with 1 trump and about 1% with 2, but gained about 2% with 3. **(F6)**
-  - **Likely why (untested) a pass can score more:** after a pass your team's score can be a 2-point euchre, or a march by your partner, so it may be bigger on average. The test didn't split this, so it's a likely reason, not a measured one.
-  - **When the table is all that matters:** if any score wins you the game (you need 1 or 2 yourself), the size doesn't matter, so the hand table is the whole story: pick up even with 1 trump. At 9–9 this is the "call with almost anything" rule above. Needing 2, picking up with 2 trumps looks attractive too (untested).
+  - **In round one: pick up with 3+ trumps; pass with 1; 2 trumps is close.** The table below shows how the hand ends each way, and the notes under it explain why the table alone isn't the whole story.
   - **In round two, if it comes back to you, always call.** **Why:** a throw-in keeps the score the same **and gives them the next deal**. At 9–9, the team dealing next wins about 61% of the time.
 
 **They need 1, you're dealing, everyone has passed to you in round one: how this hand ends**
@@ -393,6 +389,11 @@ Near the end of a game, what matters is **winning the game**, not points. These 
 | 4+ | **96%** | 4% | 59% | 41% |
 
 After a pass, "your team scores" means you euchred them or your partner named trump in round two and made it; the test didn't split the two. Whichever way this hand goes, **the next deal is the opponents'**.
+
+- **What the table says:** on this hand alone, picking up always looks better, even with 1 trump. If you pick up, they win the hand 63% of the time; if you pass, 67%.
+- **Why the game test still says pass with 1 trump:** getting through this hand isn't enough. They still need only 1, and they deal next, so what matters is **how many points you score**. A 1-trump pick-up that's made almost always scores just 1 point. When whole games were played out, picking up lost about **3%** of your game-winning chance with 1 trump and about **1%** with 2, but gained about **2%** with 3. **(F6)**
+- **Likely why (untested) a pass can score more:** after a pass, your team's score can be a 2-point euchre or a march by your partner, so it may be bigger on average. The test didn't record how many points were scored, so this is a likely reason, not a measured one.
+- **Why the table is the whole story when you need 1 yourself:** any score wins you the game, so the size of the score doesn't matter. Pick up even with 1 trump. At 9–9 this is the "call with almost anything" rule above.
 
 - **Never defend alone** when an ordinary euchre already wins the game.
   - **Why:** the extra 2 points of a lone-defence euchre are worth nothing, and euchres happen less often without your partner.
