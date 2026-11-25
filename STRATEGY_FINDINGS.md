@@ -994,6 +994,38 @@ Full tables: `npm run exp:dealer-right2`, written to the `results/` folder.
 
 ---
 
+## Finding 17: Worked example: dealer with 3 trumps and two outside cards: two Aces, or one suit Ace high?
+
+*Experiment run 25 Nov 2026, a league question. 60,000 samples, about 57,500 round-one decisions. Same method as Findings 15 and 16. Round one only: everyone has passed to the dealer.*
+
+**The hand after picking up:** 3 trumps (drawn at random from the Right, Left, Ace, King, Queen, 10 and 9 of trumps, never the Benny; one of them is the upcard) and two outside cards in three shapes. Average net points per hand for the dealer's team:
+
+| Outside cards | Pick up | Alone | If you pick up: made 3–4 | Marched | Euchred | Alone: marched |
+|---|---:|---:|---:|---:|---:|---:|
+| **Two Aces, different suits** | **+0.88** | **+0.96** | 67% | 22% | 11% | 16% |
+| One suit, Ace high (the Ace + another card of that suit) | +0.69 | +0.36 | 65% | 18% | 16% | 12% |
+| For reference: an Ace + a non-Ace of another suit | +0.51 | −0.11 | 68% | 12% | 20% | 3% |
+
+Picking up beats passing in every shape (+0.88 to +1.05).
+
+**Two Aces minus one suit Ace high** (independent samples, ± is 2 standard errors):
+
+| Trumps | Picking up | Going alone | Best choice, two Aces | Best choice, one suit Ace high |
+|---|---:|---:|---|---|
+| All 3-trump hands | **+0.19** (±0.02) | **+0.60** (±0.04) | | |
+| No top trump | **+0.25** (±0.05) | **+0.58** (±0.06) | Pick up (+0.64; alone +0.36) | Pick up (+0.39; alone −0.23) |
+| With a top trump (Right or Left) | **+0.17** (±0.03) | **+0.61** (±0.05) | **Alone (+1.19; pick up +0.98)** | Pick up (+0.81; alone +0.59) |
+
+- **Two Aces are better than one suit Ace high**, by about 0.2 points when you pick up and about 0.6 when you go alone.
+- **Why it's better:** the second Ace is a second likely trick. With two Aces the dealer is euchred 11% of the time against 16%, and marches 22% against 18%.
+- **Likely why (untested) the void doesn't make up for it:** one suit Ace high leaves you void in two suits, so you can trump in more often. But the second card of that suit (King or lower) rarely wins a trick, while the second Ace usually does. A trick in hand beats a chance to trump in. This fits Finding 11: keep a lone off-suit Ace rather than throw it for a void.
+- **Going alone:** with 3 trumps **including a top trump and two outside Aces, go alone** (+0.21 over picking up). With no top trump, pick up. One suit Ace high should pick up, not go alone, in both cases.
+- **How this fits Finding 11.** Finding 11 said the best shape is trumps plus one outside suit holding its Ace, compared with shapes that have **one** Ace. A second Ace is worth more than one fewer outside suit.
+
+Full tables: `npm run exp:dealer-two-aces`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:

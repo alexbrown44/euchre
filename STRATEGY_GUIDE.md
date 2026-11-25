@@ -57,7 +57,7 @@ Every number in this guide is an **average** over many hands that share the feat
 | **Dealer, last to speak** | 3 trumps: next with an off-suit Ace; the opposite colour with a top trump, or with one outside suit and its Ace. **Pass with 2** and let it be thrown in. |
 
 ### The dealer's loner
-Go alone with **3 big trumps and one outside suit holding its Ace**, the league rule. The data supports a little more: **3 trumps (2 big) with an outside Ace**, **4 trumps including a top trump**, and **any 5 trumps**. Without an outside Ace, 3 trumps should **pick up, not go alone** (with 3 big trumps it's a toss-up).
+Go alone with **3 big trumps and one outside suit holding its Ace**, the league rule. The data supports a little more: **3 trumps (2 big) with an outside Ace**, **3 trumps including a top trump with two outside Aces**, **4 trumps including a top trump**, and **any 5 trumps**. Without an outside Ace, 3 trumps should **pick up, not go alone** (with 3 big trumps it's a toss-up).
 
 ### After the call
 - **Defend alone** against two makers with **3 trumps including a top trump**. Against a loner, the same.
@@ -152,6 +152,7 @@ Go alone only if **both** are true:
 | 3 big trumps, one outside suit, **with the Ace** | **Alone, clearly** |
 | 3 big trumps, outside card not an Ace | Toss-up |
 | 3 trumps (2 big), with an outside Ace | Alone (the data goes a little further than the league rule) |
+| 3 trumps including a top trump, with **two outside Aces** | Alone **(F17)** |
 | 3 trumps (2 or fewer big), **no outside Ace** | **Pick up, not alone** |
 | 4 trumps including a top trump | Alone |
 | 4 trumps, no top trump | Pick up |
@@ -266,7 +267,7 @@ These situations sound alike at the table but are very different:
    - **Likely why (untested):** a lone King wins only if the Ace is in the kitty or already played. A void lets you trump the suit the first time it's led, which is a trick you can count on as long as you have trumps.
 4. **Otherwise throw your lowest card.**
 
-**One outside suit, or more suits including an Ace?** Keep the Ace. It's worth about 0.2–0.35, more than the 0.2 gained from one fewer suit. With the Ace settled, fewer suits is better. **The best shape is trumps plus one outside suit holding its Ace**, which is exactly the league's dealer-loner shape.
+**One outside suit, or more suits including an Ace?** Keep the Ace. It's worth about 0.2–0.35, more than the 0.2 gained from one fewer suit. With the Ace settled, fewer suits is better. **The best shape is trumps plus one outside suit holding its Ace**, which is exactly the league's dealer-loner shape. **But two Aces beat one suit Ace high:** with 3 trumps, two outside Aces in different suits scored about 0.2 more than an Ace and another card of the same suit (0.6 more when alone). So if you're choosing between keeping a second Ace and making a void, keep the Ace. **(F17)**
 
 **5 trumps and an off-suit Ace** (your six cards after picking up): you must throw the Ace or a trump. It's a toss-up with a partner. When alone, keep the fifth trump and throw the Ace (slightly better).
 - **Likely why (untested):** with all five cards trumps, you can draw and win every trick yourself. With an Ace instead, a defender who is void in that suit can trump it.
@@ -441,6 +442,22 @@ Everyone has passed to you in round one. Three outside cards.
 - **Why:** after a pass, the opponents often name a suit where your Right Bower is no longer a top trump.
 - **Likely why (untested) fewer suits is better:** fewer places for the opponents to win tricks, and you can trump in sooner.
 - **Likely why (untested) the turned-up Right is better:** your partner knows you hold it and can play around it, and the opponents passed knowing you'd have it, so their hands are probably weaker. The one-suit, no-Ace hand scoring slightly above the one-suit-with-Ace hand in the second column (+0.42 against +0.36) is within the random noise of the test; the Ace helped everywhere else.
+
+### Dealer with 3 trumps: two Aces, or one suit Ace high? **(F17)**
+Everyone has passed to you in round one. After the discard you hold 3 trumps and two outside cards.
+
+| Outside cards | Pick up | Alone | If you pick up: euchred | Marched |
+|---|---:|---:|---:|---:|
+| **Two Aces, different suits** | **+0.88** | **+0.96** | 11% | 22% |
+| One suit, Ace high (the Ace + another of that suit) | +0.69 | +0.36 | 16% | 18% |
+| For reference: an Ace + a non-Ace of another suit | +0.51 | −0.11 | 20% | 12% |
+
+Average net points per hand. Picking up beats passing in all three.
+
+**Two Aces are better**: about 0.2 points more when you pick up, and about 0.6 more when you go alone.
+- **Why:** the second Ace is a second likely trick. With two Aces you're euchred less often (11% against 16%) and march more often (22% against 18%).
+- **Likely why (untested) the void doesn't make up for it:** with one suit Ace high you're void in two suits, so you can trump in more often. But the second card of that suit rarely wins a trick, while a second Ace usually does. A trick in hand beats a chance to trump in.
+- **Go alone with two Aces if one of your 3 trumps is a top trump** (Right or Left): +1.19 alone against +0.98 picking up. With no top trump, pick up. With one suit Ace high, pick up either way.
 
 ### Benny + Right + Left, by seat **(F7)**
 
