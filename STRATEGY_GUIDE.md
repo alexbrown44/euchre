@@ -30,6 +30,13 @@ The simulations prove **what** works. They don't always show **why**. So each ex
 - **Gains are in points per hand**, compared with the alternative for the **same hand**. A gain of +0.3 means that, on average, the choice is worth about a third of a point more per hand. Over a night of play, choices worth 0.2 or more add up quickly.
 - **The score is assumed level and not close to the end**, unless the "Playing to the score" section applies.
 
+### Your hand comes first
+Every number in this guide is an **average** over many hands that share the features the rule names, such as the number of trumps, whether you hold a top trump, or an off-suit Ace. Everything else about those hands was dealt at random. Your actual hand is one particular hand, so:
+- **Count your hand first, then use the rule.** A rule like "next beats the opposite colour" compares the **same holding** in each suit: three trumps in next against three trumps in the opposite colour. It doesn't say "name next even when your cards are in the other suit". If you hold 2 cards of next and 4 of the opposite colour, those are different hands, and you should read each suit by its own row: 2 trumps usually means pass, 4 means name it.
+- **Colour is a tie-breaker between suits.** Next against the opposite colour was worth about 0.4–0.5 points for the same holding. A whole extra trump or a top trump usually moves a hand from "pass" to "name it", which is a bigger difference. Seat and score are different: they change how strong a hand you need, and the guide's rules for each seat and score already build that in.
+- **Details the rule doesn't mention still matter.** A rule tested on "3 trumps" includes good and bad 3-trump hands. If yours has extra strength the rule doesn't count (a second off-suit Ace, a void to trump into), it's better than the average and the number understates it; if it's weaker, the number flatters it. The worked examples (section 8) show how much shape alone can move the result.
+- **Percentages describe the long run, not this hand.** "Made 59% of the time" means that across many similar hands you'd make about 6 in 10. It doesn't tell you which 6.
+
 ---
 
 ## The one-page card
@@ -195,6 +202,7 @@ If it's come all the way round, passing means a **throw-in** (no score).
   - **Opposite colour:** only with **one outside suit and its Ace** (+0.15). Otherwise pass.
   - **Likely why (untested):** three low trumps win tricks only after the higher trumps have gone. The Ace supplies a trick of its own, which is often the difference between 2 tricks and 3.
 - **For the dealer, last to speak, next is better than the opposite colour**, the reverse of the dealer's partner's "against colour" rule. With Q-10-9, next beat the opposite colour by about 0.5 points in every shape tested. **(F15)**
+  - **Why this only applies to the same holding:** the test put the same three cards (Q-10-9) in next or in the opposite colour. If your hand is clearly stronger in the opposite colour, with more trumps or a top trump there, check that suit against its own rule above (for example, 3 trumps with a top trump: name it). The preference for next settles only the case where the two suits are about equal.
   - **Why "avoid next" doesn't apply here:** that rule is a guess about the **dealer's** hand: turning the card down hints the dealer is short in that colour. The dealer's partner has to guess. The dealer doesn't: they can see they hold three trumps in next.
   - **Likely why (untested) next is actually better:** by the time it reaches the dealer, **both opponents have passed in round two**. The non-dealing team names next readily (with 3 trumps, or 2 and an Ace), so their passing suggests neither of them holds much in next. They need a stronger hand to name the opposite colour, so their passes say less about it, and one of them may still be strong there. In short, the opponents' passes have told you next is the safer suit.
 - **Never go alone on a 3-trump hand.**
