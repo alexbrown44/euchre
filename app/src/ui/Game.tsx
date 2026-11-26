@@ -288,12 +288,13 @@ function BidControls({ v, onBid }: { v: TableView; onBid: (a: BidAction) => void
       <div className="controls controls-suits">
         <div className="suit-buttons">
           {suits.map((suit: Suit) => (
-            <button key={suit} type="button" className={`btn suit-btn suit-${suit}`} onClick={() => onBid({ type: 'name', suit, alone })} aria-label={`Name ${SUIT_NAME[suit]}${alone ? ', alone' : ''}`}>
+            <button key={suit} type="button" className={`btn suit-btn suit-${suit} ${alone ? 'suit-btn-alone' : ''}`} onClick={() => onBid({ type: 'name', suit, alone })} aria-label={`Name ${SUIT_NAME[suit]}${alone ? ', alone' : ''}`}>
               <span className="suit-btn-sym">{SUIT_SYMBOL[suit]}</span>
-              <span className="suit-btn-name">{SUIT_NAME[suit]}</span>
+              <span className="suit-btn-name">{SUIT_NAME[suit]}{alone ? ', alone' : ''}</span>
             </button>
           ))}
         </div>
+        <div className="controls-hint">{alone ? 'Now tap a suit to call it and go alone.' : 'To go alone, tick "Go alone" first, then tap a suit.'}</div>
         <div className="controls-row">
           <label className="check">
             <input type="checkbox" checked={alone} onChange={(e) => setAlone(e.target.checked)} />
