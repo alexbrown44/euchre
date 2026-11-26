@@ -1,5 +1,5 @@
 import type { Card } from '../../../engine/src/cards.ts';
-import { SUIT_NAME, SUIT_SYMBOL } from '../../../engine/src/cards.ts';
+import { cardId, SUIT_NAME, SUIT_SYMBOL } from '../../../engine/src/cards.ts';
 
 const RANK_NAME: Record<string, string> = { '9': 'Nine', '10': 'Ten', J: 'Jack', Q: 'Queen', K: 'King', A: 'Ace' };
 
@@ -42,16 +42,17 @@ export function CardView({ card, faceDown, size = 'hand', playable, dimmed, onCl
     );
   cls.push(card.kind === 'benny' ? 'card-benny' : `suit-${card.suit}`);
   const name = label ?? (card.kind === 'benny' ? 'Benny' : `${RANK_NAME[card.rank]} of ${SUIT_NAME[card.suit]}`);
+  const id = cardId(card);
 
   if (onClick) {
     return (
-      <button type="button" className={cls.join(' ')} onClick={onClick} disabled={!playable} aria-label={name}>
+      <button type="button" className={cls.join(' ')} onClick={onClick} disabled={!playable} aria-label={name} data-card={id}>
         {content}
       </button>
     );
   }
   return (
-    <div className={cls.join(' ')} aria-label={name}>
+    <div className={cls.join(' ')} aria-label={name} data-card={id}>
       {content}
     </div>
   );

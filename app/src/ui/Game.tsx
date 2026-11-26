@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { sameCard, SUIT_NAME, SUIT_SYMBOL, SUITS, type Card, type Suit } from '../../../engine/src/cards.ts';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { cardId, sameCard,SUIT_NAME, SUIT_SYMBOL, SUITS, type Card, type Suit } from '../../../engine/src/cards.ts';
 import type { Seat } from '../../../engine/src/deal.ts';
 import type { BidAction } from '../../../engine/src/bidding.ts';
 import { applyBid, applyCard, botMove, clearTrick, nextHand, tableView, turnOf, type TableState, type TableView } from '../game/table.ts';
@@ -29,6 +29,28 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
   const v = tableView(s, ME);
 
   useEffect(() => onSave(s), [s, onSave]);
+
+  // When your hand changes order (it's re-sorted once trumps are made), slide each card from
+  // where it was to its new place, so you can see where everything went.
+  const handRef = useRef<HTMLDivElement>(null);
+  const lastPos = useRef(new Map<string, number>());
+  const handOrder = v.hand.map(cardId).join(',');
+  useLayoutEffect(() => {
+    const el = handRef.current;
+    if (!el) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const now = new Map<string, number>();
+    el.querySelectorAll<HTMLElement>('[data-card]').forEach((card) => {
+      const id = card.dataset.card!;
+      const x = card.offsetLeft; // layout position, unaffected by a slide already running
+      now.set(id, x);
+      const was = lastPos.current.get(id);
+      if (!reduce && was !== undefined && Math.abs(was - x) > 1) {
+        card.animate([{ transform: `translateX(${was - x}px)` }, { transform: 'translateX(0)' }], { duration: 700, easing: 'ease-in-out' });
+      }
+    });
+    lastPos.current = now;
+  }, [handOrder]);
 
   // Bots move, and finished tricks clear, after a short pause.
   useEffect(() => {
@@ -68,7 +90,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
         <Status v={v} discarding={discarding} />
       </div>
 
-      <div className={`hand ${v.hand.length > 5 ? 'hand-six' : ''}`}>
+      <div ref={handRef} className={`hand ${v.hand.length > 5 ? 'hand-six' : ''}`}>
         {v.handHidden
           ? [0, 1, 2, 3, 4].map((i) => <CardView key={i} faceDown size="hand" />)
           : v.hand.map((c) => {
@@ -76,7 +98,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
               const waiting = v.stage === 'playing' && v.turn === ME;
               return (
                 <CardView
-                  key={c.kind === 'benny' ? 'B' : c.rank + c.suit}
+                  key={cardId(c)}
                   card={c}
                   size="hand"
                   playable={playable}
