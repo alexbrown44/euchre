@@ -143,7 +143,7 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 
 .badges { display: inline-flex; gap: 3px; flex-wrap: wrap; }
 .chip { font-size: 10px; font-weight: 800; border-radius: 999px; padding: 2px 6px; text-transform: uppercase; letter-spacing: .03em; }
-.chip-dealer { background: #fff; color: var(--felt-dark); }
+.chip-dealer { background: #fff; color: var(--felt-dark); font-size: 12px; padding: 3px 9px; box-shadow: 0 0 0 2px var(--gold), 0 2px 6px rgba(0,0,0,.35); }
 .chip-maker { background: var(--gold); color: #2a1d05; }
 .chip-alone { background: #ffdca1; color: #6b4a0c; }
 .chip-out { background: rgba(0,0,0,.35); color: #fff; }

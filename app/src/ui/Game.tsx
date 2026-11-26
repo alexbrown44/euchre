@@ -156,7 +156,7 @@ function SeatBadges({ v, seat }: { v: TableView; seat: Seat }) {
   const info = v.seats[seat]!;
   return (
     <span className="badges">
-      {info.isDealer && <span className="chip chip-dealer" title="Dealer">D</span>}
+      {info.isDealer && <span className="chip chip-dealer">Dealer</span>}
       {info.isMaker && <span className="chip chip-maker">Called</span>}
       {info.alone && <span className="chip chip-alone">Alone</span>}
       {info.sittingOut && <span className="chip chip-out">Sitting out</span>}
