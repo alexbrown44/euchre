@@ -53,7 +53,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
   };
 
   return (
-    <div className={`game ${settings.fourColour ? 'four-colour' : ''}`}>
+    <div className="game">
       <TopBar v={v} onHome={onHome} onLog={() => setShowLog(true)} onLast={() => setShowLast(true)} />
 
       <div className="felt">

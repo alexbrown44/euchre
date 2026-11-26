@@ -83,7 +83,7 @@ export default function App() {
       canResume={!!resumable}
       onResume={() => {
         if (!resumable) return;
-        setGame({ state: resumable.state, settings: { ...resumable.settings, speed: settings.speed, fourColour: settings.fourColour } });
+        setGame({ state: resumable.state, settings: { ...resumable.settings, speed: settings.speed } });
         setGameKey((k) => k + 1);
       }}
     />

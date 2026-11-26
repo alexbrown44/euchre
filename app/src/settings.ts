@@ -8,10 +8,9 @@ export interface Settings {
   difficulty: Difficulty;
   target: number;
   speed: Speed;
-  fourColour: boolean;
 }
 
-export const DEFAULT_SETTINGS: Settings = { difficulty: 'medium', target: 10, speed: 'normal', fourColour: false };
+export const DEFAULT_SETTINGS: Settings = { difficulty: 'medium', target: 10, speed: 'normal' };
 
 /** Milliseconds a bot waits before moving, and a finished trick stays on the table. */
 export const PACE: Record<Speed, { bot: number; trick: number }> = {

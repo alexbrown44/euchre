@@ -103,11 +103,6 @@ export function Home({ settings, onChange, onStart, canResume, onResume }: Props
             </div>
           </fieldset>
 
-          <label className="check">
-            <input type="checkbox" checked={settings.fourColour} onChange={(e) => set('fourColour', e.target.checked)} />
-            Four-colour suits (♦ blue, ♣ green)
-          </label>
-
           <button type="button" className="btn btn-primary start" onClick={onStart}>
             {canResume ? 'Start a new game' : 'Deal'}
           </button>

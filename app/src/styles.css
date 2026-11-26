@@ -9,8 +9,6 @@
   --gold-deep: #b8862b;
   --red: #c0262d;
   --black: #1a1a1a;
-  --blue: #1d5fc4;
-  --green: #1c7c3a;
   --line: #d5ddd9;
   --bg: #eef3f1;
   --panel: #ffffff;
@@ -217,8 +215,6 @@ button.card { cursor: default; }
 
 .suit-H, .suit-D { color: var(--red); }
 .suit-S, .suit-C { color: var(--black); }
-.four-colour .suit-D { color: var(--blue); }
-.four-colour .suit-C { color: var(--green); }
 
 /* ---------- Overlays ---------- */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: end center; z-index: 10; padding: 16px; }
