@@ -15,9 +15,9 @@ export const DEFAULT_SETTINGS: Settings = { difficulty: 'medium', target: 10, sp
 
 /** Milliseconds a bot waits before moving, and a finished trick stays on the table. */
 export const PACE: Record<Speed, { bot: number; trick: number }> = {
-  slow: { bot: 1300, trick: 2200 },
-  normal: { bot: 800, trick: 1500 },
-  fast: { bot: 350, trick: 800 },
+  slow: { bot: 2200, trick: 3500 },
+  normal: { bot: 1500, trick: 2500 },
+  fast: { bot: 700, trick: 1300 },
 };
 
 const KEY = 'euchre.settings.v1';

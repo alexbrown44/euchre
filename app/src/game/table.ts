@@ -99,7 +99,12 @@ export function applyBid(s: TableState, action: BidAction): TableState {
   const words = sayBid(s.bidding, seat, action);
   const said = s.said.map((x, i) => (i === seat ? words : x));
   const log = [...s.log, `${s.names[seat]}: ${words}`];
-  const bidding = applyBidAction(s.bidding, action);
+  let bidding = applyBidAction(s.bidding, action);
+  // After trump is made, skip anyone whose only choice is to pass (for example the maker's
+  // partner when nobody has gone alone): there's nothing for them to decide.
+  while (bidding.phase === 'afterCall' && legalBidActions(bidding).every((a) => a.type === 'pass')) {
+    bidding = applyBidAction(bidding, { type: 'pass' });
+  }
 
   if (bidding.phase === 'thrownIn') {
     return {

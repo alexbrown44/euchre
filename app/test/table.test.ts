@@ -36,3 +36,17 @@ test('games to 21 finish with a winner on 21 or more', () => {
     assert.ok(s.score[s.winner!] >= 21);
   }
 });
+
+test('the maker\'s partner is never asked to confirm a pass after the call', () => {
+  const bots = [0, 1, 2, 3].map((i) => makeBot('medium', i));
+  for (let seed = 1; seed <= 200; seed++) {
+    let s = newGame({ target: 10, names: ['You', 'West', 'Partner', 'East'], seed });
+    while (s.stage === 'bidding') {
+      if (s.bidding.phase === 'afterCall') {
+        const v = tableView(s, turnOf(s)!);
+        assert.ok(v.legalBids.some((a) => a.type === 'goAlone'), 'an after-call turn always offers a real choice');
+      }
+      s = botMove(s, bots[turnOf(s)!]!);
+    }
+  }
+});

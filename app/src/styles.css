@@ -49,7 +49,7 @@ body {
   color: var(--ink);
   -webkit-tap-highlight-color: transparent;
 }
-button { font: inherit; }
+button { font: inherit; user-select: none; -webkit-user-select: none; }
 h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 
 /* ---------- Buttons ---------- */
