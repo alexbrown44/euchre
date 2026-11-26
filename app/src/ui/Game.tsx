@@ -139,6 +139,7 @@ function TopBar({ v, onHome, onLog, onLast }: { v: TableView; onHome: () => void
           <span className="score-label">Them</span>
           <span className="score-num">{v.score[1]}</span>
         </div>
+        <TrumpBox v={v} onLog={onLog} />
       </div>
       <div className="topbar-actions">
         <button type="button" className="btn btn-ghost" onClick={onLast} disabled={!v.lastTrick}>
@@ -157,7 +158,7 @@ function SeatBadges({ v, seat }: { v: TableView; seat: Seat }) {
   return (
     <span className="badges">
       {info.isDealer && <span className="chip chip-dealer">Dealer</span>}
-      {info.isMaker && <span className="chip chip-maker">Called</span>}
+      {info.isMaker && <span className="chip chip-maker">{v.upcard.kind === 'benny' ? 'Blind shout' : 'Called'}</span>}
       {info.alone && <span className="chip chip-alone">Alone</span>}
       {info.sittingOut && <span className="chip chip-out">Sitting out</span>}
     </span>
@@ -183,24 +184,16 @@ function SeatPanel({ v, seat }: { v: TableView; seat: Seat }) {
   );
 }
 
-function TrumpBadge({ v }: { v: TableView }) {
-  if (!v.trump) return null;
-  const who = seatName(v, v.maker);
-  const extra = v.makerLoner !== null ? ', alone' : '';
-  const def = v.loneDefender !== null ? ` · ${seatName(v, v.loneDefender)} defends alone` : '';
+/** The trump suit, in the top bar beside the score, so it never looks attached to a seat. Tap for the calls. */
+function TrumpBox({ v, onLog }: { v: TableView; onLog: () => void }) {
+  const label = v.trump
+    ? `${SUIT_NAME[v.trump]} are trumps, ${v.upcard.kind === 'benny' ? 'blind shout by' : 'called by'} ${seatName(v, v.maker)}. Show the calls.`
+    : 'Trumps not made yet. Show the calls.';
   return (
-    <div className="trump-badge">
-      <span className={`trump-suit suit-${v.trump}`}>{SUIT_SYMBOL[v.trump]}</span>
-      <span>
-        <strong>{SUIT_NAME[v.trump]}</strong> are trumps
-        <br />
-        <small>
-          {v.upcard.kind === 'benny' ? `blind shout by ${who} (the Benny turned up)` : `called by ${who}`}
-          {extra}
-          {def}
-        </small>
-      </span>
-    </div>
+    <button type="button" className={`score trump-box ${v.trump ? '' : 'trump-box-empty'}`} onClick={onLog} aria-label={label}>
+      <span className="score-label">Trumps</span>
+      <span className={`trump-box-sym ${v.trump ? `suit-${v.trump}` : ''}`}>{v.trump ? SUIT_SYMBOL[v.trump] : '–'}</span>
+    </button>
   );
 }
 
@@ -209,7 +202,6 @@ function Centre({ v, onTap }: { v: TableView; onTap: () => void }) {
   const over = v.stage === 'handEnd' || v.stage === 'gameOver';
   return (
     <div className="centre" onClick={onTap}>
-      <TrumpBadge v={v} />
       {over ? null : playing ? (
         <div className="trick">
           {v.trick.map((p) => (

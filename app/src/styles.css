@@ -151,12 +151,9 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .chip-out { background: rgba(0,0,0,.35); color: #fff; }
 
 .centre { grid-area: centre; position: relative; min-height: 0; }
-.trump-badge {
-  position: absolute; top: 4px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center;
-  background: rgba(0,0,0,.28); border-radius: 12px; padding: 4px 12px 4px 8px; font-size: 13px; white-space: nowrap; z-index: 2;
-}
-.trump-badge small { color: #cfe4dd; font-size: 11px; }
-.trump-suit { font-size: 28px; line-height: 1; background: #fff; border-radius: 8px; width: 36px; height: 36px; display: grid; place-items: center; }
+.trump-box { color: inherit; font: inherit; border: 0; cursor: pointer; min-width: 58px; }
+.trump-box-sym { font-size: 22px; line-height: 1; height: 22px; background: #fff; border-radius: 6px; padding: 0 6px; margin-top: 2px; }
+.trump-box-empty .trump-box-sym { background: transparent; color: #cfe4dd; }
 
 .kitty { position: absolute; inset: 0; display: grid; place-items: center; }
 .turned-down { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; color: #cfe4dd; }
@@ -303,3 +300,14 @@ button.card { cursor: default; }
   :root:not([data-theme='light']) .rules-bar h1, :root:not([data-theme='light']) .rules-section h2 { color: var(--gold); }
 }
 .rules-done { width: 100%; margin-top: 28px; }
+
+/* Narrow phones: keep the top bar (menu, score, trumps, last trick, calls) on one line. */
+@media (max-width: 420px) {
+  .topbar { gap: 2px; padding: 6px 2px 4px; }
+  .scores { gap: 5px; }
+  .score { padding: 4px 8px; }
+  .trump-box { min-width: 0; }
+  .score-label { font-size: 10px; letter-spacing: .04em; }
+  .topbar-actions .btn-ghost { padding: 6px 5px; font-size: 12px; white-space: nowrap; }
+  .topbar .btn-ghost[aria-label='Menu'] { padding: 6px 6px; }
+}
