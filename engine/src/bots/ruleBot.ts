@@ -48,6 +48,11 @@ export interface RuleBotParams {
   /** Maker's partner going alone in answer to a lone defender. Infinity = never. */
   answerThreshold: number;
   /**
+   * Maker's partner dropping the maker and going alone when nobody else is alone (allowed under
+   * the league ruling of 26 Nov 2026). Untested, so the default is Infinity (never).
+   */
+  dropPartnerThreshold?: number;
+  /**
    * How the dealer decides to go alone in round one: by strength score (dealerAloneThreshold),
    * or by hand shape (see dealerShouldGoAlone in evaluate.ts). Defaults to 'strength'.
    */
@@ -430,7 +435,8 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
       if (onMakers) {
         const upAndDown = isDealer && orderedUp && v.maker === partnerOf(v.seat);
         if (v.makerLoner === partnerOf(v.seat)) threshold = upAndDown ? p.dealerTakeOverThreshold : p.takeOverThreshold;
-        else threshold = p.answerThreshold;
+        else if (v.loneDefender !== null) threshold = p.answerThreshold;
+        else threshold = p.dropPartnerThreshold ?? Infinity;
       } else if (v.loneDefender === partnerOf(v.seat)) {
         threshold = p.takeOverDefenceThreshold;
       } else {

@@ -133,10 +133,12 @@ export function legalBidActions(state: BiddingState): BidAction[] {
   }
 }
 
-function canGoAloneAfterCall(state: BiddingState, seat: Seat): boolean {
-  if (teamOf(seat) !== makerTeam(state)) return true; // defend alone, or take over partner's lone defence
-  // Maker's partner: take over a loner, or answer a lone defender.
-  return state.makerLoner !== null || state.loneDefender !== null;
+function canGoAloneAfterCall(_state: BiddingState, _seat: Seat): boolean {
+  // Anyone who still has a turn may go alone (league ruling, 26 Nov 2026):
+  // - a defender: defend alone, or take over their partner's lone defence;
+  // - the maker's partner: drop the maker and play alone, whether or not the maker went alone
+  //   and whether or not a defender is defending alone.
+  return true;
 }
 
 function sameAction(a: BidAction, b: BidAction): boolean {
@@ -282,9 +284,9 @@ export function describeBidAction(action: BidAction, ctx?: { seat: Seat; state: 
       if (!ctx) return 'goes alone ("Drop")';
       const { seat, state } = ctx;
       if (teamOf(seat) === makerTeam(state)) {
-        return state.makerLoner === partnerOf(seat)
-          ? 'takes over the loner ("Drop")'
-          : 'answers the lone defender, goes alone ("Drop")';
+        if (state.makerLoner === partnerOf(seat)) return 'takes over the loner ("Drop")';
+        if (state.loneDefender !== null) return 'answers the lone defender, goes alone ("Drop")';
+        return 'drops their partner and goes alone ("Drop")';
       }
       return state.loneDefender === partnerOf(seat)
         ? 'takes over the lone defence ("Drop")'

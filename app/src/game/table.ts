@@ -179,7 +179,7 @@ export function sayBid(b: BiddingState, seat: Seat, a: BidAction): string {
       return `${SUIT_NAME[a.suit]} ${SUIT_SYMBOL[a.suit]}${a.alone ? ', alone!' : ''}`;
     case 'goAlone': {
       const ours = teamOf(seat) === makerTeam(b);
-      if (ours) return b.makerLoner === partnerOf(seat) ? 'Take over, alone!' : 'Answer, alone!';
+      if (ours) return b.makerLoner === partnerOf(seat) ? 'Take over, alone!' : b.loneDefender !== null ? 'Answer, alone!' : 'Going alone!';
       return b.loneDefender === partnerOf(seat) ? 'Take over the defence!' : 'Defend alone!';
     }
     case 'discard':
@@ -190,7 +190,7 @@ export function sayBid(b: BiddingState, seat: Seat, a: BidAction): string {
 /** Label for the human's "go alone" button after trump is made. */
 export function goAloneLabel(b: BiddingState, seat: Seat): string {
   const ours = teamOf(seat) === makerTeam(b);
-  if (ours) return b.makerLoner === partnerOf(seat) ? 'Take over the loner' : 'Answer: go alone';
+  if (ours) return b.makerLoner === partnerOf(seat) ? 'Take over the loner' : b.loneDefender !== null ? 'Answer: go alone' : 'Go alone (partner sits out)';
   return b.loneDefender === partnerOf(seat) ? 'Take over the lone defence' : 'Defend alone';
 }
 

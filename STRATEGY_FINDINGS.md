@@ -144,6 +144,8 @@ The first run of this experiment (also 16 Nov) used bots whose dealer picked up 
 
 > **Rechecked 20 Nov 2026 with Monte Carlo card play: holds.** One update: defend alone against a loner with 3 trumps including any top trump. See Finding 12.
 
+> **Rule correction, 26 Nov 2026.** The league confirmed that the maker's partner, if they still have a turn, may drop the maker and go alone **even when nobody else is alone** (not only to take over a loner or answer a lone defender). The engine allowed only those two cases, so this option was never offered in any experiment. The results below are unaffected: they compare passing with the options that were tested. Whether the new option is ever worth it is **untested**; the bots never use it for now.
+
 *Experiment run 16 Nov 2026, three times. Run 3 used 2,000,000 deals and about 1.6 million decisions, with bots calibrated to the league: makers go alone in about **1 hand in 10**, someone defends alone in about 1 in 20, and round two comes up in about a third of hands. All three runs agreed closely, including runs with loners at 1 in 3 and 1 in 7.*
 
 ### How it was tested

@@ -81,7 +81,7 @@ test('opponent orders up: remaining players still get a turn, then the dealer pi
   assert.deepEqual(s1.pending, [N, E, S]);
   assert.deepEqual(types(s1), ['pass', 'goAlone'], 'North (defender) may defend alone');
   const s2 = play(s1, PASS);
-  assert.deepEqual(types(s2), ['pass'], 'East (maker\'s partner) has nothing to take over or answer');
+  assert.deepEqual(types(s2), ['pass', 'goAlone'], 'East (maker\'s partner) may drop West and go alone');
   const s3 = play(s2, PASS);
   assert.deepEqual(types(s3), ['pass', 'goAlone'], 'dealer (defender) may defend alone');
   const s4 = play(s3, PASS);
@@ -234,11 +234,22 @@ test('Benny turned up: dealer may go alone', () => {
   assert.deepEqual(c.sittingOut, [N]);
 });
 
+test('maker\'s partner may drop the maker and go alone when nobody else is alone', () => {
+  // West orders up; North (defender) passes; East (West's partner) goes alone and West sits out.
+  const s = play(startBidding(plainDeal()), ORDER, PASS, ALONE);
+  assert.equal(s.makerLoner, E);
+  assert.equal(s.maker, W, 'West still made trump');
+  const done = dealerDiscards(play(s, PASS));
+  const c = contractOf(done);
+  assert.equal(c.makerLoner, E);
+  assert.deepEqual(c.sittingOut, [W]);
+  assert.ok(c.dealerPickedUp, 'the dealer (a defender) still picks up');
+});
+
 test('illegal actions are rejected', () => {
   const start = startBidding(plainDeal());
   assert.throws(() => play(start, ALONE), 'cannot go alone before trump is made');
   assert.throws(() => play(start, PASS, ORDER), 'Up and Down must be alone');
-  assert.throws(() => play(start, ORDER, PASS, ALONE), 'maker\'s partner with no loner to take over or answer');
   const r2 = play(start, PASS, PASS, PASS, PASS);
   assert.throws(() => play(r2, { type: 'name', suit: 'C', alone: false }), 'turned-down suit');
   assert.throws(() => play(r2, ORDER), 'no ordering up in round two');

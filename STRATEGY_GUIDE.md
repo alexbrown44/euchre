@@ -252,6 +252,8 @@ These situations sound alike at the table but are very different:
 - **Don't answer a lone defender.**
   - **Why:** under league rules, the maker's partner who answers drops **their partner, the player who chose trump**. The hand built around that trump suit sits out, and a euchre still costs 4.
   - **Likely why (untested):** a lone defender holds strong trumps. Taking on that player with only half your team's cards, and without the hand that picked trump, plays into their hands.
+- **Your partner called, nobody is alone, and you still have a turn: you may go alone too.** Under league rules you can drop the partner who called and play alone. **Not tested yet.**
+  - **Likely why (untested) it's rarely right:** you drop the player who chose trump, usually on a hand built for it. It might pay with a hand that could march on its own, such as Benny, Right and Left in the suit your partner called.
 
 ---
 
