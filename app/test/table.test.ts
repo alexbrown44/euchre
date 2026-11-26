@@ -50,3 +50,29 @@ test('the maker\'s partner is never asked to confirm a pass after the call', () 
     }
   }
 });
+
+test('your cards never change, except by playing, picking up the upcard as dealer, or discarding', () => {
+  const key = (c: { kind: string; rank?: string; suit?: string }) => (c.kind === 'benny' ? 'B' : `${c.rank}${c.suit}`);
+  for (let seed = 1; seed <= 30; seed++) {
+    const bots = [0, 1, 2, 3].map((i) => makeBot('medium', seed * 10 + i));
+    let s = newGame({ target: 10, names: ['You', 'West', 'Partner', 'East'], seed });
+    let hand = s.handNumber;
+    let start = new Set(s.bidding.hands[0]!.map(key));
+    let upcard = key(s.bidding.deal.upcard);
+    for (let steps = 0; s.stage !== 'gameOver' && steps < 20000; steps++) {
+      if (s.handNumber !== hand) {
+        hand = s.handNumber;
+        start = new Set(s.bidding.hands[0]!.map(key));
+        upcard = key(s.bidding.deal.upcard);
+      }
+      const v = tableView(s, 0);
+      for (const c of v.hand) {
+        const k = key(c);
+        assert.ok(start.has(k) || (s.dealer === 0 && k === upcard), `hand ${hand}: ${k} was not dealt to you`);
+      }
+      if (s.stage === 'trickEnd') s = clearTrick(s);
+      else if (s.stage === 'handEnd') s = nextHand(s);
+      else s = botMove(s, bots[turnOf(s)!]!);
+    }
+  }
+});
