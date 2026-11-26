@@ -74,7 +74,12 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .home-head {
   background: var(--felt); color: #fff; border-radius: 16px; padding: 28px 20px 22px; margin-bottom: 16px; position: relative; overflow: hidden;
 }
-.home-suits { position: absolute; right: 16px; top: 10px; font-size: 38px; opacity: .15; letter-spacing: 4px; }
+.home-suits { position: absolute; right: 14px; top: 12px; display: flex; gap: 6px; }
+.home-suit { display: grid; place-items: center; width: 30px; height: 40px; border-radius: 5px; background: var(--paper); font-size: 22px; line-height: 1; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.home-suit:nth-child(odd) { transform: rotate(-6deg); }
+.home-suit:nth-child(even) { transform: rotate(5deg); }
+.home-suit-red { color: var(--red); }
+.home-suit-black { color: var(--black); }
 .home-head h1 { margin: 0 0 6px; font-size: 34px; }
 .tagline { margin: 0; color: #d6ebe4; font-size: 14px; }
 .resume { width: 100%; margin-bottom: 16px; }
@@ -310,4 +315,10 @@ button.card { cursor: default; }
   .score-label { font-size: 10px; letter-spacing: .04em; }
   .topbar-actions .btn-ghost { padding: 6px 5px; font-size: 12px; white-space: nowrap; }
   .topbar .btn-ghost[aria-label='Menu'] { padding: 6px 6px; }
+}
+
+/* Narrow phones: smaller suit cards so they clear the title. */
+@media (max-width: 360px) {
+  .home-suits { gap: 4px; right: 12px; }
+  .home-suit { width: 24px; height: 32px; font-size: 17px; }
 }

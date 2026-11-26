@@ -26,7 +26,12 @@ export function Home({ settings, onChange, onStart, onRules, canResume, onResume
   return (
     <main className="home">
       <header className="home-head">
-        <div className="home-suits" aria-hidden="true">♠ ♥ ♦ ♣</div>
+        <div className="home-suits" aria-hidden="true">
+          <span className="home-suit home-suit-black">♠</span>
+          <span className="home-suit home-suit-red">♥</span>
+          <span className="home-suit home-suit-red">♦</span>
+          <span className="home-suit home-suit-black">♣</span>
+        </div>
         <h1>{APP_NAME}</h1>
         <p className="tagline">{APP_TAGLINE}</p>
         <button type="button" className="rules-link" onClick={onRules}>
