@@ -7,6 +7,7 @@ interface Props {
   settings: Settings;
   onChange: (update: (s: Settings) => Settings) => void;
   onStart: () => void;
+  onRules: () => void;
   canResume: boolean;
   onResume: () => void;
 }
@@ -17,7 +18,7 @@ const SPEEDS: { id: Speed; label: string }[] = [
   { id: 'fast', label: 'Fast' },
 ];
 
-export function Home({ settings, onChange, onStart, canResume, onResume }: Props) {
+export function Home({ settings, onChange, onStart, onRules, canResume, onResume }: Props) {
   const [mode, setMode] = useState<'solo' | null>('solo');
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => onChange((s) => ({ ...s, [k]: v }));
   const step = (d: number) => onChange((s) => ({ ...s, target: Math.min(TARGET_MAX, Math.max(TARGET_MIN, s.target + d)) }));
@@ -28,6 +29,9 @@ export function Home({ settings, onChange, onStart, canResume, onResume }: Props
         <div className="home-suits" aria-hidden="true">♠ ♥ ♦ ♣</div>
         <h1>{APP_NAME}</h1>
         <p className="tagline">{APP_TAGLINE}</p>
+        <button type="button" className="rules-link" onClick={onRules}>
+          How to play: our rules →
+        </button>
       </header>
 
       {canResume && (

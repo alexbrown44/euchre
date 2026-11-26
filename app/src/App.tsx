@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Home } from './ui/Home.tsx';
 import { Game } from './ui/Game.tsx';
+import { Rules } from './ui/Rules.tsx';
 import { newGame, type TableState } from './game/table.ts';
 import { SEAT_NAMES } from './config.ts';
 import { loadSettings, saveSettings, type Settings } from './settings.ts';
@@ -37,6 +38,28 @@ export default function App() {
   const [game, setGame] = useState<Saved | null>(null);
   const [resumable, setResumable] = useState<Saved | null>(loadGame);
   const [gameKey, setGameKey] = useState(0);
+  // The rules page has its own address (#rules), so the browser's back button and links work.
+  const [showRules, setShowRules] = useState(() => location.hash === '#rules');
+  useEffect(() => {
+    const onHash = () => setShowRules(location.hash === '#rules');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+  const openedHere = useRef(false);
+  const openRules = () => {
+    openedHere.current = true;
+    location.hash = 'rules';
+    window.scrollTo(0, 0);
+  };
+  const closeRules = () => {
+    if (openedHere.current) {
+      openedHere.current = false;
+      history.back(); // back to the front page, without leaving a #rules entry behind
+    } else {
+      history.replaceState(null, '', location.pathname + location.search);
+      setShowRules(false);
+    }
+  };
 
   const changeSettings = (update: (s: Settings) => Settings) => {
     setSettings((prev) => {
@@ -62,6 +85,8 @@ export default function App() {
     [game],
   );
 
+  if (showRules && !game) return <Rules onBack={closeRules} />;
+
   if (game) {
     return (
       <Game
@@ -80,6 +105,7 @@ export default function App() {
       settings={settings}
       onChange={changeSettings}
       onStart={start}
+      onRules={openRules}
       canResume={!!resumable}
       onResume={() => {
         if (!resumable) return;
