@@ -176,6 +176,7 @@ export function sayBid(b: BiddingState, seat: Seat, a: BidAction): string {
       if (seat === dealer) return a.alone ? 'Pick it up, alone!' : 'Pick it up';
       return a.alone ? 'Order it up, alone!' : 'Order it up';
     case 'name':
+      if (b.phase === 'bennyCall') return `Benny turned up! Blind shout: ${SUIT_NAME[a.suit]} ${SUIT_SYMBOL[a.suit]}${a.alone ? ', alone!' : ''}`;
       return `${SUIT_NAME[a.suit]} ${SUIT_SYMBOL[a.suit]}${a.alone ? ', alone!' : ''}`;
     case 'goAlone': {
       const ours = teamOf(seat) === makerTeam(b);

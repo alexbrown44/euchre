@@ -173,7 +173,7 @@ function TrumpBadge({ v }: { v: TableView }) {
         <strong>{SUIT_NAME[v.trump]}</strong> are trumps
         <br />
         <small>
-          called by {who}
+          {v.upcard.kind === 'benny' ? `blind shout by ${who} (the Benny turned up)` : `called by ${who}`}
           {extra}
           {def}
         </small>
@@ -333,7 +333,7 @@ function HandEnd({ v, onNext }: { v: TableView; onNext: () => void }) {
     title = OUTCOME_HEADLINE[r.outcome];
     const caller = seatName(v, c.maker);
     lines = [
-      `${caller} called ${SUIT_NAME[c.trump]} ${SUIT_SYMBOL[c.trump]}${c.makerLoner !== null ? ' and went alone' : ''}.`,
+      `${v.upcard.kind === 'benny' ? 'The Benny was turned up, so ' : ''}${caller} called ${SUIT_NAME[c.trump]} ${SUIT_SYMBOL[c.trump]}${v.upcard.kind === 'benny' ? ' blind' : ''}${c.makerLoner !== null ? ' and went alone' : ''}.`,
       ...(c.loneDefender !== null ? [`${seatName(v, c.loneDefender)} defended alone.`] : []),
       `The makers took ${sum.makerTricks} of 5 tricks.`,
       `${r.team === 0 ? 'Your team scores' : 'Their team scores'} ${r.points} point${r.points === 1 ? '' : 's'}.`,
