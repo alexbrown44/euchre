@@ -138,12 +138,13 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .seat-active .seat-name { color: var(--gold); }
 .seat-active .seat-name::before { content: '●'; font-size: 10px; animation: pulse 1s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: .3; } }
-.seat-out { opacity: .5; }
+.seat-out .seat-cards { opacity: .4; }
+.seat-out .seat-name { color: #cfe4dd; }
 .seat-cards { display: flex; }
 .seat-cards .card + .card { margin-left: -9px; }
 .bubble {
-  background: #fff; color: var(--ink); font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.25); white-space: nowrap; max-width: 140px; overflow: hidden; text-overflow: ellipsis;
+  background: #fff; color: #1d2a26; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25); max-width: 140px; text-align: center; line-height: 1.25;
 }
 
 .badges { display: inline-flex; gap: 3px; flex-wrap: wrap; }
@@ -153,7 +154,7 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .seat-dealer { background: rgba(240, 192, 90, .16); box-shadow: inset 0 0 0 1px rgba(240, 192, 90, .45); border-radius: 14px; }
 .chip-maker { background: var(--gold); color: #2a1d05; }
 .chip-alone { background: #ffdca1; color: #6b4a0c; }
-.chip-out { background: rgba(0,0,0,.35); color: #fff; }
+.chip-out { background: #0a2e25; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
 
 .centre { grid-area: centre; position: relative; min-height: 0; }
 .trump-box { color: inherit; font: inherit; border: 0; cursor: pointer; min-width: 58px; }
@@ -161,8 +162,9 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .trump-box-empty .trump-box-sym { background: transparent; color: #cfe4dd; }
 
 .kitty { position: absolute; inset: 0; display: grid; place-items: center; }
-.turned-down { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; color: #cfe4dd; }
-.kitty-note { font-size: 14px; color: #cfe4dd; }
+.turned-down { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: #e6f2ee; }
+.turned-down .card-dimmed { filter: brightness(.82) saturate(.6); }
+.kitty-note { font-size: 14px; color: #e6f2ee; }
 
 .trick { position: absolute; inset: 0; }
 .trick-card { position: absolute; transition: transform .2s; }
@@ -171,9 +173,9 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .trick-card.at-left { left: 6%; top: 46%; transform: translateY(-50%); }
 .trick-card.at-right { right: 6%; top: 46%; transform: translateY(-50%); }
 .trick-winner .card { box-shadow: 0 0 0 3px var(--gold), 0 4px 10px rgba(0,0,0,.35); }
-.trick-hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 13px; color: #cfe4dd; white-space: nowrap; }
-.trick-won { top: auto; bottom: 2%; transform: translateX(-50%); color: var(--gold); font-weight: 700; }
-.tricks-count { position: absolute; right: 6px; bottom: 4px; font-size: 11px; color: #cfe4dd; }
+.trick-hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 14px; color: #e6f2ee; white-space: nowrap; }
+.trick-won { top: auto; bottom: 2%; transform: translateX(-50%); color: #ffd27a; font-weight: 800; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.tricks-count { position: absolute; right: 8px; top: 4px; font-size: 12px; font-weight: 600; color: #e6f2ee; background: rgba(0,0,0,.22); padding: 2px 8px; border-radius: 999px; }
 
 .me-row { display: flex; align-items: center; gap: 8px; padding: 6px 12px 0; min-height: 30px; }
 .status { font-size: 14px; color: #e6f2ee; }
@@ -185,9 +187,9 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; padding: 4px 12px calc(10px + env(safe-area-inset-bottom)); min-height: 62px; }
 .controls-suits { flex-direction: column; align-items: center; }
 .suit-buttons { display: flex; gap: 6px; }
-.suit-btn { display: flex; flex-direction: column; align-items: center; border-radius: 12px; padding: 4px 10px; min-width: 64px; background: #fff; }
+.suit-btn { display: flex; flex-direction: column; align-items: center; border-radius: 12px; padding: 4px 10px; min-width: 64px; background: #fff; color: #1d2a26; }
 .suit-btn-sym { font-size: 24px; line-height: 1; }
-.suit-btn-name { font-size: 11px; color: var(--muted); }
+.suit-btn-name { font-size: 11px; color: #3c4a45; font-weight: 600; }
 .controls-row { display: flex; gap: 16px; align-items: center; }
 .controls-hint { font-size: 12px; color: rgba(255,255,255,.75); text-align: center; }
 .suit-btn-alone { box-shadow: 0 0 0 3px var(--gold); background: #fff8e6; }
