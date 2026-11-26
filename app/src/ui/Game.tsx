@@ -85,7 +85,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
         <Centre v={v} onTap={() => s.stage === 'trickEnd' && setS(clearTrick(s))} />
       </div>
 
-      <div className="me-row">
+      <div className={`me-row ${v.dealer === ME ? 'seat-dealer' : ''}`}>
         <SeatBadges v={v} seat={ME} />
         <Status v={v} discarding={discarding} />
       </div>
@@ -168,7 +168,7 @@ function SeatPanel({ v, seat }: { v: TableView; seat: Seat }) {
   const info = v.seats[seat]!;
   const active = v.turn === seat;
   return (
-    <div className={`seat seat-${POS[seat]} ${active ? 'seat-active' : ''} ${info.sittingOut ? 'seat-out' : ''}`}>
+    <div className={`seat seat-${POS[seat]} ${active ? 'seat-active' : ''} ${info.sittingOut ? 'seat-out' : ''} ${info.isDealer ? 'seat-dealer' : ''}`}>
       <div className="seat-name">
         {info.name}
         <SeatBadges v={v} seat={seat} />
