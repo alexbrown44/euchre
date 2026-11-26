@@ -7,3 +7,6 @@ services:
     buildCommand: cd app && npm ci && npm run build
     staticPublishPath: app/dist
     pullRequestPreviewsEnabled: false
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
