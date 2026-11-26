@@ -4,3 +4,4 @@ node_modules/
 Thumbs.db
 # Simulation output can get large; keep results we want by copying them elsewhere.
 results/
+dist/

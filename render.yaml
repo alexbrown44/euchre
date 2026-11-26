@@ -1,0 +1,9 @@
+# Render Blueprint: the web app as a free static site.
+# The app imports the engine from ../engine, so the build runs from the repository root.
+services:
+  - type: web
+    name: euchre
+    runtime: static
+    buildCommand: cd app && npm ci && npm run build
+    staticPublishPath: app/dist
+    pullRequestPreviewsEnabled: false

@@ -67,4 +67,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 12: league hand tests, dealer with Q-10-9 (Finding 15) and Right Bower + 1 (Finding 16)
 - [x] Session 13: strategy guide for league players (`../STRATEGY_GUIDE.md`), built from Findings 1–16
 - [x] Session 14: dealer with 3 trumps, two Aces vs one suit Ace high (Finding 17)
-- [ ] Next: the playable app, then hints, tutorial and quizzes
+- [x] Session 15: web app started (`../app`): solo play against Easy, Medium and Hard bots, game to 10-21
+- [ ] Next: learning mode (hints, tutorial, quizzes), then online play with friends
