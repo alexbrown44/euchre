@@ -144,7 +144,7 @@ The first run of this experiment (also 16 Nov) used bots whose dealer picked up 
 
 > **Rechecked 20 Nov 2026 with Monte Carlo card play: holds.** One update: defend alone against a loner with 3 trumps including any top trump. See Finding 12.
 
-> **Rule correction, 26 Nov 2026.** The league confirmed that the maker's partner, if they still have a turn, may drop the maker and go alone **even when nobody else is alone** (not only to take over a loner or answer a lone defender). The engine allowed only those two cases, so this option was never offered in any experiment. The results below are unaffected: they compare passing with the options that were tested. Whether the new option is ever worth it is **untested**; the bots never use it for now.
+> **Rule correction, 26 Nov 2026.** The league confirmed that the maker's partner, if they still have a turn, may drop the maker and go alone **even when nobody else is alone** (not only to take over a loner or answer a lone defender). The engine allowed only those two cases, so this option was never offered in any experiment. The results below are unaffected: they compare passing with the options that were tested. Finding 18 tests the new option: go alone only with 5 trumps, or 4 or 3 strong trumps plus an off-suit Ace.
 
 *Experiment run 16 Nov 2026, three times. Run 3 used 2,000,000 deals and about 1.6 million decisions, with bots calibrated to the league: makers go alone in about **1 hand in 10**, someone defends alone in about 1 in 20, and round two comes up in about a third of hands. All three runs agreed closely, including runs with loners at 1 in 3 and 1 in 7.*
 
@@ -1025,6 +1025,35 @@ Picking up beats passing in every shape (+0.88 to +1.05).
 - **How this fits Finding 11.** Finding 11 said the best shape is trumps plus one outside suit holding its Ace, compared with shapes that have **one** Ace. A second Ace is worth more than one fewer outside suit.
 
 Full tables: `npm run exp:dealer-two-aces`, written to the `results/` folder.
+
+---
+
+## Finding 18: The maker's partner going alone
+
+*Experiment run 26 Nov 2026, after the league confirmed that the maker's partner may drop the maker and go alone even when nobody else is alone (see the note on Finding 3). 2.7 million random deals bid by league-calibrated bots, giving about 73,000 decisions where the maker's partner still had a turn, nobody was alone, and they held 3+ trumps. Each was played out both ways from that point (pass, or go alone with the maker sitting out), with Monte Carlo card play.*
+
+**Gain from going alone instead of passing**, in net points per hand (± is 2 standard errors):
+
+| Your hand (trumps in the suit your partner called) | No off-suit Ace | With an off-suit Ace |
+|---|---:|---:|
+| 3 trumps, no top trump | **−1.75** | **−0.64** |
+| 3 trumps, 1 top trump | **−1.10** | **−0.14** |
+| 3 trumps, 2+ top trumps | **−0.56** | **+0.27** (±0.04) |
+| 4 trumps, no top trump | **−0.39** | +0.16 (±0.29, few hands) |
+| 4 trumps, 1 top trump | **−0.10** | **+1.10** (±0.11) |
+| 4 trumps, 2+ top trumps | +0.04 (break-even) | **+1.67** (±0.08) |
+| 5 trumps | **+1.51 to +1.85** | (no off-suit card) |
+
+- **Go alone with:** 5 trumps; 4 trumps including a top trump **and** an off-suit Ace; or 3 trumps including two top trumps **and** an off-suit Ace. Otherwise pass.
+- **The off-suit Ace decides it**, as in the dealer's loner (Finding 4). With 4 trumps and two top trumps, going alone marched 85% of the time with an Ace, 24% without.
+- **Why passing is usually better:** your partner called on a decent hand, so with you both playing the team already marches often (29–88% in the rows above) and is almost never euchred (0–6%). Going alone only gains on a march, and you lose your partner's trumps.
+- **Benny, Right and Left together:** break-even overall (−0.02 ±0.10, 574 hands). Mostly these are 3-trump hands; with an off-suit Ace they fall in the +0.27 row.
+- **By situation:** almost every case is round two (your partner named a suit and you are on the dealer's right, or you are the dealer). Round one (your partner on the dealer's left orders up, you on the right) was rare (930 hands), and going alone lost there on average (−1.29). Likely why (untested): ordering up hands the dealer, an opponent, an extra trump, so the defence is stronger than in round two.
+- **How often:** the hands that gain come up about **1 hand in 400**.
+
+**Bots:** taught as `partnerAloneRule` (on in the default settings). Too rare to measure over whole games.
+
+Full tables: `npm run exp:partner-alone`, written to the `results/` folder.
 
 ---
 

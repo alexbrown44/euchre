@@ -31,6 +31,7 @@
     "exp:dealer-q109": "node experiments/dealer-q109.ts run 1000 0 && node experiments/dealer-q109.ts combine results/dealer-q109-from0.json",
     "exp:dealer-right2": "node experiments/dealer-right2.ts run 1000 0 && node experiments/dealer-right2.ts combine results/dealer-right2-from0.json",
     "exp:dealer-two-aces": "node experiments/dealer-two-aces.ts run 5001 0 && node experiments/dealer-two-aces.ts combine results/dealer-two-aces-from0.json",
+    "exp:partner-alone": "node experiments/partner-alone.ts run 20000 0 && node experiments/partner-alone.ts combine results/partner-alone-from0.json",
     "exp:head-to-head": "node experiments/head-to-head.ts"
   }
 }

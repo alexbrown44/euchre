@@ -68,4 +68,5 @@ Seats are numbered 0–3 clockwise (South, West, North, East). Partners sit oppo
 - [x] Session 13: strategy guide for league players (`../STRATEGY_GUIDE.md`), built from Findings 1–16
 - [x] Session 14: dealer with 3 trumps, two Aces vs one suit Ace high (Finding 17)
 - [x] Session 15: web app started (`../app`): solo play against Easy, Medium and Hard bots, game to 10-21
+- [x] Session 16: rule fix (maker's partner may go alone) and Finding 18, taught to bots
 - [ ] Next: learning mode (hints, tutorial, quizzes), then online play with friends

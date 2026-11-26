@@ -186,3 +186,14 @@ test('bots never play hidden information: the same view gives the same move', ()
   const card = parseCard('AS');
   assert.equal(cardId(bot.play({ legal: [card] } as never)), 'AS');
 });
+
+test('Finding 18: the maker\'s partner goes alone only with the hands that gained', async () => {
+  const { partnerShouldGoAlone } = await import('../src/bots/ruleBot.ts');
+  const { parseCards } = await import('../src/cards.ts');
+  // Hearts trump. Right = JH, Left = JD.
+  assert.equal(partnerShouldGoAlone(parseCards('JH JD AH AS 9C'), 'H'), true, '3 trumps, 2 top, off-suit Ace');
+  assert.equal(partnerShouldGoAlone(parseCards('JH JD AH KS 9C'), 'H'), false, '3 trumps, 2 top, no Ace');
+  assert.equal(partnerShouldGoAlone(parseCards('JH AH KH QH AS'), 'H'), true, '4 trumps, 1 top, off-suit Ace');
+  assert.equal(partnerShouldGoAlone(parseCards('JH AH KH QH KS'), 'H'), false, '4 trumps, 1 top, no Ace');
+  assert.equal(partnerShouldGoAlone(parseCards('AH KH QH 10H 9H'), 'H'), true, '5 trumps');
+});

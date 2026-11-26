@@ -53,6 +53,12 @@ export interface RuleBotParams {
    */
   dropPartnerThreshold?: number;
   /**
+   * Finding 18: the maker's partner drops the maker and goes alone (nobody else alone) with
+   * 5 trumps, 4 trumps including a top trump plus an off-suit Ace, or 3 trumps including two top
+   * trumps plus an off-suit Ace. Overrides dropPartnerThreshold. Defaults to false.
+   */
+  partnerAloneRule?: boolean;
+  /**
    * How the dealer decides to go alone in round one: by strength score (dealerAloneThreshold),
    * or by hand shape (see dealerShouldGoAlone in evaluate.ts). Defaults to 'strength'.
    */
@@ -243,6 +249,8 @@ export const DEFAULT_PARAMS: RuleBotParams = {
   // Finding 13: the loner always draws; makers lead off-suit against a lone defender
   // (51.7% ±0.2 over 200,000 games).
   lonerPlay: true,
+  // Finding 18: the maker's partner goes alone with the hands that gained (rare: about 1 hand in 400).
+  partnerAloneRule: true,
 };
 
 export const PARAM_SETS: Record<string, RuleBotParams> = {
@@ -436,6 +444,7 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
         const upAndDown = isDealer && orderedUp && v.maker === partnerOf(v.seat);
         if (v.makerLoner === partnerOf(v.seat)) threshold = upAndDown ? p.dealerTakeOverThreshold : p.takeOverThreshold;
         else if (v.loneDefender !== null) threshold = p.answerThreshold;
+        else if (p.partnerAloneRule) return partnerShouldGoAlone(v.hand, trump) ? { type: 'goAlone' } : pass;
         else threshold = p.dropPartnerThreshold ?? Infinity;
       } else if (v.loneDefender === partnerOf(v.seat)) {
         threshold = p.takeOverDefenceThreshold;
@@ -535,4 +544,15 @@ function play(v: PlayView, p: RuleBotParams): Card {
   }
   // Can't win: throw the least useful card, keeping trump if possible.
   return lowest(nonTrumps.length > 0 ? nonTrumps : legal, trump);
+}
+
+/** Finding 18: should the maker's partner drop the maker and go alone (nobody else alone)? */
+export function partnerShouldGoAlone(hand: readonly Card[], trump: Suit): boolean {
+  const trumps = hand.filter((c) => isTrump(c, trump));
+  const tops = trumps.filter((c) => trumpRank(c, trump) >= 6).length;
+  const offAce = hand.some((c) => c.kind === 'suited' && c.rank === 'A' && !isTrump(c, trump));
+  if (trumps.length >= 5) return true;
+  if (trumps.length === 4) return tops >= 1 && offAce;
+  if (trumps.length === 3) return tops >= 2 && offAce;
+  return false;
 }

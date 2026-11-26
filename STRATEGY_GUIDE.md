@@ -63,6 +63,7 @@ Go alone with **3 big trumps and one outside suit holding its Ace**, the league 
 - **Defend alone** against two makers with **3 trumps including a top trump**. Against a loner, the same.
 - **Don't take over your partner's loner or lone defence, and don't answer a lone defender** (the maker's partner dropping the player who chose trump). These lost in every hand tested. Defending alone **against** a loner is different, and fine with the hand above.
 - The dealer takes over Up and Down only with **4 trumps** after picking up.
+- **Partner called and nobody is alone:** go alone only with 5 trumps, or 4 trumps (a top trump among them) **plus an off-suit Ace**, or 3 trumps (two top trumps) **plus an off-suit Ace**.
 
 ### The discard
 **Never throw a trump or an off-suit Ace** (except with 5 trumps, below). **Make a void if you can, even throwing a lone King. Otherwise throw your lowest card.** With 5 trumps and an Ace, it's a toss-up with your partner; alone, throw the Ace.
@@ -252,8 +253,11 @@ These situations sound alike at the table but are very different:
 - **Don't answer a lone defender.**
   - **Why:** under league rules, the maker's partner who answers drops **their partner, the player who chose trump**. The hand built around that trump suit sits out, and a euchre still costs 4.
   - **Likely why (untested):** a lone defender holds strong trumps. Taking on that player with only half your team's cards, and without the hand that picked trump, plays into their hands.
-- **Your partner called, nobody is alone, and you still have a turn: you may go alone too.** Under league rules you can drop the partner who called and play alone. **Not tested yet.**
-  - **Likely why (untested) it's rarely right:** you drop the player who chose trump, usually on a hand built for it. It might pay with a hand that could march on its own, such as Benny, Right and Left in the suit your partner called.
+- **Your partner called, nobody is alone, and you still have a turn: go alone only with a hand that can march.** Under league rules you may drop the partner who called and play alone. **(F18)**
+  - **Go alone with:** 5 trumps (+1.5 to +1.85); 4 trumps including a top trump **and** an off-suit Ace (+1.1 to +1.7); or 3 trumps including two top trumps **and** an off-suit Ace (+0.27).
+  - **Otherwise pass.** Without an off-suit Ace even 4 trumps with two top trumps only breaks even, and 3 trumps with one top trump loses about 1.1.
+  - **Why:** your partner called on a decent hand, so playing together your team already marches often and is almost never euchred (0–6% in the hands tested). Going alone only gains on a march, so you need a hand that marches on its own. The off-suit Ace is what turns it into one: with 4 trumps and two top trumps, a loner marched 85% of the time with the Ace and 24% without.
+  - **Benny, Right and Left alone isn't enough** without an off-suit Ace: break-even overall.
 
 ---
 
