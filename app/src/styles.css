@@ -458,3 +458,33 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .bid-view-label { font-size: 12px !important; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 4px; }
 .bid-why { margin: 0; padding-left: 18px; font-size: 14px; }
 .bid-why li { margin-bottom: 6px; }
+
+/* ---------------------------------------------------------------- Your first hand */
+.tut-title { flex: 1; display: flex; flex-direction: column; align-items: center; line-height: 1.25; font-weight: 700; font-size: 15px; }
+.tut-progress { font-size: 12px; font-weight: 500; color: #cfe4dd; }
+.coach {
+  display: flex; gap: 10px; margin: 8px 8px 0; padding: 10px 12px; border-radius: 14px;
+  background: var(--paper); color: #1d2a26; box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.coach p { margin: 0 0 6px; font-size: 15px; line-height: 1.45; }
+.coach .rs-black { color: #1a1a1a !important; }
+.coach-logo { width: 34px; height: 34px; flex: none; border-radius: 9px; }
+.coach-body { flex: 1; min-width: 0; }
+.coach-wait { color: #5b6b66; font-style: italic; }
+.coach-wrong { background: #fdecea; border: 1px solid #f1b8b2; border-radius: 8px; padding: 6px 8px; color: #7a1e16; }
+.coach-next { display: block; margin: 4px 0 0 auto; min-width: 110px; }
+.coach-end { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.minis { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 6px; }
+.mini { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.mini-card { min-width: 29px; padding: 3px 4px; border: 1px solid #c9d3cf; border-radius: 6px; background: #fff; color: #1d2a26; font-weight: 700; font-size: 13px; text-align: center; }
+.mini-mine .mini-card { box-shadow: 0 0 0 2px var(--gold); border-color: var(--gold-deep); }
+.mini-note { font-size: 11px; color: #5b6b66; }
+.coach .mini-key { font-size: 12px; color: #5b6b66; margin-top: -2px; }
+.coach-score { font-size: 13px; border-collapse: collapse; margin: 2px 0 6px; }
+.coach-score td { padding: 2px 10px 2px 0; }
+.coach-score td:last-child { font-weight: 700; white-space: nowrap; }
+.tut .hand > div + div { margin-left: -6px; }
+.tut-suggest .card { box-shadow: 0 0 0 3px var(--gold), 0 4px 10px rgba(0,0,0,.35); transform: translateY(-6px); }
+.tut-suggest-btn { box-shadow: 0 0 0 3px var(--gold); }
+.tut-result { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-weight: 700; text-align: center; }
+.tut-result-big { font-size: 48px; line-height: 1; color: var(--gold); text-shadow: 0 2px 6px rgba(0,0,0,.4); }

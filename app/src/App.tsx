@@ -6,6 +6,7 @@ import { Learn } from './learn/Learn.tsx';
 import { Guide } from './learn/Guide.tsx';
 import { RulesQuiz } from './learn/RulesQuiz.tsx';
 import { BiddingQuiz } from './learn/BiddingQuiz.tsx';
+import { FirstHand } from './learn/FirstHand.tsx';
 import { newGame, type TableState } from './game/table.ts';
 import { SEAT_NAMES } from './config.ts';
 import { loadSettings, saveSettings, type Settings } from './settings.ts';
@@ -70,7 +71,7 @@ export default function App() {
       return;
     }
     // Opened directly from a link: go up a level instead of leaving the app.
-    const up = route.startsWith('quiz/') || route.startsWith('guide') ? 'learn' : '';
+    const up = route.startsWith('quiz/') || route.startsWith('guide') || route === 'first-hand' ? 'learn' : '';
     history.replaceState(null, '', up ? `#${up}` : location.pathname + location.search);
     setRoute(up);
   };
@@ -111,6 +112,7 @@ export default function App() {
       page === 'rules' ? <Rules section={arg} onBack={back} />
       : page === 'learn' ? <Learn onBack={back} onGo={go} />
       : page === 'guide' ? <Guide section={arg} onBack={back} />
+      : page === 'first-hand' ? <FirstHand onBack={back} onGo={go} />
       : null;
     // A quiz stays open underneath while you read a rule or the guide from it, so you keep your place.
     if (quiz) {

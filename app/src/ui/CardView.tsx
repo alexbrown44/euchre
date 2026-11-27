@@ -13,9 +13,11 @@ interface Props {
   dimmed?: boolean;
   onClick?: () => void;
   label?: string;
+  /** Let a card that can't be played still be tapped (the tutorial explains why it can't). */
+  tapAlways?: boolean;
 }
 
-export function CardView({ card, faceDown, size = 'hand', playable, dimmed, onClick, label }: Props) {
+export function CardView({ card, faceDown, size = 'hand', playable, dimmed, onClick, label, tapAlways }: Props) {
   const cls = ['card', `card-${size}`];
   if (faceDown || !card) cls.push('card-back');
   if (playable) cls.push('card-playable');
@@ -46,7 +48,7 @@ export function CardView({ card, faceDown, size = 'hand', playable, dimmed, onCl
 
   if (onClick) {
     return (
-      <button type="button" className={cls.join(' ')} onClick={onClick} disabled={!playable} aria-label={name} data-card={id}>
+      <button type="button" className={cls.join(' ')} onClick={onClick} disabled={!playable && !tapAlways} aria-label={name} data-card={id}>
         {content}
       </button>
     );

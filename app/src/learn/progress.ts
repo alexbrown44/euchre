@@ -16,6 +16,8 @@ interface Stored {
   quizzes?: Partial<Record<QuizId, QuizRecord>>;
   /** Bidding questions answered well, so new rounds prefer ones not yet seen. */
   seen?: string[];
+  /** Lessons finished. */
+  done?: string[];
 }
 
 function load(): Stored {
@@ -55,4 +57,11 @@ export const getSeen = (): Set<string> => new Set(load().seen ?? []);
 export function markSeen(ids: string[]): void {
   const s = load();
   save({ ...s, seen: [...new Set([...(s.seen ?? []), ...ids])] });
+}
+
+/** Lessons finished, such as "first-hand". */
+export const isDone = (id: string): boolean => (load().done ?? []).includes(id);
+export function markDone(id: string): void {
+  const s = load();
+  if (!(s.done ?? []).includes(id)) save({ ...s, done: [...(s.done ?? []), id] });
 }

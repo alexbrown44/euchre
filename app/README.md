@@ -24,6 +24,7 @@ npm run build    # production build in app/dist
 - `src/learn/`: Learn mode, with two tracks ("New to Euchre" and "Sharpen your game").
   - `Guide.tsx` shows STRATEGY_GUIDE.md, parsed by `guideHtml.ts` (keep in step with `tools/guide-to-html.mjs`).
   - `rulesQuiz.ts` holds the rules questions; keep them in step with EUCHRE_RULES.md.
+  - `firstHand.ts` is the script for "Your first hand" (a fixed deal and the coach's words); `test/firstHand.test.ts` checks every move is legal.
   - `data/bidding-bank.json` holds the "Would you call?" questions, measured by the simulator (below).
   - `progress.ts` keeps quiz scores in the browser.
 

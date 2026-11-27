@@ -1,29 +1,31 @@
 // Learn: two tracks over the same material. "New to Euchre" starts from the rules; "Sharpen your
 // game" goes straight to the decisions where good players differ.
 import { useState } from 'react';
-import { getRecord, getTrack, setTrack, type QuizId, type Track } from './progress.ts';
+import { getRecord, getTrack, isDone, setTrack, type QuizId, type Track } from './progress.ts';
 
 interface Item {
   title: string;
   blurb: string;
   route?: string;
   quiz?: QuizId;
+  /** A lesson, shown as done once finished. */
+  lesson?: string;
   soon?: boolean;
 }
 
 const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: boolean; intro: string; items: Item[] }> = {
   new: {
     label: 'New to Euchre',
-    pitch: 'The rules, a quiz, and hands with a clear right answer.',
+    pitch: 'A guided first hand, the rules, a quiz, and clear-cut calls.',
     suit: '♦',
     red: true,
-    intro: 'Start with the rules, test yourself, then try some clear-cut calling decisions.',
+    intro: 'Play a guided hand, read the rules, test yourself, then try some clear-cut calling decisions.',
     items: [
+      { title: 'Your first hand', blurb: 'Play one real deal, with a coach explaining each step as it happens.', route: 'first-hand', lesson: 'first-hand' },
       { title: 'The rules', blurb: 'How the game works, in plain language, including our house rules.', route: 'rules' },
       { title: 'Rules quiz', blurb: '10 quick questions a round on the cards, the calling and the scoring.', route: 'quiz/rules', quiz: 'rules' },
       { title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
       { title: 'The one-page card', blurb: 'The strategy guide\'s key advice on a single page.', route: 'guide/the-one-page-card' },
-      { title: 'Your first hand', blurb: 'A guided deal that explains each step as it happens.', soon: true },
       { title: 'Guided practice game', blurb: 'A real game against easy bots, with hints on every turn.', soon: true },
     ],
   },
@@ -97,6 +99,7 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
                     <span className="learn-item-text">
                       <span className="mode-title">{it.title}</span>
                       <span className="mode-blurb">{it.blurb}</span>
+                      {it.lesson && isDone(it.lesson) && <span className="learn-best">Done</span>}
                       {rec && (
                         <span className="learn-best">
                           Best {rec.best}/{rec.total} · {rec.rounds} {rec.rounds === 1 ? 'round' : 'rounds'}
