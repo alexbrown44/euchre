@@ -108,6 +108,15 @@ export function dealerShouldGoAlone(s: HandShape, rule: 'league' | 'shape'): boo
   return false;
 }
 
+/**
+ * After a turned-up Benny: the dealer named trumps blind, picked up and discarded. Go alone with
+ * 4 or 5 trumps, 3 trumps with an off-suit Ace, or the Benny with both Bowers (Finding 19).
+ */
+export function bennyDealerShouldGoAlone(hand: readonly Card[], trump: Suit): boolean {
+  const f = features(hand, trump);
+  return f.trumps >= 4 || (f.trumps === 3 && (f.offAces > 0 || f.topTrumps === 3));
+}
+
 /** Holds the Benny, Right Bower and Left Bower of `trump` (still all top trumps in next). */
 export function hasBennyAndBothBowers(hand: readonly Card[], trump: Suit): boolean {
   const ranks = hand.filter((c) => isTrump(c, trump)).map((c) => trumpRank(c, trump));

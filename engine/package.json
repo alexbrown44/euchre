@@ -18,6 +18,7 @@
     "exp:dealer-alone": "node experiments/dealer-alone.ts",
     "exp:mc-loners": "node experiments/mc-loners.ts",
     "exp:mc-dealer-alone": "node experiments/mc-dealer-alone.ts",
+    "exp:benny-alone": "node experiments/benny-alone.ts run 20000 0 20 && node experiments/benny-alone.ts combine results/benny-alone-from0.json",
     "exp:win-chance": "node experiments/win-chance.ts",
     "exp:score-aware": "node experiments/score-aware.ts run 150000 0 && node experiments/score-aware.ts combine results/score-aware-from0.json",
     "exp:seat": "node experiments/seat-strong-hands.ts run 25000 0 && node experiments/seat-strong-hands.ts combine results/seat-strong-from0.json",

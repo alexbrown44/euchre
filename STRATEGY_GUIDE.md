@@ -59,6 +59,9 @@ Every number in this guide is an **average** over many hands that share the feat
 ### The dealer's loner
 Go alone with **3 big trumps and one outside suit holding its Ace**, the league rule. The data supports a little more: **3 trumps (2 big) with an outside Ace**, **3 trumps including a top trump with two outside Aces**, **4 trumps including a top trump**, and **any 5 trumps**. Without an outside Ace, 3 trumps should **pick up, not go alone** (with 3 big trumps it's a toss-up).
 
+### The Benny turned up
+**Name any suit:** you can't see your cards, so no suit is better than another. Many players always name the same suit for a blind call, and that's as good as any. After you pick up and discard, **go alone with 4 or 5 trumps, or 3 trumps with an off-suit Ace** (or the Benny and both Bowers). Otherwise keep your partner. **(F19)**
+
 ### After the call
 - **Defend alone** against two makers with **3 trumps including a top trump**. Against a loner, the same.
 - **Don't take over your partner's loner or lone defence, and don't answer a lone defender** (the maker's partner dropping the player who chose trump). These lost in every hand tested. Defending alone **against** a loner is different, and fine with the hand above.
@@ -168,6 +171,30 @@ Go alone only if **both** are true:
   - **Why:** as above, 48% marches with partner against 45% alone on the league rule's hands.
 - **The league rule is the safe line.** The extra loners the data allows gain a smaller +0.36 per hand, and still held up when the opponents defended well. **(F5)**
   - **Why:** most of those extra loners take 3–4 tricks and score the same 1 point. They gain because about 1 in 4 becomes a 4-point march, while euchres rise only slightly (5% to 8%).
+
+### The Benny turned up: the blind call **(F19)**
+The dealer names trumps before seeing their cards, then picks up their hand and the Benny, discards, and only then decides whether to go alone.
+
+**Which suit to name: any.** Every suit scored the same (within 0.02 of a point over 60,000 hands each).
+- **Why:** you can't see your cards, so each suit is equally likely to be a good one for you.
+- **Tip:** many players **always name the same suit** for a blind call. That's as good as any choice, and it's one less thing to think about.
+
+**Going alone, after you've seen your cards.** You always hold the Benny, but you named the suit blind, so you may hold anything from 1 to 5 trumps.
+
+| Dealer's hand after the discard (trumps include the Benny) | No off-suit Ace | With an off-suit Ace |
+|---|---:|---:|
+| 1 or 2 trumps | **Keep your partner** (−1.2 to −1.5) | **Keep your partner** (−0.4 to −1.2) |
+| 3 trumps, no Bower | **Keep your partner** (−0.52) | Alone (+0.16) |
+| 3 trumps, one Bower | Toss-up, keep your partner (−0.06) | **Alone** (+0.72) |
+| 3 trumps, both Bowers | Alone (+0.21) | **Alone** (+1.00) |
+| 4 trumps | Alone (+0.14 to +0.48) | **Alone** (+0.97 to +1.88) |
+| 5 trumps | **Always alone** (+1.34 to +2.00) | (no off-suit card) |
+
+- **Go alone with 4 or 5 trumps, or 3 trumps with an off-suit Ace.** The Benny with both Bowers is enough on its own. Otherwise keep your partner.
+- **The off-suit Ace decides the 3-trump hands**, as in the dealer's loner above.
+  - **Why:** the same scoring logic. With 3 trumps, one Bower and an Ace, a loner marched 43% of the time and was euchred only 5%. Without the Ace, it marched 10% of the time, and the euchres more than doubled (12%).
+- **With your partner, a blind call is a good deal for the dealer's team:** +0.61 points a hand on average, euchred 1 time in 5. The guaranteed Benny pays for not choosing the suit.
+- **How often:** about 3 in 10 turned-up-Benny hands are worth going alone, roughly 1 hand in 90 overall.
 
 ---
 

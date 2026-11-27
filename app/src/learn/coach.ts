@@ -101,6 +101,18 @@ function bidHint(s: TableState, me: Seat): Hint {
 
   // After trump is made: go alone / defend alone, or not.
   const choice = guideBot.bid(view);
+  if (b.deal.upcard.kind === 'benny' && b.maker === me) {
+    return {
+      bid: choice,
+      what: choice.type === 'pass' ? 'Keep your partner' : 'Go alone',
+      why: [
+        choice.type === 'pass'
+          ? 'Not enough to go alone. After a blind call, go alone with 4 or 5 trumps, or 3 trumps with an off-suit Ace (or the Benny and both Bowers).'
+          : 'After a blind call, go alone with 4 or 5 trumps, or 3 trumps with an off-suit Ace (or the Benny and both Bowers). This hand has it.',
+        'See "The Benny turned up" in the guide.',
+      ],
+    };
+  }
   const ours = teamOf(me) === teamOf(b.maker!);
   return {
     bid: choice,

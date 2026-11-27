@@ -1057,6 +1057,48 @@ Full tables: `npm run exp:partner-alone`, written to the `results/` folder.
 
 ---
 
+## Finding 19: The Benny turned up: going alone after the blind call
+
+*Experiment run 27 Nov 2026, after the league confirmed that the dealer decides whether to go alone after picking up their cards, not when naming trumps blind. 240,000 random deals with the Benny as the upcard (each a shuffled deal with the Benny swapped into the upcard's place). The dealer named a suit at random, picked up, and discarded as the bots do; each hand was then played out both ways from that point, with partner and alone, with Monte Carlo card play for all four players.*
+
+**Which suit to name doesn't matter.** Spades, hearts, diamonds and clubs each scored +0.60 to +0.62 with partner, and the gain from going alone was −0.39 to −0.41 for all four (60,000 hands each, ±0.01). Players who always name the same suit lose nothing.
+
+**Gain from going alone instead of keeping your partner**, in net points per hand (± is 2 standard errors). Trumps include the Benny; "Bowers" are the Right and Left:
+
+| Dealer's hand after the discard | Hands | Points with partner | Euchred with partner | Points alone | March alone | Euchred alone | **Gain from going alone** |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 trump, no Ace | 11,306 | −0.73 | 59% | −1.94 | 0% | 98% | **−1.21** (±0.03) |
+| 1 trump, an Ace | 23,759 | −0.31 | 46% | −1.50 | 1% | 84% | **−1.19** (±0.02) |
+| 2 trumps, no Bower, no Ace | 28,216 | +0.00 | 35% | −1.40 | 1% | 80% | **−1.40** (±0.02) |
+| 2 trumps, no Bower, an Ace | 38,831 | +0.43 | 24% | −0.12 | 6% | 43% | **−0.55** (±0.02) |
+| 2 trumps, 1 Bower, no Ace | 11,367 | +0.29 | 26% | −1.20 | 1% | 74% | **−1.49** (±0.03) |
+| 2 trumps, 1 Bower, an Ace | 15,850 | +0.80 | 14% | +0.40 | 13% | 33% | **−0.41** (±0.03) |
+| 3 trumps, no Bower, no Ace | 20,516 | +0.64 | 17% | +0.12 | 3% | 33% | **−0.52** (±0.02) |
+| 3 trumps, no Bower, an Ace | 17,838 | +1.02 | 8% | +1.18 | 20% | 14% | **+0.16** (±0.02) |
+| 3 trumps, 1 Bower, no Ace | 20,544 | +1.03 | 6% | +0.97 | 10% | 12% | **−0.06** (±0.02) |
+| 3 trumps, 1 Bower, an Ace | 17,662 | +1.41 | 2% | +2.13 | 43% | 5% | **+0.72** (±0.02) |
+| 3 trumps, 2 Bowers, no Ace | 2,026 | +1.28 | 0% | +1.49 | 16% | 0% | **+0.21** (±0.05) |
+| 3 trumps, 2 Bowers, an Ace | 1,769 | +1.63 | 0% | +2.63 | 54% | 0% | **+1.00** (±0.06) |
+| 4 trumps, no Bower, no Ace | 5,053 | +1.21 | 3% | +1.34 | 17% | 5% | **+0.14** (±0.03) |
+| 4 trumps, no Bower, an Ace | 2,559 | +1.51 | 1% | +2.49 | 52% | 2% | **+0.97** (±0.05) |
+| 4 trumps, 1 Bower, no Ace | 10,307 | +1.42 | 1% | +1.81 | 28% | 1% | **+0.39** (±0.03) |
+| 4 trumps, 1 Bower, an Ace | 5,068 | +1.76 | 0% | +3.29 | 77% | 1% | **+1.53** (±0.03) |
+| 4 trumps, 2 Bowers, no Ace | 2,583 | +1.55 | 0% | +2.03 | 34% | 0% | **+0.48** (±0.05) |
+| 4 trumps, 2 Bowers, an Ace | 1,325 | +1.94 | 0% | +3.82 | 94% | 0% | **+1.88** (±0.04) |
+| 5 trumps | 3,421 | +1.89 | 0% | +3.66 | 89% | 0% | **+1.77** (±0.02) |
+
+- **Go alone with:** 4 or 5 trumps; 3 trumps with an off-suit Ace; or the Benny with both Bowers. Otherwise keep your partner.
+- **The off-suit Ace decides the 3-trump hands**, as in the dealer's loner (Finding 4): with one Bower, −0.06 without an Ace and +0.72 with one.
+- **4 trumps go alone even without an Ace**, though only just when neither Bower is among them (+0.14).
+- **The blind call itself is good for the dealer's team:** +0.61 a hand with partner, euchred 20% of the time. Mostly 2- or 3-trump hands, and the Benny is always one of them.
+- **How often:** the hands that should go alone are about 29% of turned-up-Benny hands, roughly 1 hand in 90 overall.
+
+**Bots:** the Medium bot (rule bot) now goes alone after a blind call by this rule, and the app's practice coach gives it as the hint.
+
+Full tables: `npm run exp:benny-alone`, written to the `results/` folder.
+
+---
+
 ## Testing a new strategy idea
 
 New ideas from league play can be tested at any time, the same way as Findings 4–7:

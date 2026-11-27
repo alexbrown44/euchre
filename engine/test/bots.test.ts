@@ -4,7 +4,7 @@ import { cardId, parseCard, parseCards } from '../src/cards.ts';
 import { createRng } from '../src/rng.ts';
 import { playGame, randomAgent, type Agent } from '../src/game.ts';
 import { ruleBot, scoreSituation } from '../src/bots/ruleBot.ts';
-import { chooseDiscard, dealerShouldGoAlone, features, handShape, strength } from '../src/bots/evaluate.ts';
+import { bennyDealerShouldGoAlone, chooseDiscard, dealerShouldGoAlone, features, handShape, strength } from '../src/bots/evaluate.ts';
 
 test('strength: more and higher trump scores higher', () => {
   const weak = strength(parseCards('9H 10S QS 9D 10C'), 'H');
@@ -196,4 +196,13 @@ test('Finding 18: the maker\'s partner goes alone only with the hands that gaine
   assert.equal(partnerShouldGoAlone(parseCards('JH AH KH QH AS'), 'H'), true, '4 trumps, 1 top, off-suit Ace');
   assert.equal(partnerShouldGoAlone(parseCards('JH AH KH QH KS'), 'H'), false, '4 trumps, 1 top, no Ace');
   assert.equal(partnerShouldGoAlone(parseCards('AH KH QH 10H 9H'), 'H'), true, '5 trumps');
+});
+
+test('Benny turned up (Finding 19): the dealer goes alone with 4+ trumps, 3 with an off-suit Ace, or Benny + both Bowers', () => {
+  const alone = (h: string) => bennyDealerShouldGoAlone(parseCards(h), 'H');
+  assert.equal(alone('BENNY KH 9H 10H QS'), true, '4 trumps, no Bower, no Ace');
+  assert.equal(alone('BENNY JH 9H AS QS'), true, '3 trumps and an off-suit Ace');
+  assert.equal(alone('BENNY JH JD QS KC'), true, 'Benny and both Bowers');
+  assert.equal(alone('BENNY JH 9H KS QS'), false, '3 trumps, one Bower, no Ace');
+  assert.equal(alone('BENNY JH AS AC QS'), false, '2 trumps, even with Aces');
 });
