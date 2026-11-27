@@ -448,6 +448,7 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .bid-guide-note { font-size: 14px; }
 .bid-method { font-size: 12px; }
 .quiz-feedback-actions .btn { white-space: nowrap; }
+.quiz-feedback-actions .btn-small { width: auto; max-width: 100%; padding: 4px 14px; white-space: normal; }
 .bid-views { margin: 10px 0; padding: 10px 12px; border-radius: var(--radius); background: color-mix(in srgb, var(--gold) 10%, var(--panel)); border: 1px solid color-mix(in srgb, var(--gold) 45%, var(--line)); }
 .bid-views h3 { margin: 0 0 8px; font-size: 16px; }
 .bid-view { border-left: 3px solid var(--felt-light); padding: 2px 0 2px 10px; margin-bottom: 10px; }
