@@ -42,7 +42,7 @@ export function Rules({ section, onBack }: { section?: string | null; onBack: ()
           </li>
           <li>
             <strong>Benny turned up: a blind shout.</strong> If the Benny is the turned-up card, the dealer names trumps{' '}
-            <strong>before looking at their own cards</strong>. There's no bidding, and only the dealer may go alone.
+            <strong>before looking at their own cards</strong>. There's no bidding. Only the dealer may go alone, and they decide that after picking up their cards.
           </li>
           <li>
             <strong>Up and Down.</strong> If the dealer's partner orders the card up, it's always a loner. The dealer is
@@ -132,7 +132,7 @@ export function Rules({ section, onBack }: { section?: string | null; onBack: ()
             before looking at their own cards.
           </li>
           <li>Then the dealer picks up their hand and the Benny, looks at all six cards, and discards one face down.</li>
-          <li>The dealer's team are the makers. <strong>Only the dealer</strong> may go alone, and nobody may defend alone.</li>
+          <li>The dealer's team are the makers. <strong>Only the dealer</strong> may go alone, and nobody may defend alone. The dealer decides whether to go alone <strong>after</strong> picking up their cards, so that choice is never blind.</li>
         </ul>
       </Section>
 

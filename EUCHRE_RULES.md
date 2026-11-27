@@ -62,7 +62,7 @@ The suit of the same color as trump has only 5 cards, because its Jack became th
 The Joker has no suit, so it cannot be ordered up in the usual way. Instead:
 - The **dealer names any suit as trump blind**, **before looking at their own cards**. There is no bidding.
 - **Only after naming trump** does the dealer pick up their hand and the Benny. They may then **look at all six cards** and choose one to discard face down, as with a normal upcard.
-- The dealer's team are the makers. **Only the dealer** may go alone.
+- The dealer's team are the makers. **Only the dealer** may go alone, and they decide **after picking up their cards**, so going alone is never a blind decision.
 - No other player may go alone, take over a loner, or defend alone in this hand.
 
 ## 5. Making Trump (Bidding)

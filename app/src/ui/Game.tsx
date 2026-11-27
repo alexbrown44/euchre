@@ -295,7 +295,7 @@ function Status({ v, discarding }: { v: TableView; discarding: boolean }) {
       if (v.bidPhase === 'bennyCall') text = 'The Benny is turned up: name trumps without looking at your cards.';
       else if (v.bidPhase === 'round1') text = `Round one: ${v.upcard.kind === 'suited' ? SUIT_NAME[v.upcard.suit] : ''} turned up.`;
       else if (v.bidPhase === 'round2') text = 'Round two: name a suit, or pass.';
-      else if (v.bidPhase === 'afterCall') text = 'Trump is made. Go alone?';
+      else if (v.bidPhase === 'afterCall') text = v.upcard.kind === 'benny' ? 'You have seen your cards. Go alone?' : 'Trump is made. Go alone?';
     } else if (v.turn !== null) text = `${seatName(v, v.turn)} is deciding…`;
   } else if (v.stage === 'playing') {
     if (v.seats[ME]!.sittingOut) text = 'You are sitting out this hand.';
@@ -343,14 +343,20 @@ function BidControls({ v, onBid, suggest }: { v: TableView; onBid: (a: BidAction
             </button>
           ))}
         </div>
-        <div className="controls-hint">{alone ? 'Now tap a suit to call it and go alone.' : 'To go alone, tick "Go alone" first, then tap a suit.'}</div>
-        <div className="controls-row">
-          <label className="check">
-            <input type="checkbox" checked={alone} onChange={(e) => setAlone(e.target.checked)} />
-            Go alone
-          </label>
-          {pass && <button type="button" className={`btn${mark(pass)}`} onClick={() => onBid(pass)}>Pass</button>}
-        </div>
+        {v.bidPhase === 'bennyCall' ? (
+          <div className="controls-hint">You can decide whether to go alone once you&apos;ve picked up your cards.</div>
+        ) : (
+          <>
+            <div className="controls-hint">{alone ? 'Now tap a suit to call it and go alone.' : 'To go alone, tick "Go alone" first, then tap a suit.'}</div>
+            <div className="controls-row">
+              <label className="check">
+                <input type="checkbox" checked={alone} onChange={(e) => setAlone(e.target.checked)} />
+                Go alone
+              </label>
+              {pass && <button type="button" className={`btn${mark(pass)}`} onClick={() => onBid(pass)}>Pass</button>}
+            </div>
+          </>
+        )}
       </div>
     );
   }

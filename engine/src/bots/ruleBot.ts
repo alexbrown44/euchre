@@ -435,6 +435,11 @@ function bid(v: BidView, p: RuleBotParams): BidAction {
     case 'afterCall': {
       if (!has(v, { type: 'goAlone' })) return pass;
       const trump = v.trump!;
+      // A turned-up Benny: the dealer named trumps blind, has picked up and discarded, and now
+      // decides whether to go alone, by the same standard as naming alone in round two.
+      if (up.kind === 'benny' && v.maker === v.seat) {
+        return strength(v.hand, trump) >= p.round2.dealer.alone ? { type: 'goAlone' } : pass;
+      }
       const orderedUp = v.history.some((e) => e.action.type === 'orderUp');
       const myHand = isDealer && orderedUp && up.kind === 'suited' ? bestAfterPickup(v.hand, up, trump) : v.hand;
       const s = strength(myHand, trump);

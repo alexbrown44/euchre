@@ -215,20 +215,30 @@ test('Benny turned up: only the dealer acts, names trump blind (no pass), picks 
   assert.equal(s.phase, 'bennyCall');
   assert.equal(s.turn, S);
   assert.ok(!types(s).includes('pass'));
-  assert.equal(legalBidActions(s).length, 8, '4 suits, alone or not');
+  assert.equal(legalBidActions(s).length, 4, '4 suits, and not alone: that comes after seeing the cards');
+  assert.ok(!isLegalBidAction(s, { type: 'name', suit: 'C', alone: true }), 'no blind loner');
   const s1 = play(s, { type: 'name', suit: 'C', alone: false });
   assert.equal(s1.phase, 'discard', 'no one else gets a turn');
   assert.ok(s1.hands[S]!.some((c) => c.kind === 'benny'));
-  const done = dealerDiscards(s1);
-  assert.equal(done.history.length, 2);
+  const s2 = dealerDiscards(s1);
+  assert.equal(s2.phase, 'afterCall', 'then the dealer, who has seen their cards, may go alone');
+  assert.equal(s2.turn, S);
+  assert.deepEqual(legalBidActions(s2), [{ type: 'pass' }, { type: 'goAlone' }]);
+  assert.equal(s2.hands[S]!.length, 5);
+  const done = play(s2, PASS);
+  assert.equal(done.phase, 'done');
+  assert.equal(done.makerLoner, null);
+  assert.equal(done.history.length, 3);
   const c = contractOf(done);
   assert.equal(c.maker, S);
   assert.equal(c.trump, 'C');
   assert.ok(c.hands[S]!.some((x) => sameCard(x, BENNY)));
 });
 
-test('Benny turned up: dealer may go alone', () => {
-  const done = dealerDiscards(play(startBidding(bennyDeal()), { type: 'name', suit: 'D', alone: true }));
+test('Benny turned up: dealer may go alone, after picking up and discarding', () => {
+  const done = play(dealerDiscards(play(startBidding(bennyDeal()), { type: 'name', suit: 'D', alone: false })), { type: 'goAlone' });
+  assert.equal(done.phase, 'done');
+  assert.equal(done.hands[S]!.length, 5, 'the dealer does not pick up twice');
   const c = contractOf(done);
   assert.equal(c.makerLoner, S);
   assert.deepEqual(c.sittingOut, [N]);

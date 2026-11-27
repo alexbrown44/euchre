@@ -264,7 +264,7 @@ export function tableView(s: TableState, me: Seat): TableView {
   let upcardState: UpcardState = 'up';
   if (b.phase === 'round2' || b.phase === 'thrownIn') upcardState = 'turnedDown';
   else if (b.phase === 'discard') upcardState = 'pickedUp';
-  else if (b.phase === 'afterCall') upcardState = b.dealerPicksUp ? 'up' : 'turnedDown';
+  else if (b.phase === 'afterCall') upcardState = b.discard !== null ? 'pickedUp' : b.dealerPicksUp ? 'up' : 'turnedDown';
   else if (b.phase === 'done') upcardState = b.dealerPicksUp ? 'pickedUp' : 'turnedDown';
 
   const trick = s.stage === 'trickEnd' && s.shownTrick ? s.shownTrick : p?.current ?? null;

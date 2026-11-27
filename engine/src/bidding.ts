@@ -14,7 +14,7 @@ export type BidAction =
   | { type: 'pass' }
   /** Round one: make the upcard's suit trump. For the dealer this is "pick it up". */
   | { type: 'orderUp'; alone: boolean }
-  /** Round two (or a turned-up Benny): name a suit as trump. */
+  /** Round two (or a turned-up Benny, never alone: the dealer decides that after seeing their cards). */
   | { type: 'name'; suit: Suit; alone: boolean }
   /** After trump is made: take over a partner's loner, defend alone, or answer a lone defender. */
   | { type: 'goAlone' }
@@ -26,6 +26,7 @@ export type BidPhase =
   | 'round2'    // name a suit or pass
   | 'bennyCall' // Benny turned up: the dealer names trump blind
   | 'afterCall' // trump is made; players who haven't spoken may go alone / defend alone
+                // (after a turned-up Benny: the dealer, having picked up and discarded, may go alone)
   | 'discard'   // dealer picked up and must discard
   | 'done'      // bidding finished, ready to play
   | 'thrownIn'; // everyone passed twice: redeal, deal passes left
@@ -118,8 +119,9 @@ export function legalBidActions(state: BiddingState): BidAction[] {
     }
 
     case 'bennyCall':
-      // The dealer must name a suit (blind). No pass.
-      return SUITS.flatMap((suit) => both.map((alone) => ({ type: 'name' as const, suit, alone })));
+      // The dealer must name a suit (blind). No pass, and not alone yet: the dealer decides
+      // that once they've picked up their hand and the Benny (EUCHRE_RULES.md section 4).
+      return SUITS.map((suit) => ({ type: 'name' as const, suit, alone: false }));
 
     case 'afterCall':
       return canGoAloneAfterCall(state, seat) ? [{ type: 'pass' }, { type: 'goAlone' }] : [{ type: 'pass' }];
@@ -202,7 +204,10 @@ export function applyBidAction(state: BiddingState, action: BidAction): BiddingS
       const hand = state.hands[dealer]!;
       const i = hand.findIndex((c) => sameCard(c, action.card));
       const hands = state.hands.map((h, idx) => (idx === dealer ? [...hand.slice(0, i), ...hand.slice(i + 1)] : h));
-      return { ...s, phase: 'done', turn: null, hands, discard: hand[i]! };
+      const discarded = { ...s, hands, discard: hand[i]! };
+      // After a turned-up Benny, the dealer has now seen all their cards and may go alone.
+      if (state.deal.upcard.kind === 'benny') return { ...discarded, phase: 'afterCall', pending: [dealer], turn: dealer };
+      return { ...discarded, phase: 'done', turn: null };
     }
   }
 }
@@ -215,7 +220,8 @@ function makeTrump(s: BiddingState, seat: Seat, trump: Suit, alone: boolean, dea
     makerLoner: alone ? seat : null,
     dealerPicksUp,
   };
-  // With a turned-up Benny no one else may go alone, so the call ends here.
+  // With a turned-up Benny no one else may go alone: the dealer picks up, discards, and then
+  // decides whether to go alone.
   const stillToSpeak = s.phase === 'bennyCall' ? [] : seatsStillToSpeak(seat, s.deal.dealer);
   return continueAfterCall(made, stillToSpeak);
 }
@@ -228,6 +234,8 @@ function continueAfterCall(s: BiddingState, stillToSpeak: readonly Seat[]): Bidd
 
 function finishCall(s: BiddingState): BiddingState {
   const dealer = s.deal.dealer;
+  // Already picked up and discarded (the dealer's go-alone choice after a turned-up Benny).
+  if (s.discard !== null) return { ...s, phase: 'done', turn: null };
   // A dealer who is sitting out does not pick up (e.g. Up and Down when the dealer doesn't take over).
   const picksUp = s.dealerPicksUp && isPlaying(s, dealer);
   if (!picksUp) return { ...s, phase: 'done', turn: null, dealerPicksUp: false };
