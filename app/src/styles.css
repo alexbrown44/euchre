@@ -7,7 +7,7 @@
   --muted: #5b6b66;
   --gold: #e2b65a;
   --gold-deep: #b8862b;
-  --red: #c0262d;
+  --red: #e31b23;
   --black: #1a1a1a;
   --line: #d5ddd9;
   --bg: #eef3f1;
@@ -80,7 +80,9 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .home-suit:nth-child(even) { transform: rotate(5deg); }
 .home-suit-red { color: var(--red); }
 .home-suit-black { color: var(--black); }
-.home-head h1 { margin: 0 0 6px; font-size: 34px; }
+.home-head h1 { margin: 0; font-size: 34px; }
+.home-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.home-logo { width: 64px; height: 64px; flex: none; border-radius: 15px; box-shadow: 0 3px 10px rgba(0,0,0,.35), 0 0 0 1.5px rgba(255,255,255,.25); }
 .tagline { margin: 0; color: #d6ebe4; font-size: 14px; }
 .resume { width: 100%; margin-bottom: 16px; }
 .modes { display: grid; gap: 10px; margin-bottom: 16px; }

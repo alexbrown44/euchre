@@ -33,7 +33,10 @@ export function Home({ settings, onChange, onStart, onRules, onLearn, canResume,
           <span className="home-suit home-suit-red">♦</span>
           <span className="home-suit home-suit-black">♣</span>
         </div>
-        <h1>{APP_NAME}</h1>
+        <div className="home-brand">
+          <img className="home-logo" src="/logo.svg" alt="" width={64} height={64} />
+          <h1>{APP_NAME}</h1>
+        </div>
         <p className="tagline">{APP_TAGLINE}</p>
         <button type="button" className="rules-link" onClick={onRules}>
           How to play: our rules →
