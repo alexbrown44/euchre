@@ -129,6 +129,7 @@ export default function App() {
           onHome={back}
           onNewGame={() => setPracticeSeed(Math.floor(Math.random() * 2 ** 31))}
           coach
+          onGo={go}
         />
       )
       : null;

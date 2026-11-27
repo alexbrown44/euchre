@@ -479,6 +479,19 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .coach-end-title { font-weight: 800; margin: 0 0 6px; }
 .next-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
 @media (min-width: 560px) { .next-list { grid-template-columns: 1fr 1fr; } }
+.sheet .next-list-one { grid-template-columns: 1fr; }
+.sheet .next-item { background: var(--panel); color: var(--ink); border-color: var(--line); }
+.sheet .next-item-main { background: var(--gold); color: #1d2a26; border-color: var(--gold-deep); }
+.sheet .next-links .btn-link { color: var(--felt); }
+.sheet .coach-end-title { margin-top: 14px; }
+.practice-tally { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 10px; }
+.practice-tally-big { font-size: 17px; }
+.practice-tally-split { color: var(--muted); font-size: 14px; }
+.practice-differed summary { cursor: pointer; font-weight: 700; color: var(--felt); }
+.practice-differed ul { margin: 6px 0; padding-left: 18px; font-size: 14px; }
+.practice-differed li { margin-bottom: 4px; }
+.practice-differed-note { color: var(--muted); font-size: 13px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .sheet .next-links .btn-link, :root:not([data-theme='light']) .practice-differed summary { color: var(--gold); } }
 .next-item { display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 8px 10px; border-radius: 10px; border: 1px solid #d8d2c2; background: #fff; color: #1d2a26; cursor: pointer; font: inherit; }
 .next-item:hover { border-color: var(--gold-deep); }
 .next-item-main { background: var(--gold); border-color: var(--gold-deep); }

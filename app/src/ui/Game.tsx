@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { cardId, sameCard,SUIT_NAME, SUIT_SYMBOL, SUITS, type Card, type Suit } from '../../../engine/src/cards.ts';
+import { cardId, cardLabel, sameCard, SUIT_NAME, SUIT_SYMBOL, SUITS, type Card, type Suit } from '../../../engine/src/cards.ts';
 import type { Seat } from '../../../engine/src/deal.ts';
 import type { BidAction } from '../../../engine/src/bidding.ts';
-import { applyBid, applyCard, botMove, clearTrick, nextHand, tableView, turnOf, type TableState, type TableView } from '../game/table.ts';
+import { applyBid, applyCard, botMove, clearTrick, nextHand, sayBid, tableView, turnOf, type TableState, type TableView } from '../game/table.ts';
 import { makeBot } from '../game/bots.ts';
 import { PACE, type Settings } from '../settings.ts';
 import { CardView } from './CardView.tsx';
@@ -20,12 +20,26 @@ interface Props {
   onNewGame: () => void;
   /** Guided practice: show the coach's hint on your turn. */
   coach?: boolean;
+  /** Guided practice: go to another page from the end of the game. */
+  onGo?: (route: string) => void;
 }
+
+/** In guided practice: how often your move matched the guide's, and where it didn't. */
+interface Tally {
+  calls: number;
+  callsMatched: number;
+  cards: number;
+  cardsMatched: number;
+  /** "Hand 3: you said “Order it up”; the guide would pass." */
+  differed: string[];
+}
+const NO_TALLY: Tally = { calls: 0, callsMatched: 0, cards: 0, cardsMatched: 0, differed: [] };
+const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 
 /** Where each seat sits on screen, seen from seat 0 at the bottom. Seats go clockwise. */
 const POS = ['bottom', 'left', 'top', 'right'] as const;
 
-export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Props) {
+export function Game({ initial, settings, onSave, onHome, onNewGame, coach, onGo }: Props) {
   const [s, setS] = useState<TableState>(initial);
   const [showLog, setShowLog] = useState(false);
   const [showLast, setShowLast] = useState(false);
@@ -34,11 +48,26 @@ export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Pr
   const v = tableView(s, ME);
   const hint = useMemo(() => (coach ? coachHint(s, ME) : null), [coach, s]);
   const [hintsOn, setHintsOn] = useState(true);
+  /** The card the coach suggests: to play, or to discard after picking up. */
+  const suggestCard = hint?.card ?? (hint?.bid?.type === 'discard' ? hint.bid.card : null);
   /** After your move: what the guide would have done instead, if different. */
   const [note, setNote] = useState<string | null>(null);
-  const compare = (key: string) => {
+  const [tally, setTally] = useState<Tally>(NO_TALLY);
+  /** Compare your move with the hint: `you` says what you did, for the list at the end. */
+  const compare = (key: string, you: string) => {
     if (!hint) return;
-    setNote(key === hintKey(hint) ? null : `The guide would have said: ${hint.what}.`);
+    // A blind shout after the Benny is turned up has no right answer, so it isn't marked or counted.
+    if (s.stage === 'bidding' && s.bidding.phase === 'bennyCall') return setNote(null);
+    const same = key === hintKey(hint);
+    setNote(same ? null : `The guide would have said: ${hint.what}.`);
+    const card = !!hint.card;
+    setTally((t) => ({
+      calls: t.calls + (card ? 0 : 1),
+      callsMatched: t.callsMatched + (!card && same ? 1 : 0),
+      cards: t.cards + (card ? 1 : 0),
+      cardsMatched: t.cardsMatched + (card && same ? 1 : 0),
+      differed: same ? t.differed : [...t.differed, `Hand ${s.handNumber}: you ${you}; the guide would ${lowerFirst(hint.what)}.`],
+    }));
   };
 
   useEffect(() => onSave(s), [s, onSave]);
@@ -79,7 +108,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Pr
   }, [s, bots, pace]);
 
   const bid = (a: BidAction) => {
-    compare(actionKey(a));
+    compare(actionKey(a), a.type === 'discard' ? `discarded the ${cardLabel(a.card)}` : `said “${sayBid(s.bidding, ME, a)}”`);
     setS(applyBid(s, a));
   };
   const isLegal = (c: Card) => v.legalCards.some((x) => sameCard(x, c));
@@ -88,7 +117,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Pr
   const onCard = (c: Card) => {
     if (discarding) bid({ type: 'discard', card: c });
     else if (isLegal(c)) {
-      compare(cardId(c));
+      compare(cardId(c), `played the ${cardLabel(c)}`);
       setS(applyCard(s, c));
     }
   };
@@ -124,7 +153,7 @@ export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Pr
                   size="hand"
                   playable={playable}
                   dimmed={waiting && !playable}
-                  highlight={hintsOn && !!hint?.card && cardId(hint.card) === cardId(c)}
+                  highlight={hintsOn && !!suggestCard && cardId(suggestCard) === cardId(c)}
                   onClick={() => onCard(c)}
                 />
               );
@@ -134,7 +163,12 @@ export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Pr
       <BidControls v={v} onBid={bid} suggest={hintsOn && hint?.bid ? actionKey(hint.bid) : null} />
 
       {v.stage === 'handEnd' && v.summary && <HandEnd v={v} onNext={() => setS(nextHand(s))} />}
-      {v.stage === 'gameOver' && <GameOver v={v} onAgain={onNewGame} onHome={onHome} />}
+      {v.stage === 'gameOver' &&
+        (coach && onGo ? (
+          <PracticeOver v={v} tally={tally} onAgain={onNewGame} onLearn={onHome} onGo={onGo} />
+        ) : (
+          <GameOver v={v} onAgain={onNewGame} onHome={onHome} />
+        ))}
       {showLog && <LogSheet v={v} onClose={() => setShowLog(false)} />}
       {showLast && <LastTrick v={v} onClose={() => setShowLast(false)} />}
     </div>
@@ -449,6 +483,74 @@ function GameOver({ v, onAgain, onHome }: { v: TableView; onAgain: () => void; o
         </button>
         <button type="button" className="btn" onClick={onHome}>
           Change settings
+        </button>
+      </div>
+    </Sheet>
+  );
+}
+
+const PRACTICE_NEXT = [
+  { title: 'Play against the bots', blurb: 'A full game from the front page: pick Easy, Medium or Hard, and the length.', route: '' },
+  { title: 'Would you call?', blurb: 'Real hands: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner' },
+  { title: 'The strategy guide', blurb: 'The rules of thumb behind every hint, with the evidence.', route: 'guide' },
+];
+
+/** The end of a guided practice game: how you played next to the guide, and where to go next. */
+function PracticeOver({ v, tally, onAgain, onLearn, onGo }: { v: TableView; tally: Tally; onAgain: () => void; onLearn: () => void; onGo: (route: string) => void }) {
+  const won = v.winner === 0;
+  const total = tally.calls + tally.cards;
+  const matched = tally.callsMatched + tally.cardsMatched;
+  const share = total ? matched / total : 0;
+  const verdict =
+    share >= 0.85 ? "You're playing the way the guide does. Try a full game against Medium bots next."
+    : share >= 0.6 ? 'A good game. Have a look at the moves where you went another way.'
+    : 'Have a look at the moves where you went another way: each hint explains the rule behind it.';
+  return (
+    <Sheet title={won ? 'You win!' : 'They win'}>
+      <p className="final-score">
+        Us <strong>{v.score[0]}</strong> · Them <strong>{v.score[1]}</strong>
+      </p>
+      <p>{won ? 'You and your partner reached ' : 'The other team reached '}{v.target} first.</p>
+      {total > 0 && (
+        <div className="practice-tally">
+          <p className="practice-tally-big">
+            You made the guide&apos;s move <strong>{matched}</strong> times out of <strong>{total}</strong>
+          </p>
+          <p className="practice-tally-split">
+            Calls {tally.callsMatched} of {tally.calls} · Cards {tally.cardsMatched} of {tally.cards}
+          </p>
+          <p>{verdict}</p>
+          {tally.differed.length > 0 && (
+            <details className="practice-differed">
+              <summary>Where you went another way ({tally.differed.length})</summary>
+              <ul>
+                {tally.differed.map((d, i) => (
+                  <li key={i}>
+                    <SuitText text={d} />
+                  </li>
+                ))}
+              </ul>
+              <p className="practice-differed-note">Going another way isn&apos;t always wrong: some calls are close, and the guide plays the odds.</p>
+            </details>
+          )}
+        </div>
+      )}
+      <p className="coach-end-title">Where next?</p>
+      <div className="next-list next-list-one">
+        <button type="button" className="next-item next-item-main" onClick={onAgain} autoFocus>
+          <span className="next-item-title">Play another practice game</span>
+          <span className="next-item-blurb">New cards, the same Easy bots, and the coach&apos;s hint on every turn.</span>
+        </button>
+        {PRACTICE_NEXT.map((n) => (
+          <button key={n.title} type="button" className="next-item" onClick={() => onGo(n.route)}>
+            <span className="next-item-title">{n.title}</span>
+            <span className="next-item-blurb">{n.blurb}</span>
+          </button>
+        ))}
+      </div>
+      <div className="next-links">
+        <button type="button" className="btn-link" onClick={onLearn}>
+          Back to Learn &amp; improve
         </button>
       </div>
     </Sheet>
