@@ -2,7 +2,7 @@
 // to explain them. Questions come from engine/experiments/quiz-bank.ts (see app/scripts/build-bidding-bank.ts).
 
 import { effectiveSuit, isTrump, parseCard, sameColourSuit, SUITS, SUIT_NAME, SUIT_SYMBOL, trumpRank, type Card, type Suit } from '../../../engine/src/cards.ts';
-import { bestAfterPickup } from '../../../engine/src/bots/evaluate.ts';
+import { bennyDealerShouldGoAlone, bestAfterPickup } from '../../../engine/src/bots/evaluate.ts';
 import { leftOf, partnerOf, type Seat } from '../../../engine/src/deal.ts';
 import type { BidAction } from '../../../engine/src/bidding.ts';
 
@@ -22,7 +22,11 @@ export interface BankQuestion {
   level: Level;
   dealer: Seat;
   seat: Seat;
-  phase: 'round1' | 'round2';
+  /** 'bennyAlone': the Benny was turned up, you (the dealer) named `trump` blind, picked up and discarded. */
+  phase: 'round1' | 'round2' | 'bennyAlone';
+  /** bennyAlone: the suit you named blind, and the card you discarded. */
+  trump?: Suit;
+  discard?: string;
   hand: string[];
   upcard: string;
   history: { seat: Seat; action: BidAction }[];
@@ -64,6 +68,7 @@ export function turnedDown(q: BankQuestion): Suit | null {
 
 /** The words on a choice's button. */
 export function optionLabel(q: BankQuestion, a: BidAction): string {
+  if (q.phase === 'bennyAlone') return a.type === 'goAlone' ? 'Go alone' : 'Keep your partner';
   const role = roleOf(q.seat, q.dealer);
   if (a.type === 'pass') return 'Pass';
   if (a.type === 'orderUp') {
@@ -120,6 +125,7 @@ export function handFor(hand: readonly Card[], trump: Suit): string {
 export function describeHand(q: BankQuestion): string[] {
   const hand = cards(q.hand);
   const up = parseCard(q.upcard);
+  if (q.phase === 'bennyAlone' && q.trump) return [`With ${SUIT_NAME[q.trump].toLowerCase()} as trumps you have ${handFor(hand, q.trump)}.`];
   if (q.phase === 'round1' && up.kind === 'suited') {
     const role = roleOf(q.seat, q.dealer);
     if (role === 'dealer') {
@@ -139,6 +145,7 @@ export function describeHand(q: BankQuestion): string[] {
 
 /** The guide section to read for this decision (a heading in STRATEGY_GUIDE.md). */
 export function guideHeading(q: BankQuestion): string {
+  if (q.phase === 'bennyAlone') return 'The Benny turned up: the blind call';
   const role = roleOf(q.seat, q.dealer);
   const best = bestOption(q).action;
   const alone = (best.type === 'orderUp' || best.type === 'name') && best.alone;
@@ -173,7 +180,10 @@ const RULE_ROUND2: Record<Role, string> = {
 };
 
 /** The guide's rule of thumb for this seat and round, in a sentence or two. */
+export const BENNY_RULE = 'After a blind call, go alone with 4 or 5 trumps, or 3 trumps with an off-suit Ace (the Benny and both Bowers are also enough). Otherwise keep your partner.';
+
 export function guideRule(q: BankQuestion): string {
+  if (q.phase === 'bennyAlone') return BENNY_RULE;
   const role = roleOf(q.seat, q.dealer);
   if (q.phase === 'round1') return RULE_ROUND1[role];
   return `${RULE_ROUND2[role]} Go alone in round two only with 4+ trumps.`;
@@ -207,6 +217,7 @@ export function guideChoice(q: BankQuestion): BidAction {
   const hand = cards(q.hand);
   const up = parseCard(q.upcard);
   const pass: BidAction = { type: 'pass' };
+  if (q.phase === 'bennyAlone') return q.trump && bennyDealerShouldGoAlone(hand, q.trump) ? { type: 'goAlone' } : pass;
   if (up.kind !== 'suited') return pass;
   if (q.phase === 'round1') {
     const t = up.suit;
@@ -250,12 +261,13 @@ export function guideChoice(q: BankQuestion): BidAction {
   return best ? { type: 'name', suit: best.suit, alone: best.n >= 4 } : pass;
 }
 
-const isAlone = (a: BidAction) => (a.type === 'orderUp' || a.type === 'name') && a.alone;
+const isAlone = (a: BidAction) => a.type === 'goAlone' || ((a.type === 'orderUp' || a.type === 'name') && a.alone);
 /** How bold a choice is: pass, call, call alone. */
 const boldness = (a: BidAction) => (a.type === 'pass' ? 0 : isAlone(a) ? 2 : 1);
 
 /** The trump suit the disagreement is about. */
 function suitInQuestion(q: BankQuestion): Suit | null {
+  if (q.phase === 'bennyAlone') return q.trump ?? null;
   const up = parseCard(q.upcard);
   if (q.phase === 'round1') return up.kind === 'suited' ? up.suit : null;
   for (const a of [bestOption(q).action, q.guide]) if (a.type === 'name') return a.suit;
@@ -310,7 +322,7 @@ export function whyTheyDiffer(q: BankQuestion): string[] {
     }
   }
 
-  if (q.history.length > 0) {
+  if (q.history.length > 0 && q.phase !== 'bennyAlone') {
     reasons.push(
       `The calls so far are evidence. ${q.history.length === 1 ? 'One player has' : `${q.history.length} players have`} already spoken, and the simulator only deals the hidden cards in ways that fit what they did; the rule of thumb ignores what the others said.`,
     );

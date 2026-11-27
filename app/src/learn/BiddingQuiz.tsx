@@ -1,8 +1,9 @@
 // "Would you call?": real bidding spots, marked against the simulator's measured best choice.
 import { useMemo, useState } from 'react';
-import { sortHand, SUIT_NAME } from '../../../engine/src/cards.ts';
+import { cardLabel, parseCard, sortHand, SUIT_NAME, SUIT_SYMBOL } from '../../../engine/src/cards.ts';
 import type { Seat } from '../../../engine/src/deal.ts';
 import bank from './data/bidding-bank.json';
+import bennyBank from './data/benny-bank.json';
 import {
   actionKey, bestOption, cards, describeHand, grade, guideHeading, guideRule, optionLabel, whyTheyDiffer, pts, ROLE_TEXT, roleOf, saidLabel, seatName,
   type BankQuestion, type Grade, type Level,
@@ -13,7 +14,8 @@ import { QuizEnd, QuizFrame } from './QuizFrame.tsx';
 import { CardView } from '../ui/CardView.tsx';
 import { SuitText } from './SuitText.tsx';
 
-const BANK = bank as unknown as BankQuestion[];
+/** Calling spots, plus going alone after a blind call on a turned-up Benny (Finding 19). */
+const BANK = [...(bank as unknown as BankQuestion[]), ...(bennyBank as unknown as BankQuestion[])];
 const ROUND = 10;
 
 function pickRound(level: Level): BankQuestion[] {
@@ -86,7 +88,8 @@ function Question({ q, chosen, onChoose, onNext, onGuide, last }: {
   onGuide: (anchor: string) => void;
   last: boolean;
 }) {
-  const hand = useMemo(() => sortHand(cards(q.hand), null), [q]);
+  const hand = useMemo(() => sortHand(cards(q.hand), q.trump ?? null), [q]);
+  const benny = q.phase === 'bennyAlone';
   const up = cards([q.upcard])[0]!;
   const role = roleOf(q.seat, q.dealer);
   const dealerName = seatName(q, q.dealer);
@@ -118,10 +121,23 @@ function Question({ q, chosen, onChoose, onNext, onGuide, last }: {
         <div className="bid-table">
           <div className="bid-upcard">
             <CardView card={up} size="table" dimmed={q.phase === 'round2'} />
-            <span>{q.phase === 'round1' ? 'turned up' : 'turned down'}</span>
+            <span>{q.phase === 'round2' ? 'turned down' : 'turned up'}</span>
           </div>
           <div className="bid-calls">
-            {q.phase === 'round2' ? (
+            {benny && q.trump ? (
+              <>
+                <p className="bid-round">
+                  The Benny was turned up, so you named trumps blind, before looking at your cards:{' '}
+                  <strong>
+                    <SuitText text={`${SUIT_NAME[q.trump]} ${SUIT_SYMBOL[q.trump]}`} />
+                  </strong>
+                  .
+                </p>
+                <p className="bid-round">
+                  You picked up your hand and the Benny{q.discard && <>, and discarded the <SuitText text={cardLabel(parseCard(q.discard))} /> face down</>}.
+                </p>
+              </>
+            ) : q.phase === 'round2' ? (
               <>
                 <p className="bid-round">Round one: everyone passed.</p>
                 <p className="bid-round">Round two so far:</p>
@@ -136,7 +152,9 @@ function Question({ q, chosen, onChoose, onNext, onGuide, last }: {
           </div>
         </div>
         <p className="quiz-question">
-          {q.phase === 'round1'
+          {benny
+            ? 'Now you can see your cards. Go alone, or keep your partner?'
+            : q.phase === 'round1'
             ? role === 'dealer'
               ? 'Everyone has passed to you. Pick it up, or pass?'
               : 'Your call. Order it up, or pass?'
@@ -226,7 +244,7 @@ function Question({ q, chosen, onChoose, onNext, onGuide, last }: {
             </p>
           )}
           <p className="hint bid-method">
-            Measured by dealing the hidden cards {q.samples} different ways (keeping only deals that fit the calls so far) and playing
+            Measured by dealing the hidden cards {q.samples} different ways{benny ? '' : ' (keeping only deals that fit the calls so far)'} and playing
             each choice out. Choices too close to the best to tell apart (within 0.05 points a hand, or within the measuring error) count as right.
           </p>
           <div className="quiz-feedback-actions">

@@ -96,6 +96,21 @@ test("the guide's choice follows the guide's written rules", () => {
   assert.equal(k(spot(0, 'round2', ['AC', 'QC', 'KH', '9D', '10D'], '9S')), 'pass');
 });
 
+test('Benny go-alone questions: valid hands, the guide\'s rule, and a wrong answer in each', () => {
+  const benny = JSON.parse(readFileSync(new URL('../src/learn/data/benny-bank.json', import.meta.url), 'utf8')) as BankQuestion[];
+  assert.ok(benny.length >= 10);
+  for (const q of benny) {
+    assert.equal(q.phase, 'bennyAlone');
+    assert.equal(q.hand.length, 5);
+    assert.ok(q.hand.includes('BENNY'), `${q.id}: you hold the Benny`);
+    assert.ok(q.discard && !q.hand.includes(q.discard), `${q.id}: the discard is not in your hand`);
+    assert.equal(actionKey(q.guide), actionKey(guideChoice(q)), q.id);
+    assert.ok(q.options.some((o) => grade(q, actionKey(o.action)) === 'wrong'), `${q.id}: every option is right`);
+    assert.ok(headingTexts.has(guideHeading(q).toLowerCase()));
+  }
+  assert.ok(benny.some((q) => q.level === 'beginner') && benny.some((q) => q.level === 'seasoned'));
+});
+
 test('the bank records the written guide\'s choice', () => {
   const bank = JSON.parse(readFileSync(new URL('../src/learn/data/bidding-bank.json', import.meta.url), 'utf8')) as BankQuestion[];
   for (const q of bank) assert.equal(actionKey(q.guide), actionKey(guideChoice(q)), q.id);

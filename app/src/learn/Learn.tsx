@@ -27,7 +27,7 @@ const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: b
       { title: 'Your first hand', blurb: 'See the rules in action: one real deal, with a coach explaining each step.', route: 'first-hand', lesson: 'first-hand' },
       { title: 'Rules quiz', blurb: '10 quick questions a round on the cards, the calling and the scoring.', route: 'quiz/rules', quiz: 'rules' },
       { stage: 'Play with a coach', title: 'Guided practice game', blurb: "A real game to 5 against Easy bots, with the coach's hint on every turn.", route: 'practice' },
-      { stage: 'Make better calls', title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
+      { stage: 'Make better calls', title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, pass, or go alone?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
       { title: 'The one-page card', blurb: "The strategy guide's key advice on a single page, to keep handy at the table.", route: 'guide/the-one-page-card' },
     ],
   },

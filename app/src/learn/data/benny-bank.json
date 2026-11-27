@@ -1,0 +1,1271 @@
+[
+ {
+  "id": "benny-100-1",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "S",
+  "discard": "QH",
+  "hand": [
+   "QC",
+   "10C",
+   "JD",
+   "9D",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "S",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": -0.58,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -2,
+    "margin": 0.178
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-101-3",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "KD",
+  "hand": [
+   "JS",
+   "AC",
+   "10S",
+   "JC",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": -0.31,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -1.81,
+    "margin": 0.187
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-200-5",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "9C",
+  "hand": [
+   "9S",
+   "JC",
+   "KD",
+   "KS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.203,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -1.33,
+    "margin": 0.197
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-201-7",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "S",
+  "discard": "9H",
+  "hand": [
+   "QD",
+   "AC",
+   "9C",
+   "AS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "S",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.38,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -0.34,
+    "margin": 0.206
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-201-8",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "S",
+  "discard": "10H",
+  "hand": [
+   "KS",
+   "9D",
+   "KD",
+   "AD",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "S",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.223,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -0.4,
+    "margin": 0.211
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-210-9",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "C",
+  "discard": "9S",
+  "hand": [
+   "KD",
+   "10H",
+   "JC",
+   "QH",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "C",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.337,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -0.63,
+    "margin": 0.21
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-210-10",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "9C",
+  "hand": [
+   "QH",
+   "10H",
+   "KH",
+   "JH",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.323,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -1.24,
+    "margin": 0.212
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-211-11",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "JC",
+  "hand": [
+   "JS",
+   "AD",
+   "QS",
+   "JD",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.563,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -0.17,
+    "margin": 0.179
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-300-13",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "QS",
+  "hand": [
+   "10D",
+   "9H",
+   "QH",
+   "QD",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.61,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 0.02,
+    "margin": 0.171
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-300-14",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "9C",
+  "hand": [
+   "JS",
+   "10H",
+   "9H",
+   "KD",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 0.323,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": -0.45,
+    "margin": 0.18
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-301-16",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "10S",
+  "hand": [
+   "AD",
+   "QS",
+   "KD",
+   "AS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.213,
+    "margin": 0.188
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 1.62,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-310-18",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "10D",
+  "hand": [
+   "JH",
+   "QH",
+   "10S",
+   "KS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.19,
+    "margin": 0.146
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 1.49,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "pass"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-311-19",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "JC",
+  "hand": [
+   "JD",
+   "10H",
+   "AC",
+   "KC",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.263,
+    "margin": 0.201
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 1.9,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-311-20",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "9H",
+  "hand": [
+   "AD",
+   "QS",
+   "JH",
+   "AS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.46,
+    "margin": 0.18
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 2.08,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-320-22",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "C",
+  "discard": "10S",
+  "hand": [
+   "9D",
+   "KD",
+   "JS",
+   "JC",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "C",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.267,
+    "margin": 0.119
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 1.49,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-321-23",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "10H",
+  "hand": [
+   "AC",
+   "JD",
+   "AH",
+   "JH",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.747,
+    "margin": 0.117
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 3.44,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-321-24",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "S",
+  "discard": "9H",
+  "hand": [
+   "JC",
+   "9D",
+   "AD",
+   "JS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "S",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.75,
+    "margin": 0.155
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 2.81,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-400-25",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "QC",
+  "hand": [
+   "QD",
+   "KD",
+   "KH",
+   "9D",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.267,
+    "margin": 0.142
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 1.68,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-401-27",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "AS",
+  "hand": [
+   "KH",
+   "AC",
+   "9H",
+   "10H",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.44,
+    "margin": 0.146
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 2.28,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-401-28",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "JC",
+  "hand": [
+   "KH",
+   "AH",
+   "AS",
+   "10H",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.51,
+    "margin": 0.136
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 2.46,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-410-30",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "10S",
+  "hand": [
+   "KH",
+   "QD",
+   "KD",
+   "JD",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.52,
+    "margin": 0.157
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 2.52,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-411-31",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "C",
+  "discard": "KH",
+  "hand": [
+   "AD",
+   "JS",
+   "AC",
+   "KC",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "C",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.717,
+    "margin": 0.119
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 3.07,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-420-33",
+  "level": "seasoned",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "D",
+  "discard": "9C",
+  "hand": [
+   "JD",
+   "9D",
+   "JH",
+   "9H",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "D",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.563,
+    "margin": 0.153
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 1.84,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-421-35",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "C",
+  "discard": "10H",
+  "hand": [
+   "QC",
+   "JC",
+   "JS",
+   "AS",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "C",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.937,
+    "margin": 0.098
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 3.67,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-500-37",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "C",
+  "discard": "9S",
+  "hand": [
+   "QC",
+   "KC",
+   "AC",
+   "10C",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "C",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.64,
+    "margin": 0.118
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 2.91,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-510-39",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "KC",
+  "hand": [
+   "AH",
+   "KH",
+   "JH",
+   "9H",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 1.99,
+    "margin": 0.028
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 3.97,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ },
+ {
+  "id": "benny-520-41",
+  "level": "beginner",
+  "dealer": 0,
+  "seat": 0,
+  "phase": "bennyAlone",
+  "trump": "H",
+  "discard": "10C",
+  "hand": [
+   "KH",
+   "JD",
+   "10H",
+   "JH",
+   "BENNY"
+  ],
+  "upcard": "BENNY",
+  "history": [
+   {
+    "seat": 0,
+    "action": {
+     "type": "name",
+     "suit": "H",
+     "alone": false
+    }
+   }
+  ],
+  "options": [
+   {
+    "action": {
+     "type": "pass"
+    },
+    "mean": 2,
+    "margin": 0
+   },
+   {
+    "action": {
+     "type": "goAlone"
+    },
+    "mean": 4,
+    "margin": 0
+   }
+  ],
+  "guide": {
+   "type": "goAlone"
+  },
+  "samples": 300
+ }
+]
