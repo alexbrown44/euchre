@@ -58,7 +58,7 @@ export function QuizEnd({ score, total, best, onAgain, onBack, children }: {
           Another round
         </button>
         <button type="button" className="btn" onClick={onBack}>
-          Back to Learn
+          Back to Learn &amp; improve
         </button>
       </div>
     </section>

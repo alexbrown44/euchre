@@ -52,8 +52,8 @@ export function Home({ settings, onChange, onStart, onRules, onLearn, canResume,
           <span className="mode-blurb">You and a bot partner against two bots.</span>
         </button>
         <button type="button" className="mode" onClick={onLearn}>
-          <span className="mode-title">Learn</span>
-          <span className="mode-blurb">For beginners and seasoned players: the rules, quizzes and the strategy guide.</span>
+          <span className="mode-title">Learn &amp; improve</span>
+          <span className="mode-blurb">New to Euchre or a seasoned player: the rules, quizzes, and the evidence behind every call.</span>
         </button>
         <div className="mode mode-soon" aria-disabled="true">
           <span className="mode-title">Play with friends</span>
