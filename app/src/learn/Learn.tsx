@@ -11,9 +11,12 @@ interface Item {
   soon?: boolean;
 }
 
-const TRACKS: Record<Track, { label: string; intro: string; items: Item[] }> = {
+const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: boolean; intro: string; items: Item[] }> = {
   new: {
     label: 'New to Euchre',
+    pitch: 'The rules, a quiz, and hands with a clear right answer.',
+    suit: '♦',
+    red: true,
     intro: 'Start with the rules, test yourself, then try some clear-cut calling decisions.',
     items: [
       { title: 'The rules', blurb: 'How the game works, in plain language, including our house rules.', route: 'rules' },
@@ -26,6 +29,9 @@ const TRACKS: Record<Track, { label: string; intro: string; items: Item[] }> = {
   },
   sharpen: {
     label: 'Sharpen your game',
+    pitch: 'Close calls and the evidence behind every rule of thumb.',
+    suit: '♠',
+    red: false,
     intro: 'The decisions where pub players differ, answered by simulating hundreds of thousands of hands.',
     items: [
       { title: 'Would you call?', blurb: 'Real hands, including the close ones. See how much each choice is worth.', route: 'quiz/bidding', quiz: 'bidding' },
@@ -44,6 +50,9 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
     pick(t);
   };
 
+  const ready = track ? TRACKS[track].items.filter((it) => !it.soon) : [];
+  const soon = track ? TRACKS[track].items.filter((it) => it.soon) : [];
+
   return (
     <main className="rules learn">
       <header className="rules-bar">
@@ -53,40 +62,66 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
         <h1>Learn</h1>
       </header>
 
-      {track === null && <p className="rules-lead">New to Euchre, or want to sharpen up? Pick a track. You can switch at any time.</p>}
+      <section className="learn-hero">
+        <h2>Get better at Euchre</h2>
+        <p>{track === null ? 'New to the game, or after an edge at the pub? Pick a track. You can switch at any time.' : 'Pick up where you left off, or switch track below.'}</p>
+      </section>
 
-      <div className="seg learn-tracks" role="tablist" aria-label="Track">
+      <div className="learn-tracks" role="tablist" aria-label="Track">
         {(Object.keys(TRACKS) as Track[]).map((t) => (
-          <button key={t} type="button" role="tab" aria-selected={track === t} className={track === t ? 'on' : ''} onClick={() => choose(t)}>
-            {TRACKS[t].label}
+          <button key={t} type="button" role="tab" aria-selected={track === t} className={`learn-track ${track === t ? 'learn-track-on' : ''}`} onClick={() => choose(t)}>
+            <span className={`learn-track-suit ${TRACKS[t].red ? 'home-suit-red' : 'home-suit-black'}`} aria-hidden="true">{TRACKS[t].suit}</span>
+            <span className="learn-track-text">
+              <span className="learn-track-label">{TRACKS[t].label}</span>
+              <span className="learn-track-pitch">{TRACKS[t].pitch}</span>
+              {track === null && (
+                <span className="learn-track-has">
+                  {TRACKS[t].items.filter((it) => !it.soon).map((it) => it.title.replace(/ \(starter\)$/, '')).join(' · ')}
+                </span>
+              )}
+            </span>
           </button>
         ))}
       </div>
 
       {track && (
         <>
-          <p className="hint learn-intro">{TRACKS[track].intro}</p>
-          <div className="learn-items">
-            {TRACKS[track].items.map((it) => {
+          <p className="learn-intro">{TRACKS[track].intro}</p>
+          <ol className="learn-items">
+            {ready.map((it, i) => {
               const rec = it.quiz ? getRecord(it.quiz) : null;
-              return it.soon ? (
-                <div key={it.title} className="mode mode-soon" aria-disabled="true">
-                  <span className="mode-title">{it.title}</span>
-                  <span className="mode-blurb">{it.blurb} Coming soon.</span>
-                </div>
-              ) : (
-                <button key={it.title} type="button" className="mode" onClick={() => onGo(it.route!)}>
-                  <span className="mode-title">{it.title}</span>
-                  <span className="mode-blurb">{it.blurb}</span>
-                  {rec && (
-                    <span className="learn-best">
-                      Best: {rec.best}/{rec.total} · {rec.rounds} {rec.rounds === 1 ? 'round' : 'rounds'}
+              return (
+                <li key={it.title}>
+                  <button type="button" className="learn-item" onClick={() => onGo(it.route!)}>
+                    <span className="learn-step" aria-hidden="true">{i + 1}</span>
+                    <span className="learn-item-text">
+                      <span className="mode-title">{it.title}</span>
+                      <span className="mode-blurb">{it.blurb}</span>
+                      {rec && (
+                        <span className="learn-best">
+                          Best {rec.best}/{rec.total} · {rec.rounds} {rec.rounds === 1 ? 'round' : 'rounds'}
+                        </span>
+                      )}
                     </span>
-                  )}
-                </button>
+                    <span className="learn-go" aria-hidden="true">›</span>
+                  </button>
+                </li>
               );
             })}
-          </div>
+          </ol>
+          {soon.length > 0 && (
+            <>
+              <h3 className="learn-soon-head">Coming soon</h3>
+              <ul className="learn-soon">
+                {soon.map((it) => (
+                  <li key={it.title}>
+                    <span className="mode-title">{it.title}</span>
+                    <span className="mode-blurb">{it.blurb}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </>
       )}
     </main>

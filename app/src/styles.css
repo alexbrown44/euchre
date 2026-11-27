@@ -326,11 +326,45 @@ button.card { cursor: default; }
 }
 
 /* ---------------------------------------------------------------- Learn */
-.learn-tracks { margin: 16px 0 4px; }
-.learn-tracks button { font-size: 14px; }
-.learn-intro { margin: 8px 2px 12px; }
-.learn-items { display: grid; gap: 10px; }
-.learn-best { font-size: 12px; font-weight: 700; color: var(--gold-deep); margin-top: 2px; }
+.learn-hero {
+  background: var(--felt); color: #fff; border-radius: 16px; padding: 18px 18px 16px; margin: 16px 0 12px;
+  background-image: radial-gradient(circle at 85% 0%, var(--felt-light), transparent 60%);
+}
+.learn-hero h2 { margin: 0 0 4px; font-size: 22px; }
+.learn-hero p { margin: 0; color: #d6ebe4; font-size: 14px; }
+.learn-tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 480px) { .learn-tracks { grid-template-columns: 1fr; } }
+.learn-track {
+  display: flex; gap: 12px; align-items: flex-start; text-align: left; border: 2px solid var(--line); background: var(--panel); color: var(--ink);
+  border-radius: var(--radius); padding: 12px; cursor: pointer; font: inherit;
+}
+.learn-track:hover { border-color: var(--felt-light); }
+.learn-track-on { border-color: var(--felt); background: color-mix(in srgb, var(--felt-light) 10%, var(--panel)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--felt-light) 25%, transparent); }
+.learn-track-suit {
+  flex: none; display: grid; place-items: center; width: 34px; height: 46px; border-radius: 6px; background: var(--paper);
+  border: 1px solid var(--line); font-size: 24px; line-height: 1; box-shadow: 0 2px 4px rgba(0,0,0,.12); transform: rotate(-5deg);
+}
+.learn-track-text { display: flex; flex-direction: column; gap: 2px; }
+.learn-track-label { font-weight: 700; font-size: 16px; }
+.learn-track-pitch { font-size: 13px; color: var(--muted); }
+.learn-track-has { font-size: 12px; font-weight: 600; color: var(--felt-light); margin-top: 4px; }
+.learn-intro { margin: 18px 2px 10px; color: var(--muted); font-size: 14px; }
+.learn-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.learn-item {
+  width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+  border-radius: var(--radius); padding: 12px; cursor: pointer; font: inherit; box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.learn-item:hover { border-color: var(--felt-light); }
+.learn-step {
+  flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--felt); color: #fff; font-weight: 700; font-size: 14px;
+}
+.learn-item-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.learn-go { flex: none; font-size: 26px; line-height: 1; color: var(--felt-light); }
+.learn-soon-head { margin: 22px 2px 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.learn-soon { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.learn-soon li { display: flex; flex-direction: column; gap: 2px; border: 1px dashed var(--line); border-radius: var(--radius); padding: 10px 12px; color: var(--muted); }
+.learn-soon .mode-title { font-size: 14px; }
+.learn-best { align-self: flex-start; font-size: 12px; font-weight: 700; color: var(--gold-deep); background: color-mix(in srgb, var(--gold) 18%, transparent); border-radius: 999px; padding: 1px 8px; margin-top: 4px; }
 
 /* The strategy guide */
 .guide-contents { margin: 12px 0; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 12px; }
