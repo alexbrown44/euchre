@@ -14,6 +14,13 @@ import { SuitText } from './SuitText.tsx';
 const NAMES = ['You', 'West', 'Partner', 'East'] as const;
 const POS = ['bottom', 'left', 'top', 'right'] as const;
 const ONE: Record<Suit, string> = { S: 'spade', H: 'heart', D: 'diamond', C: 'club' };
+/** Where to go after the hand. */
+const NEXT = [
+  { title: 'Play a practice game', blurb: 'A real game to 5 against Easy bots, with my hint on every turn.', route: 'practice' },
+  { title: 'Rules quiz', blurb: '10 quick questions on the cards, the calling and the scoring.', route: 'quiz/rules' },
+  { title: 'Would you call?', blurb: 'Real hands: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner' },
+  { title: 'Read the rules', blurb: 'Everything in plain language, including going alone.', route: 'rules' },
+];
 /** How long each other player takes, so you can follow the moves. */
 const MOVE_MS = 850;
 
@@ -184,15 +191,23 @@ export function FirstHand({ onBack, onGo }: { onBack: () => void; onGo: (route: 
               )}
               {last && (
                 <div className="coach-end">
-                  <button type="button" className="btn btn-primary" onClick={() => onGo('quiz/rules')}>
-                    Try the rules quiz
-                  </button>
-                  <button type="button" className="btn" onClick={() => onGo('rules')}>
-                    Read the rules
-                  </button>
-                  <button type="button" className="btn" onClick={restart}>
-                    Play it again
-                  </button>
+                  <p className="coach-end-title">Where next?</p>
+                  <div className="next-list">
+                    {NEXT.map((n, i) => (
+                      <button key={n.route} type="button" className={`next-item ${i === 0 ? 'next-item-main' : ''}`} onClick={() => onGo(n.route)}>
+                        <span className="next-item-title">{n.title}</span>
+                        <span className="next-item-blurb">{n.blurb}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="next-links">
+                    <button type="button" className="btn-link" onClick={restart}>
+                      Play this hand again
+                    </button>
+                    <button type="button" className="btn-link" onClick={onBack}>
+                      Back to Learn &amp; improve
+                    </button>
+                  </div>
                 </div>
               )}
             </>
