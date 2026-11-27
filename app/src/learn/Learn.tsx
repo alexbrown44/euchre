@@ -11,22 +11,24 @@ interface Item {
   /** A lesson, shown as done once finished. */
   lesson?: string;
   soon?: boolean;
+  /** Starts a new stage of the track, shown as a heading above this item. */
+  stage?: string;
 }
 
 const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: boolean; intro: string; items: Item[] }> = {
   new: {
     label: 'New to Euchre',
-    pitch: 'A guided first hand, the rules, quizzes, and a game with a coach.',
+    pitch: 'The rules, a guided first hand, quizzes, and a game with a coach.',
     suit: '♦',
     red: true,
-    intro: 'Play a guided hand, read the rules, test yourself, then play a real game with the coach beside you.',
+    intro: 'Read the rules, see them in action, check what you know, then play a real game with the coach beside you.',
     items: [
-      { title: 'Your first hand', blurb: 'Play one real deal, with a coach explaining each step as it happens.', route: 'first-hand', lesson: 'first-hand' },
-      { title: 'The rules', blurb: 'How the game works, in plain language, including our house rules.', route: 'rules' },
+      { stage: 'Learn the game', title: 'The rules', blurb: 'Start here: how the game works, in plain language, including our house rules.', route: 'rules' },
+      { title: 'Your first hand', blurb: 'See the rules in action: one real deal, with a coach explaining each step.', route: 'first-hand', lesson: 'first-hand' },
       { title: 'Rules quiz', blurb: '10 quick questions a round on the cards, the calling and the scoring.', route: 'quiz/rules', quiz: 'rules' },
-      { title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
-      { title: 'Guided practice game', blurb: "A real game to 5 against Easy bots, with the coach's hint on every turn.", route: 'practice' },
-      { title: 'The one-page card', blurb: 'The strategy guide\'s key advice on a single page.', route: 'guide/the-one-page-card' },
+      { stage: 'Play with a coach', title: 'Guided practice game', blurb: "A real game to 5 against Easy bots, with the coach's hint on every turn.", route: 'practice' },
+      { stage: 'Make better calls', title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
+      { title: 'The one-page card', blurb: "The strategy guide's key advice on a single page, to keep handy at the table.", route: 'guide/the-one-page-card' },
     ],
   },
   sharpen: {
@@ -94,6 +96,7 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
               const rec = it.quiz ? getRecord(it.quiz) : null;
               return (
                 <li key={it.title}>
+                  {it.stage && <h3 className="learn-stage">{it.stage}</h3>}
                   <button type="button" className="learn-item" onClick={() => onGo(it.route!)}>
                     <span className="learn-step" aria-hidden="true">{i + 1}</span>
                     <span className="learn-item-text">

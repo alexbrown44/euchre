@@ -16,8 +16,8 @@ const POS = ['bottom', 'left', 'top', 'right'] as const;
 const ONE: Record<Suit, string> = { S: 'spade', H: 'heart', D: 'diamond', C: 'club' };
 /** Where to go after the hand. */
 const NEXT = [
-  { title: 'Play a practice game', blurb: 'A real game to 5 against Easy bots, with my hint on every turn.', route: 'practice' },
   { title: 'Rules quiz', blurb: '10 quick questions on the cards, the calling and the scoring.', route: 'quiz/rules' },
+  { title: 'Play a practice game', blurb: 'A real game to 5 against Easy bots, with my hint on every turn.', route: 'practice' },
   { title: 'Would you call?', blurb: 'Real hands: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner' },
   { title: 'Read the rules', blurb: 'Everything in plain language, including going alone.', route: 'rules' },
 ];
