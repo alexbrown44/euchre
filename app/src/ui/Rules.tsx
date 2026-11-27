@@ -59,7 +59,7 @@ export function Rules({ onBack }: { onBack: () => void }) {
             <strong>The dealer's discard is secret</strong>, even from their partner.
           </li>
           <li>
-            <strong>Game length is agreed before you start.</strong> This app lets you choose anything from 10 to 21.
+            <strong>Game length is agreed before you start.</strong> This app lets you choose anything from 5 to 21.
           </li>
         </ul>
       </aside>

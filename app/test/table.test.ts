@@ -76,3 +76,10 @@ test('your cards never change, except by playing, picking up the upcard as deale
     }
   }
 });
+
+test('games to 5 finish with a winner on 5 or more', () => {
+  for (let seed = 1; seed <= 5; seed++) {
+    const s = playOut('medium', 5, seed);
+    assert.ok(s.score[s.winner!] >= 5);
+  }
+});

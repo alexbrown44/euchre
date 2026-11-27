@@ -2,7 +2,7 @@
 export const APP_NAME = 'Euchre';
 export const APP_TAGLINE = 'Pub-league house rules: the Benny, Up and Down, and defending alone';
 
-export const TARGET_MIN = 10;
+export const TARGET_MIN = 5;
 export const TARGET_MAX = 21;
 
 /** The human always sits at seat 0, at the bottom of the screen. Seats go clockwise. */

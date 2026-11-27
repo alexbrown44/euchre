@@ -20,7 +20,7 @@ npm run build    # production build in app/dist
   multiplayer server will hold the same `TableState` and send each player their `TableView`.
 - `src/game/bots.ts`: Easy, Medium and Hard bots, built from the simulator's bots.
 - `src/ui/`: the screens. The table only ever reads a `TableView`.
-- `src/config.ts`: the app's name and limits (game length 10 to 21), in one place.
+- `src/config.ts`: the app's name and limits (game length 5 to 21), in one place.
 
 ## Deploying
 
