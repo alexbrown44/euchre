@@ -324,3 +324,100 @@ button.card { cursor: default; }
   .home-suits { gap: 4px; right: 12px; }
   .home-suit { width: 24px; height: 32px; font-size: 17px; }
 }
+
+/* ---------------------------------------------------------------- Learn */
+.learn-tracks { margin: 16px 0 4px; }
+.learn-tracks button { font-size: 14px; }
+.learn-intro { margin: 8px 2px 12px; }
+.learn-items { display: grid; gap: 10px; }
+.learn-best { font-size: 12px; font-weight: 700; color: var(--gold-deep); margin-top: 2px; }
+
+/* The strategy guide */
+.guide-contents { margin: 12px 0; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 12px; }
+.guide-contents summary { font-weight: 700; cursor: pointer; padding: 4px 0; }
+.guide-contents nav { display: grid; gap: 2px; margin: 6px 0 4px; }
+.guide-contents nav button { text-align: left; background: none; border: 0; color: var(--ink); padding: 8px 4px; border-radius: 8px; cursor: pointer; font: inherit; }
+.guide-contents nav button:hover { background: var(--bg); }
+.guide-body h2 { font-size: 20px; color: var(--felt); margin: 28px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--gold); scroll-margin-top: 64px; }
+.guide-body h3 { font-size: 16px; color: var(--felt); margin: 20px 0 6px; scroll-margin-top: 64px; }
+.guide-body ul, .guide-body ol { padding-left: 22px; }
+.guide-body li { margin-bottom: 6px; }
+.guide-body .ref { color: var(--gold-deep); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.guide-body li.why, .guide-body li.likely { list-style: none; margin: 6px 0 8px -16px; padding: 6px 10px; border-left: 3px solid; border-radius: 0 8px 8px 0; font-size: 14px; }
+.guide-body li.why { background: color-mix(in srgb, var(--felt-light) 12%, var(--panel)); border-color: var(--felt-light); }
+.guide-body li.likely { background: color-mix(in srgb, var(--gold) 14%, var(--panel)); border-color: var(--gold); }
+.guide-table { overflow-x: auto; margin: 8px 0 14px; }
+.guide-table table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.guide-table th { background: var(--felt); color: #fff; text-align: left; padding: 6px 8px; }
+.guide-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.guide-table .num { text-align: right; white-space: nowrap; }
+section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel)); border: 1px solid color-mix(in srgb, var(--gold) 50%, var(--line)); border-radius: var(--radius); padding: 2px 14px 10px; margin-top: 20px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .guide-body h2, :root:not([data-theme='light']) .guide-body h3 { color: var(--gold); }
+}
+
+/* Quizzes */
+.quiz-progress { display: grid; grid-template-columns: 1fr auto; gap: 6px; margin: 12px 0 8px; font-size: 13px; color: var(--muted); }
+.quiz-score { font-weight: 700; color: var(--felt); }
+.quiz-bar { grid-column: 1 / -1; height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.quiz-bar div { height: 100%; background: var(--gold); transition: width .3s; }
+.quiz-question { font-size: 18px; font-weight: 700; margin: 12px 0; }
+.quiz-options { display: grid; gap: 8px; }
+.quiz-options-grid { grid-template-columns: 1fr 1fr; }
+.quiz-options-grid .quiz-option-pass { grid-column: 1 / -1; }
+.quiz-option {
+  text-align: left; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border-radius: var(--radius);
+  border: 2px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer;
+}
+.quiz-option:disabled { cursor: default; }
+.quiz-right { border-color: #2e8b57; background: color-mix(in srgb, #2e8b57 14%, var(--panel)); font-weight: 700; }
+.quiz-wrong { border-color: #c0392b; background: color-mix(in srgb, #c0392b 12%, var(--panel)); }
+.quiz-faded { opacity: .55; }
+.quiz-feedback { margin-top: 14px; padding: 12px 14px; border-radius: var(--radius); border-left: 4px solid; background: var(--panel); }
+.quiz-feedback.ok { border-color: #2e8b57; }
+.quiz-feedback.no { border-color: #c0392b; }
+.quiz-feedback p { margin: 0 0 8px; }
+.quiz-feedback-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+.quiz-end { text-align: center; padding: 20px 0; }
+.quiz-end-score { font-size: 44px; font-weight: 800; margin: 8px 0 0; color: var(--felt); }
+.quiz-end-score small { font-size: 18px; font-weight: 600; color: var(--muted); }
+.quiz-end-verdict { font-size: 18px; margin: 4px 0 8px; }
+.quiz-end-actions { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.quiz-missed { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 14px; margin-top: 12px; }
+.quiz-missed h2 { font-size: 16px; margin: 10px 0 6px; }
+.quiz-missed li { margin-bottom: 6px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .quiz-score, :root:not([data-theme='light']) .quiz-end-score { color: var(--gold); }
+}
+
+/* "Would you call?" */
+.bid-situation p { margin: 6px 0; }
+.bid-table {
+  display: flex; gap: 14px; align-items: center; background: radial-gradient(ellipse at center, var(--felt-light), var(--felt) 70%);
+  color: #fff; border-radius: var(--radius); padding: 12px 14px; margin: 10px 0;
+}
+.bid-upcard { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #e6f2ee; flex: none; }
+.bid-calls { flex: 1; min-width: 0; }
+.bid-round { margin: 2px 0; font-size: 13px; color: #e6f2ee; }
+.quiz-calls { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 6px; }
+.quiz-call { background: #fff; color: #1d2a26; border-radius: 999px; padding: 2px 10px; font-size: 13px; }
+.bid-calls .hint { color: #e6f2ee; }
+.quiz-hand { min-height: 0; padding: 4px 0 12px; }
+.bid-hand-note { font-size: 14px; }
+.bid-results { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 14px; }
+.bid-results caption { text-align: left; font-weight: 700; font-size: 13px; color: var(--muted); padding-bottom: 4px; }
+.bid-results td { padding: 5px 6px; border-bottom: 1px solid var(--line); }
+.bid-results .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bid-mark { white-space: nowrap; color: #2e8b57; font-weight: 700; font-size: 12px; }
+.bid-chosen td { font-weight: 700; }
+.bid-you { font-weight: 400; font-size: 12px; color: var(--muted); }
+.bid-guide-note { font-size: 14px; }
+.bid-method { font-size: 12px; }
+.quiz-feedback-actions .btn { white-space: nowrap; }
+.bid-views { margin: 10px 0; padding: 10px 12px; border-radius: var(--radius); background: color-mix(in srgb, var(--gold) 10%, var(--panel)); border: 1px solid color-mix(in srgb, var(--gold) 45%, var(--line)); }
+.bid-views h3 { margin: 0 0 8px; font-size: 16px; }
+.bid-view { border-left: 3px solid var(--felt-light); padding: 2px 0 2px 10px; margin-bottom: 10px; }
+.bid-view p { margin: 0 0 4px; font-size: 14px; }
+.bid-view-label { font-size: 12px !important; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 4px; }
+.bid-why { margin: 0; padding-left: 18px; font-size: 14px; }
+.bid-why li { margin-bottom: 6px; }

@@ -1,6 +1,6 @@
 // The house rules this app plays, in plain language. Source: EUCHRE_RULES.md at the repository root.
 // Keep the two in step when a rule changes.
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 
 const S = ({ s }: { s: '♠' | '♥' | '♦' | '♣' }) => <span className={s === '♥' || s === '♦' ? 'rs-red' : 'rs-black'}>{s}</span>;
 
@@ -13,12 +13,16 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
-export function Rules({ onBack }: { onBack: () => void }) {
+export function Rules({ section, onBack }: { section?: string | null; onBack: () => void }) {
   const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Opened at a section (e.g. "Read the rule" in the quiz): jump straight there.
+  useEffect(() => {
+    if (section) document.getElementById(section)?.scrollIntoView({ block: 'start' });
+  }, [section]);
   return (
     <main className="rules">
       <header className="rules-bar">
-        <button type="button" className="btn btn-small rules-back" onClick={onBack} aria-label="Back to the front page">
+        <button type="button" className="btn btn-small rules-back" onClick={onBack} aria-label="Back">
           ←
         </button>
         <h1>How to play: our rules</h1>
@@ -231,7 +235,7 @@ export function Rules({ onBack }: { onBack: () => void }) {
       </Section>
 
       <button type="button" className="btn btn-primary rules-done" onClick={onBack}>
-        Back to the front page
+        Back
       </button>
     </main>
   );

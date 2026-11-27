@@ -8,6 +8,7 @@ interface Props {
   onChange: (update: (s: Settings) => Settings) => void;
   onStart: () => void;
   onRules: () => void;
+  onLearn: () => void;
   canResume: boolean;
   onResume: () => void;
 }
@@ -18,7 +19,7 @@ const SPEEDS: { id: Speed; label: string }[] = [
   { id: 'fast', label: 'Fast' },
 ];
 
-export function Home({ settings, onChange, onStart, onRules, canResume, onResume }: Props) {
+export function Home({ settings, onChange, onStart, onRules, onLearn, canResume, onResume }: Props) {
   const [mode, setMode] = useState<'solo' | null>('solo');
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => onChange((s) => ({ ...s, [k]: v }));
   const step = (d: number) => onChange((s) => ({ ...s, target: Math.min(TARGET_MAX, Math.max(TARGET_MIN, s.target + d)) }));
@@ -50,10 +51,10 @@ export function Home({ settings, onChange, onStart, onRules, canResume, onResume
           <span className="mode-title">Play against bots</span>
           <span className="mode-blurb">You and a bot partner against two bots.</span>
         </button>
-        <div className="mode mode-soon" aria-disabled="true">
+        <button type="button" className="mode" onClick={onLearn}>
           <span className="mode-title">Learn</span>
-          <span className="mode-blurb">Tutorial, hints, quizzes and the strategy guide. Coming soon.</span>
-        </div>
+          <span className="mode-blurb">For beginners and seasoned players: the rules, quizzes and the strategy guide.</span>
+        </button>
         <div className="mode mode-soon" aria-disabled="true">
           <span className="mode-title">Play with friends</span>
           <span className="mode-blurb">Online games with a room code. Coming soon.</span>
