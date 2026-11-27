@@ -15,13 +15,16 @@ interface Props {
   label?: string;
   /** Let a card that can't be played still be tapped (the tutorial explains why it can't). */
   tapAlways?: boolean;
+  /** Outline the card the coach suggests. */
+  highlight?: boolean;
 }
 
-export function CardView({ card, faceDown, size = 'hand', playable, dimmed, onClick, label, tapAlways }: Props) {
+export function CardView({ card, faceDown, size = 'hand', playable, dimmed, onClick, label, tapAlways, highlight }: Props) {
   const cls = ['card', `card-${size}`];
   if (faceDown || !card) cls.push('card-back');
   if (playable) cls.push('card-playable');
   if (dimmed) cls.push('card-dimmed');
+  if (highlight) cls.push('card-suggest');
 
   if (faceDown || !card) return <div className={cls.join(' ')} aria-label="face-down card" />;
 

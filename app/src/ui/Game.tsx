@@ -6,6 +6,9 @@ import { applyBid, applyCard, botMove, clearTrick, nextHand, tableView, turnOf, 
 import { makeBot } from '../game/bots.ts';
 import { PACE, type Settings } from '../settings.ts';
 import { CardView } from './CardView.tsx';
+import { coachHint, hintKey, type Hint } from '../learn/coach.ts';
+import { actionKey } from '../learn/bidding.ts';
+import { SuitText } from '../learn/SuitText.tsx';
 
 const ME: Seat = 0;
 
@@ -15,18 +18,28 @@ interface Props {
   onSave: (s: TableState) => void;
   onHome: () => void;
   onNewGame: () => void;
+  /** Guided practice: show the coach's hint on your turn. */
+  coach?: boolean;
 }
 
 /** Where each seat sits on screen, seen from seat 0 at the bottom. Seats go clockwise. */
 const POS = ['bottom', 'left', 'top', 'right'] as const;
 
-export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
+export function Game({ initial, settings, onSave, onHome, onNewGame, coach }: Props) {
   const [s, setS] = useState<TableState>(initial);
   const [showLog, setShowLog] = useState(false);
   const [showLast, setShowLast] = useState(false);
   const bots = useMemo(() => [0, 1, 2, 3].map((i) => makeBot(settings.difficulty, initial.seed * 10 + i)), [settings.difficulty, initial.seed]);
   const pace = PACE[settings.speed];
   const v = tableView(s, ME);
+  const hint = useMemo(() => (coach ? coachHint(s, ME) : null), [coach, s]);
+  const [hintsOn, setHintsOn] = useState(true);
+  /** After your move: what the guide would have done instead, if different. */
+  const [note, setNote] = useState<string | null>(null);
+  const compare = (key: string) => {
+    if (!hint) return;
+    setNote(key === hintKey(hint) ? null : `The guide would have said: ${hint.what}.`);
+  };
 
   useEffect(() => onSave(s), [s, onSave]);
 
@@ -65,13 +78,19 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
     }
   }, [s, bots, pace]);
 
-  const bid = (a: BidAction) => setS(applyBid(s, a));
+  const bid = (a: BidAction) => {
+    compare(actionKey(a));
+    setS(applyBid(s, a));
+  };
   const isLegal = (c: Card) => v.legalCards.some((x) => sameCard(x, c));
   const discarding = v.bidPhase === 'discard' && v.turn === ME;
 
   const onCard = (c: Card) => {
     if (discarding) bid({ type: 'discard', card: c });
-    else if (isLegal(c)) setS(applyCard(s, c));
+    else if (isLegal(c)) {
+      compare(cardId(c));
+      setS(applyCard(s, c));
+    }
   };
 
   return (
@@ -90,6 +109,8 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
         <Status v={v} discarding={discarding} />
       </div>
 
+      {coach && (hint || note) && <CoachStrip hint={hint} note={note} on={hintsOn} onToggle={() => setHintsOn((x) => !x)} />}
+
       <div ref={handRef} className={`hand ${v.hand.length > 5 ? 'hand-six' : ''}`}>
         {v.handHidden
           ? [0, 1, 2, 3, 4].map((i) => <CardView key={i} faceDown size="hand" />)
@@ -103,13 +124,14 @@ export function Game({ initial, settings, onSave, onHome, onNewGame }: Props) {
                   size="hand"
                   playable={playable}
                   dimmed={waiting && !playable}
+                  highlight={hintsOn && !!hint?.card && cardId(hint.card) === cardId(c)}
                   onClick={() => onCard(c)}
                 />
               );
             })}
       </div>
 
-      <BidControls v={v} onBid={bid} />
+      <BidControls v={v} onBid={bid} suggest={hintsOn && hint?.bid ? actionKey(hint.bid) : null} />
 
       {v.stage === 'handEnd' && v.summary && <HandEnd v={v} onNext={() => setS(nextHand(s))} />}
       {v.stage === 'gameOver' && <GameOver v={v} onAgain={onNewGame} onHome={onHome} />}
@@ -248,7 +270,8 @@ function Status({ v, discarding }: { v: TableView; discarding: boolean }) {
   return <div className="status">{text}</div>;
 }
 
-function BidControls({ v, onBid }: { v: TableView; onBid: (a: BidAction) => void }) {
+function BidControls({ v, onBid, suggest }: { v: TableView; onBid: (a: BidAction) => void; suggest: string | null }) {
+  const mark = (a: BidAction | undefined) => (a && suggest === actionKey(a) ? ' tut-suggest-btn' : '');
   const [alone, setAlone] = useState(false);
   useEffect(() => setAlone(false), [v.bidPhase, v.handNumber]);
   if (v.stage !== 'bidding' || v.turn !== ME || v.bidPhase === 'discard') return <div className="controls" />;
@@ -263,10 +286,10 @@ function BidControls({ v, onBid }: { v: TableView; onBid: (a: BidAction) => void
     const upAndDown = !up && !!upAlone; // the dealer's partner: ordering up is always alone
     return (
       <div className="controls">
-        {pass && <button type="button" className="btn" onClick={() => onBid(pass)}>Pass</button>}
-        {up && <button type="button" className="btn btn-primary" onClick={() => onBid(up)}>{isDealer ? 'Pick it up' : 'Order it up'}</button>}
+        {pass && <button type="button" className={`btn${mark(pass)}`} onClick={() => onBid(pass)}>Pass</button>}
+        {up && <button type="button" className={`btn btn-primary${mark(up)}`} onClick={() => onBid(up)}>{isDealer ? 'Pick it up' : 'Order it up'}</button>}
         {upAlone && (
-          <button type="button" className="btn btn-alone" onClick={() => onBid(upAlone)}>
+          <button type="button" className={`btn btn-alone${mark(upAlone)}`} onClick={() => onBid(upAlone)}>
             {upAndDown ? 'Up and Down (alone)' : isDealer ? 'Pick up, alone' : 'Order up, alone'}
           </button>
         )}
@@ -280,7 +303,7 @@ function BidControls({ v, onBid }: { v: TableView; onBid: (a: BidAction) => void
       <div className="controls controls-suits">
         <div className="suit-buttons">
           {suits.map((suit: Suit) => (
-            <button key={suit} type="button" className={`btn suit-btn suit-${suit} ${alone ? 'suit-btn-alone' : ''}`} onClick={() => onBid({ type: 'name', suit, alone })} aria-label={`Name ${SUIT_NAME[suit]}${alone ? ', alone' : ''}`}>
+            <button key={suit} type="button" className={`btn suit-btn suit-${suit} ${alone ? 'suit-btn-alone' : ''}${suggest?.startsWith(`name-${suit}`) ? ' tut-suggest-btn' : ''}`} onClick={() => onBid({ type: 'name', suit, alone })} aria-label={`Name ${SUIT_NAME[suit]}${alone ? ', alone' : ''}`}>
               <span className="suit-btn-sym">{SUIT_SYMBOL[suit]}</span>
               <span className="suit-btn-name">{SUIT_NAME[suit]}{alone ? ', alone' : ''}</span>
             </button>
@@ -292,7 +315,7 @@ function BidControls({ v, onBid }: { v: TableView; onBid: (a: BidAction) => void
             <input type="checkbox" checked={alone} onChange={(e) => setAlone(e.target.checked)} />
             Go alone
           </label>
-          {pass && <button type="button" className="btn" onClick={() => onBid(pass)}>Pass</button>}
+          {pass && <button type="button" className={`btn${mark(pass)}`} onClick={() => onBid(pass)}>Pass</button>}
         </div>
       </div>
     );
@@ -302,12 +325,52 @@ function BidControls({ v, onBid }: { v: TableView; onBid: (a: BidAction) => void
     const go = has((a) => a.type === 'goAlone');
     return (
       <div className="controls">
-        {pass && <button type="button" className="btn" onClick={() => onBid(pass)}>{go ? 'No' : 'OK'}</button>}
-        {go && <button type="button" className="btn btn-alone" onClick={() => onBid(go)}>{v.goAloneLabel}</button>}
+        {pass && <button type="button" className={`btn${mark(pass)}`} onClick={() => onBid(pass)}>{go ? 'No' : 'OK'}</button>}
+        {go && <button type="button" className={`btn btn-alone${mark(go)}`} onClick={() => onBid(go)}>{v.goAloneLabel}</button>}
       </div>
     );
   }
   return <div className="controls" />;
+}
+
+function CoachStrip({ hint, note, on, onToggle }: { hint: Hint | null; note: string | null; on: boolean; onToggle: () => void }) {
+  return (
+    <section className="coach coach-live" aria-live="polite">
+      <img className="coach-logo" src="/logo.svg" alt="" width={30} height={30} />
+      <div className="coach-body">
+        {note && (
+          <p className="coach-note">
+            <SuitText text={note} />
+          </p>
+        )}
+        {hint && on && (
+          <>
+            <p>
+              <strong>
+                <SuitText text={`${hint.what}.`} />
+              </strong>{' '}
+              <SuitText text={hint.why[0] ?? ''} />
+            </p>
+            {hint.why.length > 1 && (
+              <details className="coach-more">
+                <summary>Why?</summary>
+                {hint.why.slice(1).map((w) => (
+                  <p key={w}>
+                    <SuitText text={w} />
+                  </p>
+                ))}
+              </details>
+            )}
+          </>
+        )}
+        {hint && (
+          <button type="button" className="coach-toggle" onClick={onToggle}>
+            {on ? 'Hide hints' : 'Show the hint'}
+          </button>
+        )}
+      </div>
+    </section>
+  );
 }
 
 // ---------------------------------------------------------------------------

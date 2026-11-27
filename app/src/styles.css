@@ -488,3 +488,11 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .tut-suggest-btn { box-shadow: 0 0 0 3px var(--gold); }
 .tut-result { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-weight: 700; text-align: center; }
 .tut-result-big { font-size: 48px; line-height: 1; color: var(--gold); text-shadow: 0 2px 6px rgba(0,0,0,.4); }
+.card.card-suggest { transform: translateY(-20px); box-shadow: 0 0 0 4px #ffd34d, 0 0 16px 4px rgba(255,211,77,.75), 0 6px 12px rgba(0,0,0,.35); }
+.card.card-suggest:hover { transform: translateY(-24px); }
+.coach-live { margin: 6px 8px 0; padding: 8px 10px; }
+.coach-live p { font-size: 14px; margin: 0 0 4px; }
+.coach-note { color: #6b4a0c; background: #fff3d6; border: 1px solid #f0d58f; border-radius: 8px; padding: 4px 8px; }
+.coach-more summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--felt); }
+.coach-more p { font-size: 13px; color: #3c4a45; margin-top: 4px; }
+.coach-toggle { background: none; border: 0; padding: 2px 0; font-size: 12px; font-weight: 700; color: var(--felt-light); cursor: pointer; text-decoration: underline; }

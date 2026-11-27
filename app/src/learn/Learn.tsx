@@ -16,17 +16,17 @@ interface Item {
 const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: boolean; intro: string; items: Item[] }> = {
   new: {
     label: 'New to Euchre',
-    pitch: 'A guided first hand, the rules, a quiz, and clear-cut calls.',
+    pitch: 'A guided first hand, the rules, quizzes, and a game with a coach.',
     suit: '♦',
     red: true,
-    intro: 'Play a guided hand, read the rules, test yourself, then try some clear-cut calling decisions.',
+    intro: 'Play a guided hand, read the rules, test yourself, then play a real game with the coach beside you.',
     items: [
       { title: 'Your first hand', blurb: 'Play one real deal, with a coach explaining each step as it happens.', route: 'first-hand', lesson: 'first-hand' },
       { title: 'The rules', blurb: 'How the game works, in plain language, including our house rules.', route: 'rules' },
       { title: 'Rules quiz', blurb: '10 quick questions a round on the cards, the calling and the scoring.', route: 'quiz/rules', quiz: 'rules' },
       { title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, or pass?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
+      { title: 'Guided practice game', blurb: "A real game to 5 against Easy bots, with the coach's hint on every turn.", route: 'practice' },
       { title: 'The one-page card', blurb: 'The strategy guide\'s key advice on a single page.', route: 'guide/the-one-page-card' },
-      { title: 'Guided practice game', blurb: 'A real game against easy bots, with hints on every turn.', soon: true },
     ],
   },
   sharpen: {

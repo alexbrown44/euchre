@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Home } from './ui/Home.tsx';
 import { Game } from './ui/Game.tsx';
 import { Rules } from './ui/Rules.tsx';
@@ -12,6 +12,8 @@ import { SEAT_NAMES } from './config.ts';
 import { loadSettings, saveSettings, type Settings } from './settings.ts';
 
 const GAME_KEY = 'euchre.solo-game.v1';
+/** The guided practice game is a short one. */
+const PRACTICE_TARGET = 5;
 
 interface Saved {
   state: TableState;
@@ -71,10 +73,15 @@ export default function App() {
       return;
     }
     // Opened directly from a link: go up a level instead of leaving the app.
-    const up = route.startsWith('quiz/') || route.startsWith('guide') || route === 'first-hand' ? 'learn' : '';
+    const up = route.startsWith('quiz/') || route.startsWith('guide') || route === 'first-hand' || route === 'practice' ? 'learn' : '';
     history.replaceState(null, '', up ? `#${up}` : location.pathname + location.search);
     setRoute(up);
   };
+
+  // The guided practice game: Easy bots, a short game, the coach on. Not saved.
+  const [practiceSeed, setPracticeSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
+  const practice = useMemo(() => newGame({ target: PRACTICE_TARGET, names: SEAT_NAMES, seed: practiceSeed }), [practiceSeed]);
+  const noSave = useCallback(() => {}, []);
 
   const changeSettings = (update: (s: Settings) => Settings) => {
     setSettings((prev) => {
@@ -113,6 +120,17 @@ export default function App() {
       : page === 'learn' ? <Learn onBack={back} onGo={go} />
       : page === 'guide' ? <Guide section={arg} onBack={back} />
       : page === 'first-hand' ? <FirstHand onBack={back} onGo={go} />
+      : page === 'practice' ? (
+        <Game
+          key={practiceSeed}
+          initial={practice}
+          settings={{ ...settings, difficulty: 'easy', target: PRACTICE_TARGET }}
+          onSave={noSave}
+          onHome={back}
+          onNewGame={() => setPracticeSeed(Math.floor(Math.random() * 2 ** 31))}
+          coach
+        />
+      )
       : null;
     // A quiz stays open underneath while you read a rule or the guide from it, so you keep your place.
     if (quiz) {
