@@ -277,7 +277,7 @@ button.card { cursor: default; }
 }
 .rules-bar h1 { font-size: 22px; margin: 0; color: var(--felt); }
 .rules-back { border-radius: 999px; font-size: 18px; }
-.bar-logo { flex: none; width: 34px; height: 34px; margin-left: auto; }
+.bar-logo { flex: none; width: 26px; height: 39px; margin-left: auto; filter: drop-shadow(0 1px 2px rgba(0,0,0,.25)); }
 .rules-lead { font-size: 16px; }
 .rules-key { background: var(--panel); border: 2px solid var(--gold); border-radius: var(--radius); padding: 4px 16px 8px; margin: 16px 0; }
 .rules-key h2 { font-size: 18px; margin: 10px 0 6px; color: var(--gold-deep); }
@@ -555,3 +555,6 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .play-current-card { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; }
 .play-follow { text-align: center; margin: -4px 0 8px; }
 .bid-guide-note p { margin: 0 0 6px; }
+/* Dark mode: a faint light outline so the black chough on the header logo stays visible. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .bar-logo { filter: drop-shadow(0 0 1px rgba(255,255,255,.75)) drop-shadow(0 0 1px rgba(255,255,255,.5)); } }
+:root[data-theme='dark'] .bar-logo { filter: drop-shadow(0 0 1px rgba(255,255,255,.75)) drop-shadow(0 0 1px rgba(255,255,255,.5)); }

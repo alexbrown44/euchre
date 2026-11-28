@@ -20,7 +20,7 @@ export function Guide({ section, onBack }: { section: string | null; onBack: () 
           ←
         </button>
         <h1>Strategy guide</h1>
-        <img className="bar-logo" src="/logo.svg" alt="" width={34} height={34} />
+        <img className="bar-logo" src="/logo-mark.svg" alt="" width={26} height={39} />
       </header>
 
       <details className="guide-contents">

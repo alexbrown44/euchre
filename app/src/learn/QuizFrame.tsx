@@ -16,7 +16,7 @@ export function QuizFrame({ title, index, total, score, onBack, children }: {
           ←
         </button>
         <h1>{title}</h1>
-        <img className="bar-logo" src="/logo.svg" alt="" width={34} height={34} />
+        <img className="bar-logo" src="/logo-mark.svg" alt="" width={26} height={39} />
       </header>
       <div className="quiz-progress" aria-label={`Question ${Math.min(index + 1, total)} of ${total}, ${score} right so far`}>
         <span>
