@@ -13,7 +13,7 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 |---|---|
 | **Who** | Alex (the league player and product owner) working with Claude (in the Claude Code desktop app), which wrote the code, ran the experiments and drafted the documents |
 | **When** | Planning from 12 Nov; first code commit 16 Nov; app live 26 Nov; latest change 28 Nov 2026 |
-| **Commits** | 97, on 12 different days |
+| **Commits** | 98, on 12 different days |
 | **Code** | About 11,500 lines: game engine 1,900, experiments 3,850, app 4,450, tests 1,330 |
 | **Writing** | House rules (200 lines), strategy findings (1,100 lines), strategy guide (540 lines, plus a PDF) |
 | **Tests** | 91 engine tests and 20 app tests, all passing |
@@ -149,6 +149,7 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 58. **A transparent version of the logo** (logo-mark.svg: the whole Joker card and chough, no green tile) for the green banner, after Alex noticed the tile's edges showing against a slightly different green.
 59. **The transparent logo in the page headers too** (Alex's request). In dark mode the black chough vanished against the dark page, so the header logo gets a faint light outline there.
 60. **The transparent logo on the front page** as well, in place of the tiled one (the tile stays for the browser-tab and phone icons).
+61. **The front-page title anchored to the logo:** Alex felt "Euchre" looked like it was floating beside the taller logo. The title and tagline now sit together as one block beside the logo, with a short gold rule between them.
 
 ---
 
@@ -209,6 +210,6 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 10. **Teaching:** first hand, coached practice game, calling quizzes and card-play puzzles with "two views"
 11. **Brand:** the chough on the Joker
 12. **How we worked:** the build → test → check → ship loop; who did what
-13. **By the numbers:** 97 commits, 11,500 lines, 111 tests, 19 findings, 12 days
+13. **By the numbers:** 98 commits, 11,500 lines, 111 tests, 19 findings, 12 days
 14. **Lessons**
 15. **What's next:** hand review, weak spots, multiplayer, a name

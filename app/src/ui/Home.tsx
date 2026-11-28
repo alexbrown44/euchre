@@ -36,9 +36,11 @@ export function Home({ settings, onChange, onStart, onRules, onLearn, onAbout, c
         </div>
         <div className="home-brand">
           <img className="home-logo" src="/logo-mark.svg" alt="" width={56} height={84} />
-          <h1>{APP_NAME}</h1>
+          <div className="home-title">
+            <h1>{APP_NAME}</h1>
+            <p className="tagline">{APP_TAGLINE}</p>
+          </div>
         </div>
-        <p className="tagline">{APP_TAGLINE}</p>
         <button type="button" className="rules-link" onClick={onRules}>
           How to play: our rules →
         </button>
