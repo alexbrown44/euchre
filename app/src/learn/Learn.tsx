@@ -64,13 +64,15 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
         <button type="button" className="btn btn-small rules-back" onClick={onBack} aria-label="Back to the front page">
           ←
         </button>
-        <img className="bar-logo" src="/logo.svg" alt="" width={34} height={34} />
         <h1>Learn &amp; improve</h1>
       </header>
 
       <section className="learn-hero">
-        <h2>Get better at Euchre</h2>
-        <p>{track === null ? 'New to the game, or after an edge at the pub? Pick a track. You can switch at any time.' : 'Pick up where you left off, or switch track below.'}</p>
+        <div>
+          <h2>Get better at Euchre</h2>
+          <p>{track === null ? 'New to the game, or after an edge at the pub? Pick a track. You can switch at any time.' : 'Pick up where you left off, or switch track below.'}</p>
+        </div>
+        <img className="learn-hero-logo" src="/logo.svg" alt="" width={64} height={64} />
       </section>
 
       <div className="learn-tracks" role="tablist" aria-label="Track">
