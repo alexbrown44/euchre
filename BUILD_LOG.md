@@ -13,12 +13,12 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 |---|---|
 | **Who** | Alex (the league player and product owner) working with Claude (in the Claude Code desktop app), which wrote the code, ran the experiments and drafted the documents |
 | **When** | Planning from 12 Nov; first code commit 16 Nov; app live 26 Nov; latest change 28 Nov 2026 |
-| **Commits** | 91, on 12 different days |
-| **Code** | About 11,000 lines: game engine 1,900, experiments 3,600, app 4,100, tests 1,300 |
+| **Commits** | 92, on 12 different days |
+| **Code** | About 11,500 lines: game engine 1,900, experiments 3,850, app 4,450, tests 1,330 |
 | **Writing** | House rules (200 lines), strategy findings (1,100 lines), strategy guide (540 lines, plus a PDF) |
-| **Tests** | 91 engine tests and 19 app tests, all passing |
+| **Tests** | 91 engine tests and 20 app tests, all passing |
 | **Experiments** | 19 strategy findings from 25 experiment scripts; millions of simulated hands |
-| **The app** | Play against bots (3 strengths), learn the game (guided hand, practice game with a coach, quizzes), strategy guide, rules, About & feedback |
+| **The app** | Play against bots (3 strengths), learn the game (guided hand, practice game with a coach, calling quizzes, card-play puzzles), strategy guide, rules, About & feedback |
 
 ## The tools
 
@@ -137,6 +137,15 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 
 50. **An About & feedback page**, linked from the front page: built by Alex (linked to LinkedIn) using Claude, with a tap-to-email feedback button.
 
+## Phase 13: Card-play puzzles (28 Nov)
+
+51. **"What would you play?"**: puzzles from real hands. League bots deal and call; Monte Carlo bots play up to one of your turns with a real choice.
+52. **Every card measured:** the hidden cards are dealt 300 ways, keeping only deals that fit the calls, who has run out of which suit, and the cards already played; the hand is then played out after each card. Spots where every card scores about the same are dropped.
+53. **The bank:** 360 spots in 12 parallel batches (about 40 minutes), 186 puzzles kept: 79 starter (the guide's card is best and the wrong cards cost at least 0.4 points) and 107 seasoned. At most 12 of each kind (opening lead, later lead, trumping in, letting it go, loners...) per level, so no one situation dominates.
+54. **The screen:** the contract, the tricks so far, the trick on the table; tap a card (cards you can't play are greyed). The answer shows each card's points, the guide's card with the coach's plain reason, a "Two views" box when they disagree, and a link to the guide section.
+55. **Where it sits:** the starter level is a new stage in New to Euchre, "Play your cards well"; the seasoned level replaces "coming soon" in Sharpen your game.
+56. **Fixes found while checking:** black suit symbols vanished in dark mode on the trick list; switching from one quiz level straight to the other kept the old question on screen (also fixed for "Would you call?").
+
 ---
 
 ## How we worked: the pattern behind every step
@@ -163,7 +172,7 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 
 **Done and live**
 - Solo play against Easy, Medium and Hard bots, games of 5 to 21 points, resumable.
-- Learn & improve: rules, Your first hand, rules quiz, guided practice game, "Would you call?" (starter and seasoned, now with Benny questions), the strategy guide and its one-page card.
+- Learn & improve: rules, Your first hand, rules quiz, guided practice game, "Would you call?" (starter and seasoned, now with Benny questions), "What would you play?" card-play puzzles (starter and seasoned), the strategy guide and its one-page card.
 - The strategy guide with 19 findings, as a document and a PDF.
 - Logo, icons, the Benny card, About & feedback.
 
@@ -173,9 +182,9 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 
 ## Next steps
 
-1. **Card-play puzzles, "What would you play?"**: leads, letting it go, when to trump in; measured the same way as the calling quiz.
-2. **Coached play and hand review:** play the Hard bots, then see which decisions cost points.
-3. **Your weak spots:** your accuracy by topic, so you know what to practise.
+1. **Coached play and hand review:** play the Hard bots, then see which decisions cost points.
+2. **Your weak spots:** your accuracy by topic, so you know what to practise (the puzzles are already tagged by topic).
+3. **More opening-lead puzzles:** they come up less often, so the bank has fewer of them; a targeted run could add more.
 4. **Play with friends:** online games with a room code (a small server on Render holding each game; each player sees only their own cards).
 5. **Name and domain:** once chosen, a one-line change in the app's settings.
 6. **Spread the word in the league:** gather feedback through the About page, and keep testing new strategy ideas players bring.
@@ -193,9 +202,9 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 7. **The guide:** numbers turned into table-ready advice, with reasons
 8. **The app goes live:** solo play, deployed in a day; a day of fixes from real play
 9. **Real use finds real gaps:** two rule fixes, two new findings
-10. **Teaching:** first hand, coached practice game, quizzes with "two views"
+10. **Teaching:** first hand, coached practice game, calling quizzes and card-play puzzles with "two views"
 11. **Brand:** the chough on the Joker
 12. **How we worked:** the build → test → check → ship loop; who did what
-13. **By the numbers:** 91 commits, 11,000 lines, 110 tests, 19 findings, 12 days
+13. **By the numbers:** 92 commits, 11,500 lines, 111 tests, 19 findings, 12 days
 14. **Lessons**
-15. **What's next:** puzzles, hand review, multiplayer, a name
+15. **What's next:** hand review, weak spots, multiplayer, a name

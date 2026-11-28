@@ -1,6 +1,6 @@
 // What the learner has done, kept in this browser only (like the saved game).
 
-export type QuizId = 'rules' | 'bidding-beginner' | 'bidding';
+export type QuizId = 'rules' | 'bidding-beginner' | 'bidding' | 'play-beginner' | 'play';
 export type Track = 'new' | 'sharpen';
 
 export interface QuizRecord {

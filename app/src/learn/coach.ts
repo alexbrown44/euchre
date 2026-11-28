@@ -11,8 +11,8 @@ import { newDeck } from '../../../engine/src/deck.ts';
 import type { Seat } from '../../../engine/src/deal.ts';
 import { partnerOf, teamOf } from '../../../engine/src/deal.ts';
 import type { BidAction } from '../../../engine/src/bidding.ts';
-import { legalPlays } from '../../../engine/src/play.ts';
-import { bidView, playView } from '../../../engine/src/game.ts';
+import { legalPlays, type PlayState } from '../../../engine/src/play.ts';
+import { bidView, playView, type Score } from '../../../engine/src/game.ts';
 import { DEFAULT_PARAMS, ruleBot } from '../../../engine/src/bots/ruleBot.ts';
 import type { TableState } from '../game/table.ts';
 import { actionKey, describeHand, guideChoice, guideRule, type BankQuestion } from './bidding.ts';
@@ -124,10 +124,14 @@ function bidHint(s: TableState, me: Seat): Hint {
 }
 
 function cardHint(s: TableState, me: Seat): Hint {
-  const p = s.play!;
+  return playHint(s.play!, me, s.score, s.target, s.bidding.deal.upcard);
+}
+
+/** The guide's card (the Medium bot's) at this point in the play, and why, in plain words. */
+export function playHint(p: PlayState, me: Seat, score: Score, target: number, upcard: Card): Hint {
   const trump = p.trump;
   const legal = legalPlays(p);
-  const card = guideBot.play(playView(p, me, s.score, s.target, s.bidding.deal.upcard));
+  const card = guideBot.play(playView(p, me, score, target, upcard));
   const what = `Play the ${cardLabel(card)}`;
   const plays = p.current.plays;
   const led = plays.length ? effectiveSuit(plays[0]!.card, trump) : null;

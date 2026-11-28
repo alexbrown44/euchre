@@ -536,3 +536,18 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .about-card p a { color: var(--felt); font-weight: 700; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .about-card p a { color: var(--gold); } }
 :root[data-theme='dark'] .about-card p a { color: var(--gold); }
+
+/* What would you play? */
+.play-topic { margin: 4px 0 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.play-felt { background: var(--felt); border-radius: var(--radius); padding: 8px 10px; margin: 8px 0; color: #e6f2ee; }
+.play-tricks { list-style: none; margin: 0 0 6px; padding: 0; font-size: 13px; }
+.play-tricks li { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+.play-trick-no { font-weight: 700; min-width: 52px; }
+.play-trick-card { background: #fff; color: #1d2a26; border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.play-trick-card .rs-black { color: #1a1a1a !important; }
+.play-q .quiz-question { margin-bottom: 18px; }
+.play-won { font-weight: 800; box-shadow: 0 0 0 2px var(--gold); }
+.play-current { display: flex; gap: 10px; flex-wrap: wrap; padding: 4px 0 2px; }
+.play-current-card { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; }
+.play-follow { text-align: center; margin: -4px 0 8px; }
+.bid-guide-note p { margin: 0 0 6px; }

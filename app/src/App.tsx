@@ -7,6 +7,7 @@ import { Learn } from './learn/Learn.tsx';
 import { Guide } from './learn/Guide.tsx';
 import { RulesQuiz } from './learn/RulesQuiz.tsx';
 import { BiddingQuiz } from './learn/BiddingQuiz.tsx';
+import { PlayQuiz } from './learn/PlayQuiz.tsx';
 import { FirstHand } from './learn/FirstHand.tsx';
 import { newGame, type TableState } from './game/table.ts';
 import { SEAT_NAMES } from './config.ts';
@@ -113,8 +114,10 @@ export default function App() {
     const activeQuiz = route.startsWith('quiz/') ? route : quizRoute;
     const quiz =
       activeQuiz === 'quiz/rules' ? <RulesQuiz onBack={back} onRules={(sec) => go(`rules/${sec}`)} />
-      : activeQuiz === 'quiz/bidding-beginner' ? <BiddingQuiz level="beginner" onBack={back} onGuide={(a) => go(`guide/${a}`)} />
-      : activeQuiz === 'quiz/bidding' ? <BiddingQuiz level="seasoned" onBack={back} onGuide={(a) => go(`guide/${a}`)} />
+      : activeQuiz === 'quiz/bidding-beginner' ? <BiddingQuiz key="bidding-beginner" level="beginner" onBack={back} onGuide={(a) => go(`guide/${a}`)} />
+      : activeQuiz === 'quiz/bidding' ? <BiddingQuiz key="bidding" level="seasoned" onBack={back} onGuide={(a) => go(`guide/${a}`)} />
+      : activeQuiz === 'quiz/play-beginner' ? <PlayQuiz key="play-beginner" level="beginner" onBack={back} onGuide={(a) => go(`guide/${a}`)} />
+      : activeQuiz === 'quiz/play' ? <PlayQuiz key="play" level="seasoned" onBack={back} onGuide={(a) => go(`guide/${a}`)} />
       : null;
     const other =
       page === 'rules' ? <Rules section={arg} onBack={back} />

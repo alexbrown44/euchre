@@ -6,6 +6,10 @@ import { guideToHtml } from '../src/learn/guideHtml.ts';
 import { RULES_QUESTIONS } from '../src/learn/rulesQuiz.ts';
 import { actionKey, bestOption, grade, guideChoice, guideHeading, type BankQuestion } from '../src/learn/bidding.ts';
 import type { Seat } from '../../engine/src/deal.ts';
+import { cardId, parseCard } from '../../engine/src/cards.ts';
+import { legalPlays } from '../../engine/src/play.ts';
+import { contractText, gradePlay, toState, TOPIC_IDS, topicHeading, type PlayQuestion } from '../src/learn/play.ts';
+import { playHint } from '../src/learn/coach.ts';
 
 const guide = guideToHtml(readFileSync(new URL('../../STRATEGY_GUIDE.md', import.meta.url), 'utf8'));
 const headingTexts = new Set(guide.headings.map((h) => h.text.replace(/\s*\(F\d+(?:, F\d+)*\)\s*$/, '').toLowerCase()));
@@ -114,4 +118,20 @@ test('Benny go-alone questions: valid hands, the guide\'s rule, and a wrong answ
 test('the bank records the written guide\'s choice', () => {
   const bank = JSON.parse(readFileSync(new URL('../src/learn/data/bidding-bank.json', import.meta.url), 'utf8')) as BankQuestion[];
   for (const q of bank) assert.equal(actionKey(q.guide), actionKey(guideChoice(q)), q.id);
+});
+
+test('card-play puzzles: legal options, the guide\'s card, a guide section, and a wrong answer in each', () => {
+  const puzzles = JSON.parse(readFileSync(new URL('../src/learn/data/play-bank.json', import.meta.url), 'utf8')) as PlayQuestion[];
+  assert.ok(puzzles.length >= 20);
+  for (const q of puzzles) {
+    const s = toState(q);
+    const legal = legalPlays(s).map(cardId).sort();
+    assert.deepEqual(q.options.map((o) => o.card).sort(), legal, `${q.id}: the options are the legal cards`);
+    assert.equal(cardId(playHint(s, q.seat, [0, 0], 10, parseCard(q.upcard)).card!), q.guide, `${q.id}: the coach plays the guide's card`);
+    assert.ok(q.options.some((o) => gradePlay(q, o.card) === 'wrong'), `${q.id}: every card is right`);
+    assert.ok(headingTexts.has(topicHeading(q).toLowerCase()), `${q.id}: missing guide heading "${topicHeading(q)}"`);
+    assert.ok(TOPIC_IDS.includes(q.topic), q.topic);
+    assert.ok(contractText(q).length > 0);
+  }
+  assert.ok(puzzles.some((q) => q.level === 'beginner') && puzzles.some((q) => q.level === 'seasoned'));
 });

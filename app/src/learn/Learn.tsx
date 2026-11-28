@@ -28,6 +28,7 @@ const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: b
       { title: 'Rules quiz', blurb: '10 quick questions a round on the cards, the calling and the scoring.', route: 'quiz/rules', quiz: 'rules' },
       { stage: 'Play with a coach', title: 'Guided practice game', blurb: "A real game to 5 against Easy bots, with the coach's hint on every turn.", route: 'practice' },
       { stage: 'Make better calls', title: 'Would you call? (starter)', blurb: 'Real hands with a clear right answer: order it up, name a suit, pass, or go alone?', route: 'quiz/bidding-beginner', quiz: 'bidding-beginner' },
+      { stage: 'Play your cards well', title: 'What would you play? (starter)', blurb: 'Card-play puzzles with a clear best card: what to lead, when to trump in, when to let it go.', route: 'quiz/play-beginner', quiz: 'play-beginner' },
       { title: 'The one-page card', blurb: "The strategy guide's key advice on a single page, to keep handy at the table.", route: 'guide/the-one-page-card' },
     ],
   },
@@ -40,7 +41,7 @@ const TRACKS: Record<Track, { label: string; pitch: string; suit: string; red: b
     items: [
       { title: 'Would you call?', blurb: 'Real hands, including the close ones. See how much each choice is worth.', route: 'quiz/bidding', quiz: 'bidding' },
       { title: 'Strategy guide', blurb: 'Every rule of thumb, with the evidence behind it.', route: 'guide' },
-      { title: 'What would you play?', blurb: 'Card-play puzzles: leads, letting it go, stoppers.', soon: true },
+      { title: 'What would you play?', blurb: 'Card-play puzzles from real hands, including the close ones. See what each card is worth.', route: 'quiz/play', quiz: 'play' },
       { title: 'Coached play and hand review', blurb: 'Play the Hard bots, then see which decisions cost you points.', soon: true },
       { title: 'Your weak spots', blurb: 'Your accuracy by topic, so you know what to practise.', soon: true },
     ],
