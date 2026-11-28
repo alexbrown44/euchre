@@ -277,6 +277,7 @@ button.card { cursor: default; }
 }
 .rules-bar h1 { font-size: 22px; margin: 0; color: var(--felt); }
 .rules-back { border-radius: 999px; font-size: 18px; }
+.bar-logo { flex: none; width: 34px; height: 34px; }
 .rules-lead { font-size: 16px; }
 .rules-key { background: var(--panel); border: 2px solid var(--gold); border-radius: var(--radius); padding: 4px 16px 8px; margin: 16px 0; }
 .rules-key h2 { font-size: 18px; margin: 10px 0 6px; color: var(--gold-deep); }

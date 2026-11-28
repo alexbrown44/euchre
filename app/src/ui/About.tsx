@@ -9,6 +9,7 @@ export function About({ onBack }: { onBack: () => void }) {
         <button type="button" className="btn btn-small rules-back" onClick={onBack} aria-label="Back">
           ←
         </button>
+        <img className="bar-logo" src="/logo.svg" alt="" width={34} height={34} />
         <h1>About &amp; feedback</h1>
       </header>
 

@@ -13,7 +13,7 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 |---|---|
 | **Who** | Alex (the league player and product owner) working with Claude (in the Claude Code desktop app), which wrote the code, ran the experiments and drafted the documents |
 | **When** | Planning from 12 Nov; first code commit 16 Nov; app live 26 Nov; latest change 28 Nov 2026 |
-| **Commits** | 92, on 12 different days |
+| **Commits** | 93, on 12 different days |
 | **Code** | About 11,500 lines: game engine 1,900, experiments 3,850, app 4,450, tests 1,330 |
 | **Writing** | House rules (200 lines), strategy findings (1,100 lines), strategy guide (540 lines, plus a PDF) |
 | **Tests** | 91 engine tests and 20 app tests, all passing |
@@ -145,6 +145,7 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 54. **The screen:** the contract, the tricks so far, the trick on the table; tap a card (cards you can't play are greyed). The answer shows each card's points, the guide's card with the coach's plain reason, a "Two views" box when they disagree, and a link to the guide section.
 55. **Where it sits:** the starter level is a new stage in New to Euchre, "Play your cards well"; the seasoned level replaces "coming soon" in Sharpen your game.
 56. **Fixes found while checking:** black suit symbols vanished in dark mode on the trick list; switching from one quiz level straight to the other kept the old question on screen (also fixed for "Would you call?").
+57. **The logo in every page header** (rules, guide, Learn & improve, every quiz, About), at Alex's request, next to the back button.
 
 ---
 
@@ -205,6 +206,6 @@ From a pub-league card game to a live web app, in 12 working days (12 to 28 Nove
 10. **Teaching:** first hand, coached practice game, calling quizzes and card-play puzzles with "two views"
 11. **Brand:** the chough on the Joker
 12. **How we worked:** the build → test → check → ship loop; who did what
-13. **By the numbers:** 92 commits, 11,500 lines, 111 tests, 19 findings, 12 days
+13. **By the numbers:** 93 commits, 11,500 lines, 111 tests, 19 findings, 12 days
 14. **Lessons**
 15. **What's next:** hand review, weak spots, multiplayer, a name

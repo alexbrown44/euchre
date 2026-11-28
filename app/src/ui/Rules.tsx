@@ -25,6 +25,7 @@ export function Rules({ section, onBack }: { section?: string | null; onBack: ()
         <button type="button" className="btn btn-small rules-back" onClick={onBack} aria-label="Back">
           ←
         </button>
+        <img className="bar-logo" src="/logo.svg" alt="" width={34} height={34} />
         <h1>How to play: our rules</h1>
       </header>
 

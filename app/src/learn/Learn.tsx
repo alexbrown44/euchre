@@ -64,6 +64,7 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
         <button type="button" className="btn btn-small rules-back" onClick={onBack} aria-label="Back to the front page">
           ←
         </button>
+        <img className="bar-logo" src="/logo.svg" alt="" width={34} height={34} />
         <h1>Learn &amp; improve</h1>
       </header>
 
