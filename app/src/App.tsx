@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Home } from './ui/Home.tsx';
 import { Game } from './ui/Game.tsx';
 import { Rules } from './ui/Rules.tsx';
+import { About } from './ui/About.tsx';
 import { Learn } from './learn/Learn.tsx';
 import { Guide } from './learn/Guide.tsx';
 import { RulesQuiz } from './learn/RulesQuiz.tsx';
@@ -117,6 +118,7 @@ export default function App() {
       : null;
     const other =
       page === 'rules' ? <Rules section={arg} onBack={back} />
+      : page === 'about' ? <About onBack={back} />
       : page === 'learn' ? <Learn onBack={back} onGo={go} />
       : page === 'guide' ? <Guide section={arg} onBack={back} />
       : page === 'first-hand' ? <FirstHand onBack={back} onGo={go} />
@@ -166,6 +168,7 @@ export default function App() {
       onStart={start}
       onRules={() => go('rules')}
       onLearn={() => go('learn')}
+      onAbout={() => go('about')}
       canResume={!!resumable}
       onResume={() => {
         if (!resumable) return;

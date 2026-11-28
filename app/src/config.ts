@@ -2,6 +2,9 @@
 export const APP_NAME = 'Euchre';
 export const APP_TAGLINE = 'Pub-league house rules: the Benny, Up and Down, and defending alone';
 
+/** Where feedback goes (shown on the About page). */
+export const FEEDBACK_EMAIL = 'alexbr4cornwall@gmail.com';
+
 export const TARGET_MIN = 5;
 export const TARGET_MAX = 21;
 

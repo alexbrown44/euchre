@@ -523,3 +523,13 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .coach-more summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--felt); }
 .coach-more p { font-size: 13px; color: #3c4a45; margin-top: 4px; }
 .coach-toggle { background: none; border: 0; padding: 2px 0; font-size: 12px; font-weight: 700; color: var(--felt-light); cursor: pointer; text-decoration: underline; }
+
+/* ---------- About & feedback ---------- */
+.home-foot { margin-top: 24px; text-align: center; }
+.home-foot-link { background: none; border: none; padding: 6px 10px; font: inherit; font-size: 14px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.home-foot-link:hover { color: var(--ink); }
+.about-card { display: flex; gap: 16px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+.about-card p { margin: 0 0 10px; }
+.about-logo { flex: none; border-radius: 16px; }
+.about-mail { display: inline-block; margin: 2px 0 12px; text-decoration: none; overflow-wrap: anywhere; }
+@media (max-width: 420px) { .about-card { flex-direction: column; } }
