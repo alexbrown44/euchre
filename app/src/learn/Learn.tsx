@@ -72,7 +72,7 @@ export function Learn({ onBack, onGo }: { onBack: () => void; onGo: (route: stri
           <h2>Get better at Euchre</h2>
           <p>{track === null ? 'New to the game, or after an edge at the pub? Pick a track. You can switch at any time.' : 'Pick up where you left off, or switch track below.'}</p>
         </div>
-        <img className="learn-hero-logo" src="/logo.svg" alt="" width={64} height={64} />
+        <img className="learn-hero-logo" src="/logo-mark.svg" alt="" width={56} height={84} />
       </section>
 
       <div className="learn-tracks" role="tablist" aria-label="Track">
