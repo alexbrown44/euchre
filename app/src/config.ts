@@ -4,6 +4,8 @@ export const APP_TAGLINE = 'Pub-league house rules: the Benny, Up and Down, and 
 
 /** Where feedback goes (shown on the About page). */
 export const FEEDBACK_EMAIL = 'alexbr4cornwall@gmail.com';
+/** The author's name on the About page links here. */
+export const AUTHOR_URL = 'https://www.linkedin.com/in/alexbrownracing/';
 
 export const TARGET_MIN = 5;
 export const TARGET_MAX = 21;

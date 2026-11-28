@@ -1,5 +1,5 @@
 // About this app, and where to send feedback.
-import { APP_NAME, FEEDBACK_EMAIL } from '../config.ts';
+import { APP_NAME, AUTHOR_URL, FEEDBACK_EMAIL } from '../config.ts';
 
 export function About({ onBack }: { onBack: () => void }) {
   const mail = `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(`${APP_NAME} app feedback`)}`;
@@ -16,7 +16,11 @@ export function About({ onBack }: { onBack: () => void }) {
         <img className="about-logo" src="/logo.svg" alt="" width={72} height={72} />
         <div>
           <p>
-            This app was built by Alex, using Claude. It plays Euchre by our Cornish pub-league house rules, and its strategy
+            This app was built by{' '}
+            <a href={AUTHOR_URL} target="_blank" rel="noopener noreferrer">
+              Alex
+            </a>
+            , using Claude. It plays Euchre by our Cornish pub-league house rules, and its strategy
             advice comes from simulating hundreds of thousands of hands.
           </p>
           <p>Any feedback, please email:</p>

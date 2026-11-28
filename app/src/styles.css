@@ -533,3 +533,6 @@ section.guide-card { background: color-mix(in srgb, var(--gold) 10%, var(--panel
 .about-logo { flex: none; border-radius: 16px; }
 .about-mail { display: inline-block; margin: 2px 0 12px; text-decoration: none; overflow-wrap: anywhere; }
 @media (max-width: 420px) { .about-card { flex-direction: column; } }
+.about-card p a { color: var(--felt); font-weight: 700; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .about-card p a { color: var(--gold); } }
+:root[data-theme='dark'] .about-card p a { color: var(--gold); }
