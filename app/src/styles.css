@@ -82,7 +82,7 @@ h1, h2 { font-family: Georgia, 'Times New Roman', serif; }
 .home-suit-black { color: var(--black); }
 .home-head h1 { margin: 0; font-size: 34px; }
 .home-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-.home-logo { width: 64px; height: 64px; flex: none; border-radius: 15px; box-shadow: 0 3px 10px rgba(0,0,0,.35), 0 0 0 1.5px rgba(255,255,255,.25); }
+.home-logo { width: 56px; height: 84px; flex: none; filter: drop-shadow(0 2px 3px rgba(0,0,0,.3)); }
 .tagline { margin: 0; color: #d6ebe4; font-size: 14px; }
 .resume { width: 100%; margin-bottom: 16px; }
 .modes { display: grid; gap: 10px; margin-bottom: 16px; }

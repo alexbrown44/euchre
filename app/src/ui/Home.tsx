@@ -35,7 +35,7 @@ export function Home({ settings, onChange, onStart, onRules, onLearn, onAbout, c
           <span className="home-suit home-suit-black">♣</span>
         </div>
         <div className="home-brand">
-          <img className="home-logo" src="/logo.svg" alt="" width={64} height={64} />
+          <img className="home-logo" src="/logo-mark.svg" alt="" width={56} height={84} />
           <h1>{APP_NAME}</h1>
         </div>
         <p className="tagline">{APP_TAGLINE}</p>
